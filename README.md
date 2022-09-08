@@ -1,7 +1,7 @@
 # LFG_service
 "Looking For Group" service
 
-Spring 으로 만들어진 파티구함(Looking For Group) Rest API server Java 소스
+Spring 으로 만들어진 파티구함(Looking For Group) Rest API mvc server Java 소스
 
 <H3>*LFG(Looking For Group)*</H2>
 '파티구함' 서비스는<br>
@@ -22,8 +22,7 @@ __멀티 게임__ 이지만 인게임에서 플레이어 찾기, 모집을 __지
 ---
 (임시)
 # 시작하기
-친구들이 바쁜가요? 그게임을 안좋아 하나요?<br>
-[파티구함](.com#) 에서 파티를 찾아보세요
+[파티구함](#) 에서 파티 찾기.
 
 # 이미지 1
 
