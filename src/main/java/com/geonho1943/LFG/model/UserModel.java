@@ -1,25 +1,39 @@
 package com.geonho1943.LFG.model;
 
-import com.geonho1943.LFG.extraDB.ExtraDB;
+import com.geonho1943.LFG.extraDB.User;
 
-//DB에 user에 대한 저장,조회를 위한 기능들
-public class UserModel extends ExtraDB {
-    private int idx=0;
+import java.util.List;
+import java.util.Optional;
 
-    public String test(String test){
-        setName(test);
-        return getName();
+public class UserModel implements UserRepository {
+    @Override
+    public User save(User user) {
+        return null;
     }
 
-    public String join(String name,String pw){
-        //setIdx(++idx);
-        setName(name);
-        setPw(pw);
-        return getName()+" "+getPw()+"success!";
-        //!!!!
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.empty();
     }
-    public String lookup(){
-        return String.valueOf(getIdx())+" "+getName();
+
+    @Override
+    public Optional<User> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
+
+    @Override
+    public String test(){
+        return test();
+    }
+
+    @Override
+    public String save(String name, String pw) {
+        return null;
     }
 
 }
