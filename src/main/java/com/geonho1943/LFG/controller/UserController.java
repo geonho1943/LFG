@@ -34,7 +34,7 @@ public class UserController {
         user.setUser_pw(pw);
         user.setUser_name(name);
         userService.join(user);
-        System.out.println("join이 실행중입니다 Controller. "+ user.getUser_id()+" "+user.getUser_pw()+" "+user.getUser_name());
+
         return " idx : " + user.getUser_idx() + "id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
     }
 

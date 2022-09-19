@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.DriverManager.getConnection;
 
 public class UserModel implements UserRepository {
 
@@ -33,7 +32,7 @@ public class UserModel implements UserRepository {
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                user.setUser_id(rs.getString(1));
+                user.setUser_idx(Integer.parseInt(rs.getString(1)));
             } else {
                 throw new SQLException("id 조회 실패");
             }

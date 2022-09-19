@@ -21,7 +21,8 @@ public class UserService {
 
     public User join(User user){
         userRepository.join(user);
-        System.out.println("join이 실행중입니다. "+ user.getUser_id()+" "+user.getUser_pw()+" "+user.getUser_name());
+        System.out.println(
+        );
         return user;
     }
 
