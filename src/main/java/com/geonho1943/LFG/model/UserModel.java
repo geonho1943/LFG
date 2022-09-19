@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class UserModel implements UserRepository {
@@ -71,6 +72,32 @@ public class UserModel implements UserRepository {
             close(conn, pstmt, rs);
         }
     }
+
+    @Override
+    public User pick(User user) {
+        String sql = "select * from lfg_user where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getUser_id());
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                user.setUser_idx(rs.getInt("user_idx"));
+                user.setUser_id(rs.getString("user_id"));
+                user.setUser_pw(rs.getString("user_pw"));
+                user.setUser_name(rs.getString("user_name"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+        return user;
+    }
+
 
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);

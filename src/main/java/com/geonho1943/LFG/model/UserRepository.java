@@ -8,4 +8,6 @@ public interface UserRepository {
     User join(User user);
 
     List<User> findAll();
+
+    User pick(User user);
 }

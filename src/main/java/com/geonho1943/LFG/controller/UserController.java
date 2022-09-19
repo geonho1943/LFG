@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,7 +17,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
 
     @GetMapping("/test")
     @ResponseBody
@@ -34,8 +32,7 @@ public class UserController {
         user.setUser_pw(pw);
         user.setUser_name(name);
         userService.join(user);
-
-        return " idx : " + user.getUser_idx() + "id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
+        return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
     }
 
     @GetMapping("/user_list")
@@ -46,14 +43,14 @@ public class UserController {
         return users;
     }
 
-    @GetMapping("/test_list")
+    @GetMapping("/user_pick")
     @ResponseBody
-    public List<String> testlist(){
-        ArrayList<String> list01 = new ArrayList<String>();
-        list01.add("1");
-        list01.add("2");
-        list01.add("3");
-        System.out.println(list01);
-        return list01;
+    public String user_pick(@RequestParam("id")String id){
+        User user = new User();
+        user.setUser_id(id);
+        userService.pick(user);
+        return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name();
     }
+
+
 }

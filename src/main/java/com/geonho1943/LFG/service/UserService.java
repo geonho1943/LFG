@@ -21,12 +21,15 @@ public class UserService {
 
     public User join(User user){
         userRepository.join(user);
-        System.out.println(
-        );
         return user;
     }
 
     public List<User> lookup() {
         return userRepository.findAll();
+    }
+
+
+    public User pick(User user) {
+        return userRepository.pick(user);
     }
 }
