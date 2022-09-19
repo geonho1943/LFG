@@ -3,9 +3,13 @@ package com.geonho1943.LFG.controller;
 import com.geonho1943.LFG.extraDB.User;
 import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -24,7 +28,7 @@ public class UserController {
 
     @GetMapping("/user_join")
     @ResponseBody
-    public String join(@RequestParam("id")String id,@RequestParam("pw") String pw,@RequestParam("name")String name){
+    public String user_join(@RequestParam("id")String id,@RequestParam("pw") String pw,@RequestParam("name")String name){
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);
@@ -32,6 +36,24 @@ public class UserController {
         userService.join(user);
         System.out.println("join이 실행중입니다 Controller. "+ user.getUser_id()+" "+user.getUser_pw()+" "+user.getUser_name());
         return " idx : " + user.getUser_idx() + "id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
+    }
 
+    @GetMapping("/user_list")
+    @ResponseBody
+    public List<User> user_list(Model model){
+        List<User> users = userService.lookup();
+        model.addAttribute("users",users);
+        return users;
+    }
+
+    @GetMapping("/test_list")
+    @ResponseBody
+    public List<String> testlist(){
+        ArrayList<String> list01 = new ArrayList<String>();
+        list01.add("1");
+        list01.add("2");
+        list01.add("3");
+        System.out.println(list01);
+        return list01;
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Transactional
 @Service
@@ -21,5 +23,9 @@ public class UserService {
         userRepository.join(user);
         System.out.println("join이 실행중입니다. "+ user.getUser_id()+" "+user.getUser_pw()+" "+user.getUser_name());
         return user;
+    }
+
+    public List<User> lookup() {
+        return userRepository.findAll();
     }
 }

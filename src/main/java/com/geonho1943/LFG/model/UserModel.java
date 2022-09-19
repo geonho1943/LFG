@@ -5,6 +5,8 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.sql.DriverManager.getConnection;
 
@@ -36,6 +38,34 @@ public class UserModel implements UserRepository {
                 throw new SQLException("id 조회 실패");
             }
             return user;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    @Override
+    public List<User> findAll() {
+        String sql = "select * from lfg_user";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while(rs.next()) {
+                User user = new User();
+                user.setUser_idx(rs.getInt("user_idx"));
+                user.setUser_id(rs.getString("user_id"));
+                user.setUser_name(rs.getString("user_name"));
+                user.setUser_pw(rs.getString("user_pw"));
+                users.add(user);
+            }
+            return users;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
