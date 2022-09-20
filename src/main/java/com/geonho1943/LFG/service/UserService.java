@@ -32,4 +32,8 @@ public class UserService {
     public User pick(User user) {
         return userRepository.pick(user);
     }
+
+    public User modify(User user) {
+        return userRepository.modify(user);
+    }
 }

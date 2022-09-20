@@ -52,5 +52,19 @@ public class UserController {
         return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name();
     }
 
+    @GetMapping("/user_modify")
+    @ResponseBody
+    public String user_modify(
+            @RequestParam("idx")int idx,@RequestParam("id")String id,
+            @RequestParam("pw")String pw,@RequestParam("name")String name){
+        User user = new User();
+        user.setUser_idx(idx);
+        user.setUser_id(id);
+        user.setUser_pw(pw);
+        user.setUser_name(name);
+        userService.modify(user);
+        return user.getUser_idx()+" modify success!!";
+    }
+
 
 }

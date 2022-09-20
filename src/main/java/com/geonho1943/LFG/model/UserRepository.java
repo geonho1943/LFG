@@ -10,4 +10,6 @@ public interface UserRepository {
     List<User> findAll();
 
     User pick(User user);
+
+    User modify(User user);
 }
