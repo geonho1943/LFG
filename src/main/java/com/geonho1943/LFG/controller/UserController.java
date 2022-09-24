@@ -66,5 +66,4 @@ public class UserController {
         return user.getUser_idx()+" modify success!!";
     }
 
-
 }
