@@ -36,4 +36,8 @@ public class UserService {
     public User modify(User user) {
         return userRepository.modify(user);
     }
+
+    public User sleep(User user) {
+        return userRepository.sleep(user);
+    }
 }

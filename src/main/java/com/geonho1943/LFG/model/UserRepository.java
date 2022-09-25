@@ -12,4 +12,6 @@ public interface UserRepository {
     User pick(User user);
 
     User modify(User user);
+
+    User sleep(User user);
 }

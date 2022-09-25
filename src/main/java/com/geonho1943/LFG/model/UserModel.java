@@ -19,7 +19,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        String sql = "INSERT INTO `LFGservice`.`lfg_user` (`user_id`,`user_pw`,`user_name`) VALUES (?,?,?);";
+        String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name) VALUES (?,?,?);";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -100,7 +100,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public User modify(User user) {
-        String sql = "update LFGservice.lfg_user set user_id=?,user_pw=?,user_name=? where user_idx=?;";
+        String sql = "update lfg_user set user_id=?,user_pw=?,user_name=? where user_idx=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -119,6 +119,28 @@ public class UserModel implements UserRepository {
             close(conn, pstmt, rs);
         }
     }
+
+    @Override
+    public User sleep(User user) {
+        String sql = "DELETE FROM lfg_user WHERE user_idx=?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user.getUser_idx());
+            pstmt.executeUpdate();
+            return user;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+
+
 
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);

@@ -66,4 +66,13 @@ public class UserController {
         return user.getUser_idx()+" modify success!!";
     }
 
+    @GetMapping("/user_sleep")
+    @ResponseBody
+    public String user_sleep(
+            @RequestParam("idx")int idx){
+        User user = new User();
+        user.setUser_idx(idx);
+        userService.sleep(user);
+            return user.getUser_idx()+" delete success!!";
+    }
 }
