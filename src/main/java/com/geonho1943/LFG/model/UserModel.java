@@ -32,10 +32,10 @@ public class UserModel implements UserRepository {
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                user.setUser_idx(rs.getInt("user_idx"));
                 //user.setUser_idx(Integer.parseInt(rs.getString(1)));
+                user.setUser_idx(rs.getInt(1));
             } else {
-                throw new SQLException("id 조회 실패");
+                throw new SQLException("idx 조회 실패");
             }
             return user;
         } catch (Exception e) {
@@ -106,15 +106,17 @@ public class UserModel implements UserRepository {
         ResultSet rs = null;
         try {
             conn = getConnection();
-            pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getUser_id());
             pstmt.setString(2, user.getUser_pw());
             pstmt.setString(3, user.getUser_name());
             pstmt.setInt(4, user.getUser_idx());
             pstmt.executeUpdate();
             return user;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
