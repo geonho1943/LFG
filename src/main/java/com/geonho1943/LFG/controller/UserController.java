@@ -43,13 +43,14 @@ public class UserController {
         return users;
     }
 
-    @GetMapping("/user_pick")
+    @GetMapping("/user_login")
     @ResponseBody
-    public String user_pick(@RequestParam("id")String id){
+    public String user_pick(@RequestParam("id")String id,@RequestParam("pw")String pw){
         User user = new User();
         user.setUser_id(id);
+        user.setUser_pw(pw);
         userService.pick(user);
-        return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name();
+        return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+"login success!!";
     }
 
     @GetMapping("/user_modify")

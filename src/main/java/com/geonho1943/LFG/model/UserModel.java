@@ -75,7 +75,8 @@ public class UserModel implements UserRepository {
 
     @Override
     public User pick(User user) {
-        String sql = "select * from lfg_user where user_id = ?;";
+        String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw = ?;";
+
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -83,6 +84,7 @@ public class UserModel implements UserRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getUser_id());
+            pstmt.setString(2, user.getUser_pw());
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 user.setUser_idx(rs.getInt("user_idx"));
