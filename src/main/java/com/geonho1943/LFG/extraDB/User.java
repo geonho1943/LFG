@@ -6,6 +6,7 @@ public class User {
     private String user_id;
     private String user_name;
     private String user_pw;
+    private String user_reg;
 
     public int getUser_idx() {
         return user_idx;
@@ -38,4 +39,13 @@ public class User {
     public void setUser_pw(String user_pw) {
         this.user_pw = user_pw;
     }
+
+    public String getUser_reg() {
+        return user_reg;
+    }
+
+    public void setUser_reg(String user_reg) {
+        this.user_reg = user_reg;
+    }
+
 }

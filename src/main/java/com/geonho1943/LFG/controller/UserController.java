@@ -26,7 +26,9 @@ public class UserController {
 
     @GetMapping("/user_join")
     @ResponseBody
-    public String user_join(@RequestParam("id")String id,@RequestParam("pw") String pw,@RequestParam("name")String name){
+    public String user_join(
+            @RequestParam("id")String id,@RequestParam("pw")String pw,
+            @RequestParam("name")String name){
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);
@@ -45,7 +47,8 @@ public class UserController {
 
     @GetMapping("/user_login")
     @ResponseBody
-    public String user_pick(@RequestParam("id")String id,@RequestParam("pw")String pw){
+    public String user_pick(
+            @RequestParam("id")String id,@RequestParam("pw")String pw){
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);

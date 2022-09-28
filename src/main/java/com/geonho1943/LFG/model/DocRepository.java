@@ -1,6 +1,9 @@
 package com.geonho1943.LFG.model;
 
 import com.geonho1943.LFG.extraDB.Doc;
+import com.geonho1943.LFG.extraDB.User;
+
+import java.util.List;
 
 public interface DocRepository {
     //crud
@@ -9,5 +12,5 @@ public interface DocRepository {
     Doc modify(Doc doc);//수정
     Doc delete(Doc doc);//삭제
 
-
+    List<Doc> list();
 }

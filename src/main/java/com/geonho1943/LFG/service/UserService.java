@@ -12,7 +12,6 @@ import java.util.List;
 @Transactional
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
 @Autowired
     public UserService(UserRepository userRepository) {

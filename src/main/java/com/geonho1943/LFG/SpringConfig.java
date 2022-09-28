@@ -1,5 +1,7 @@
 package com.geonho1943.LFG;
 
+import com.geonho1943.LFG.model.DocModel;
+import com.geonho1943.LFG.model.DocRepository;
 import com.geonho1943.LFG.model.UserModel;
 import com.geonho1943.LFG.model.UserRepository;
 import com.geonho1943.LFG.service.UserService;
@@ -18,4 +20,9 @@ public class SpringConfig {
     public UserRepository userRepository(){
         return new UserModel(dataSource);
     }
+    @Bean
+    public DocRepository docRepository(){
+        return new DocModel(dataSource);
+    }
+
 }

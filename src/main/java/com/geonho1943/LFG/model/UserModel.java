@@ -19,7 +19,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name) VALUES (?,?,?);";
+        String sql = "INSERTE INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -63,6 +63,7 @@ public class UserModel implements UserRepository {
                 user.setUser_id(rs.getString("user_id"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_pw(rs.getString("user_pw"));
+                user.setUser_reg(rs.getString("user_reg"));
                 users.add(user);
             }
             return users;
@@ -91,6 +92,7 @@ public class UserModel implements UserRepository {
                 user.setUser_id(rs.getString("user_id"));
                 user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
+                user.setUser_name(rs.getString("user_reg"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -113,6 +115,7 @@ public class UserModel implements UserRepository {
             pstmt.setString(2, user.getUser_pw());
             pstmt.setString(3, user.getUser_name());
             pstmt.setInt(4, user.getUser_idx());
+            //reg_date는 뽑지 않는다
             pstmt.executeUpdate();
             return user;
         } catch (Exception e) {
@@ -140,8 +143,6 @@ public class UserModel implements UserRepository {
             close(conn, pstmt, rs);
         }
     }
-
-
 
 
     private Connection getConnection() {
