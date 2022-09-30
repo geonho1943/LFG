@@ -53,7 +53,7 @@ public class UserController {
         user.setUser_id(id);
         user.setUser_pw(pw);
         userService.pick(user);
-        return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+"login success!!";
+        return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
     }
 
     @GetMapping("/user_modify")

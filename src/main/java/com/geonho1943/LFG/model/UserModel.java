@@ -19,7 +19,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        String sql = "INSERTE INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
+        String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -32,7 +32,6 @@ public class UserModel implements UserRepository {
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
-                //user.setUser_idx(Integer.parseInt(rs.getString(1)));
                 user.setUser_idx(rs.getInt(1));
             } else {
                 throw new SQLException("idx 조회 실패");
@@ -76,8 +75,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public User pick(User user) {
-        String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw = ?;";
-
+        String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -93,13 +91,16 @@ public class UserModel implements UserRepository {
                 user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_name(rs.getString("user_reg"));
+                return user;
+            }else {
+                throw new SQLException("idx 조회 실패");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         } finally {
             close(conn, pstmt, rs);
         }
-        return user;
+
     }
 
     @Override
@@ -115,7 +116,6 @@ public class UserModel implements UserRepository {
             pstmt.setString(2, user.getUser_pw());
             pstmt.setString(3, user.getUser_name());
             pstmt.setInt(4, user.getUser_idx());
-            //reg_date는 뽑지 않는다
             pstmt.executeUpdate();
             return user;
         } catch (Exception e) {

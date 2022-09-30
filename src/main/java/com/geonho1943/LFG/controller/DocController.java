@@ -20,12 +20,6 @@ public class DocController {
         this.docService = docService;
     }
 
-    @GetMapping("/doc_test")
-    @ResponseBody
-    public String Test(){
-        return "ok";
-    }
-
     @GetMapping("/doc_read")
     @ResponseBody
     public Doc read(@RequestParam("tit")String tit){
@@ -53,6 +47,29 @@ public class DocController {
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
         return docs;
+    }
+
+    @GetMapping("/doc_modify")
+    @ResponseBody
+    public Doc doc_modi(
+            @RequestParam("tit")String tit,@RequestParam("cont")String cont,
+            @RequestParam("idx")int idx){
+        Doc doc = new Doc();
+        doc.setDoc_tit(tit);
+        doc.setDoc_cont(cont);
+        doc.setDoc_idx(idx);
+        docService.modify(doc);
+        return doc;
+    }
+
+    @GetMapping("/doc_delete")
+    @ResponseBody
+    public String doc_del(
+            @RequestParam("idx")int idx){
+        Doc doc = new Doc();
+        doc.setDoc_idx(idx);
+        docService.delete(doc);
+        return doc.getDoc_idx()+" delete success!!";
     }
 
 }

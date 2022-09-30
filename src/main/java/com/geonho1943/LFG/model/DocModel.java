@@ -97,14 +97,45 @@ public class DocModel implements DocRepository{
         }
     }
     @Override
+
     public Doc modify(Doc doc) {
-        return null;
+        String sql = "update `lfg_doc` set doc_tit = ?,doc_cont = ? where doc_idx = ?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, doc.getDoc_tit());
+            pstmt.setString(2, doc.getDoc_cont());
+            pstmt.setInt(3, doc.getDoc_idx());
+            pstmt.executeUpdate();
+            return doc;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+
     }
 
     @Override
     public Doc delete(Doc doc) {
-        //DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = '7');
-        return null;
+        String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?);";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, doc.getDoc_idx());
+            pstmt.executeUpdate();
+            return  doc;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
 
 

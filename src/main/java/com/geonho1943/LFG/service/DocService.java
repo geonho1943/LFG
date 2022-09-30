@@ -18,16 +18,22 @@ public class DocService {
     }
 
     public Doc read(Doc doc){
-        docRepository.read(doc);
-        return doc;
+        return docRepository.read(doc);
     }
 
     public Doc post(Doc doc) {
-        docRepository.post(doc);
-        return doc;
+        return docRepository.post(doc);
     }
 
     public List<Doc> list() {
         return docRepository.list();
+    }
+
+    public Doc modify(Doc doc) {
+        return docRepository.modify(doc);
+    }
+
+    public Doc delete(Doc doc) {
+        return docRepository.delete(doc);
     }
 }
