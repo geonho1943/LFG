@@ -29,6 +29,7 @@ public class UserService {
 
 
     public User pick(User user) {
+        System.out.println("user pick 서비스 실행");
         return userRepository.pick(user);
     }
 

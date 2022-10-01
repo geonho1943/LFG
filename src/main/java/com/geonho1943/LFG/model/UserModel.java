@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public class UserModel implements UserRepository {
@@ -91,6 +90,7 @@ public class UserModel implements UserRepository {
                 user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_name(rs.getString("user_reg"));
+                System.out.println(user.getUser_id()+" "+user.getUser_pw());
                 return user;
             }else {
                 throw new SQLException("idx 조회 실패");
