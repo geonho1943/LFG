@@ -47,15 +47,15 @@ public class UserController {
 
     @GetMapping("/user_login")
     @ResponseBody
-    public String user_pick(
+    public User user_pick(
             @RequestParam("id")String id,@RequestParam("pw")String pw){
         System.out.println("컨트롤러 실행중 user_login");
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);
         userService.pick(user);
-
-        return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
+        return user;
+       //return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
     }
 
     @GetMapping("/user_modify")
