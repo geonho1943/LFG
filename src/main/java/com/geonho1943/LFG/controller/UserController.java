@@ -60,7 +60,7 @@ public class UserController {
 
     @GetMapping("/user_modify")
     @ResponseBody
-    public String user_modify(
+    public User user_modify(
             @RequestParam("idx")int idx,@RequestParam("id")String id,
             @RequestParam("pw")String pw,@RequestParam("name")String name){
         User user = new User();
@@ -69,16 +69,16 @@ public class UserController {
         user.setUser_pw(pw);
         user.setUser_name(name);
         userService.modify(user);
-        return user.getUser_idx()+" modify success!!";
+        return user;
     }
 
     @GetMapping("/user_sleep")
     @ResponseBody
-    public String user_sleep(
+    public User user_sleep(
             @RequestParam("idx")int idx){
         User user = new User();
         user.setUser_idx(idx);
         userService.sleep(user);
-            return user.getUser_idx()+" delete success!!";
+            return user;
     }
 }
