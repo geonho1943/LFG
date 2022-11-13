@@ -22,19 +22,19 @@ public class DocController {
 
     @GetMapping("/doc_read")
     @ResponseBody
-    public Doc read(@RequestParam("tit")String tit){
+    public Doc read(@RequestParam("sub")String sub){
         Doc doc = new Doc();
-        doc.setDoc_tit(tit);
+        doc.setDoc_sub(sub);
         docService.read(doc);
         return doc;
     }
     @GetMapping("/doc_post")
     @ResponseBody
     public String post(
-            @RequestParam("tit")String tit, @RequestParam("writ")String writ,
+            @RequestParam("sub")String sub, @RequestParam("writ")String writ,
             @RequestParam("cont")String cont){
         Doc doc = new Doc();
-        doc.setDoc_tit(tit);
+        doc.setDoc_sub(sub);
         doc.setDoc_writ(writ);
         doc.setDoc_cont(cont);
         docService.post(doc);
@@ -52,10 +52,10 @@ public class DocController {
     @GetMapping("/doc_modify")
     @ResponseBody
     public Doc doc_modi(
-            @RequestParam("tit")String tit,@RequestParam("cont")String cont,
+            @RequestParam("sub")String sub,@RequestParam("cont")String cont,
             @RequestParam("idx")int idx){
         Doc doc = new Doc();
-        doc.setDoc_tit(tit);
+        doc.setDoc_sub(sub);
         doc.setDoc_cont(cont);
         doc.setDoc_idx(idx);
         docService.modify(doc);

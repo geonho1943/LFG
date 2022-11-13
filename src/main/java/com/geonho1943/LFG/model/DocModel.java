@@ -17,14 +17,14 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc post(Doc doc) {
-        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_tit`, `doc_writ`, `doc_cont`,`doc_reg`) VALUES (?,?,?,sysdate());";
+        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_reg`) VALUES (?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, doc.getDoc_tit());
+            pstmt.setString(1, doc.getDoc_sub());
             pstmt.setString(2, doc.getDoc_writ());
             pstmt.setString(3, doc.getDoc_cont());
             pstmt.executeUpdate();
@@ -44,18 +44,18 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc read(Doc doc) {
-        String sql = "select * from lfg_doc where doc_tit=?";
+        String sql = "select * from lfg_doc where doc_sub=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, doc.getDoc_tit());
+            pstmt.setString(1, doc.getDoc_sub());
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 doc.setDoc_idx(rs.getInt("doc_idx"));
-                doc.setDoc_tit(rs.getString("doc_tit"));
+                doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_leg(rs.getString("doc_reg"));
@@ -83,7 +83,7 @@ public class DocModel implements DocRepository{
             while (rs.next()) {
                 Doc doc = new Doc();
                 doc.setDoc_idx(rs.getInt("doc_idx"));
-                doc.setDoc_tit(rs.getString("doc_tit"));
+                doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_leg(rs.getString("doc_reg"));
@@ -99,14 +99,14 @@ public class DocModel implements DocRepository{
     @Override
 
     public Doc modify(Doc doc) {
-        String sql = "update `lfg_doc` set doc_tit = ?,doc_cont = ? where doc_idx = ?;";
+        String sql = "update `lfg_doc` set doc_sub = ?,doc_cont = ? where doc_idx = ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, doc.getDoc_tit());
+            pstmt.setString(1, doc.getDoc_sub());
             pstmt.setString(2, doc.getDoc_cont());
             pstmt.setInt(3, doc.getDoc_idx());
             pstmt.executeUpdate();

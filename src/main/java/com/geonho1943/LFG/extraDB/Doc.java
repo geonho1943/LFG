@@ -2,7 +2,7 @@ package com.geonho1943.LFG.extraDB;
 
 public class Doc {
     private int doc_idx;
-    private String doc_tit;
+    private String doc_sub;
     private String doc_writ;
     private String doc_cont;
     private String doc_leg;
@@ -13,14 +13,6 @@ public class Doc {
 
     public void setDoc_idx(int doc_idx) {
         this.doc_idx = doc_idx;
-    }
-
-    public String getDoc_tit() {
-        return doc_tit;
-    }
-
-    public void setDoc_tit(String doc_tit) {
-        this.doc_tit = doc_tit;
     }
 
     public String getDoc_writ() {
@@ -45,5 +37,13 @@ public class Doc {
 
     public void setDoc_leg(String doc_leg) {
         this.doc_leg = doc_leg;
+    }
+
+    public String getDoc_sub() {
+        return doc_sub;
+    }
+
+    public void setDoc_sub(String doc_sub) {
+        this.doc_sub = doc_sub;
     }
 }
