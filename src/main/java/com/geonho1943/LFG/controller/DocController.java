@@ -1,7 +1,6 @@
 package com.geonho1943.LFG.controller;
 
 import com.geonho1943.LFG.extraDB.Doc;
-import com.geonho1943.LFG.extraDB.User;
 import com.geonho1943.LFG.service.DocService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

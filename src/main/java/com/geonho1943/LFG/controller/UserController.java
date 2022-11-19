@@ -5,6 +5,7 @@ import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,12 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String test(){
-        return "test_ok";
-    }
-
     @GetMapping("/user_join")
     @ResponseBody
     public String user_join(
@@ -35,6 +30,19 @@ public class UserController {
         user.setUser_name(name);
         userService.join(user);
         return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
+
+    }
+    @GetMapping("/userjoin")
+    public String joinTemp(){
+        return "user/userJoin";
+    }
+
+    @PostMapping("/user_join")
+    public String user_join(userForm form){
+        User user = new User();
+        user.setUser_name(form.getName());
+        System.out.println(user.getUser_name());
+        return "redirect:/";
     }
 
     @GetMapping("/user_list")
@@ -49,7 +57,6 @@ public class UserController {
     @ResponseBody
     public User user_pick(
             @RequestParam("id")String id,@RequestParam("pw")String pw){
-        System.out.println("컨트롤러 실행중 user_login");
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);
