@@ -36,12 +36,13 @@ public class UserController {
     public String joinTemp(){
         return "user/userJoin";
     }
-
     @PostMapping("/user_join")
     public String user_join(userForm form){
-        User user = new User();
+         User user = new User();
+        user.setUser_id(form.getId());
+        user.setUser_pw(form.getPw());
         user.setUser_name(form.getName());
-        System.out.println(user.getUser_name());
+        userService.join(user);
         return "redirect:/";
     }
 
