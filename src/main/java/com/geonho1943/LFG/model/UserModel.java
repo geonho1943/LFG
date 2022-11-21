@@ -90,7 +90,6 @@ public class UserModel implements UserRepository {
                 user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_reg(rs.getString("user_reg"));
-                System.out.println(user.getUser_id()+" "+user.getUser_pw());
                 return user;
             }else {
                 throw new SQLException("idx 조회 실패");

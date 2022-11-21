@@ -43,7 +43,7 @@ public class UserController {
         user.setUser_pw(form.getPw());
         user.setUser_name(form.getName());
         userService.join(user);
-        return "redirect:/";
+        return "/home";
     }
 
     @GetMapping("/user_list")
@@ -64,6 +64,19 @@ public class UserController {
         userService.pick(user);
         return user;
        //return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
+    }
+
+    @GetMapping("/userlogin")
+    public String loginTemp(){
+        return "user/userLogin";
+    }
+    @PostMapping("/user_login")
+    public String user_login(userForm form){
+        User user = new User();
+        user.setUser_id(form.getId());
+        user.setUser_pw(form.getPw());
+        userService.pick(user);
+        return "ok";
     }
 
     @GetMapping("/user_modify")
