@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>게시판 목록보기</title>
+</head>
+<body>
+<section class="doc">
+    <div class="page-title">
+        <div class="container">
+            <h3>Doc List</h3>
+        </div>
+    </div>
+
+    <div id="doc-list">
+        <div class="container">
+            <table class="doc-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th scope="col" class="th-viewcnt">조회수</th>
+                    <th scope="col" class="th-name">작성자</th>
+                    <th scope="col" class="th-date">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="doc : ${list}">
+                    <td th:text="${doc.doc_idx}"></td>
+                    <th>
+                        <a th:href="@{/doc(boardId=${doc.doc_id})}" th:text="${doc.doc_sub}"></a>
+                    </th>
+                    <td th:text="${doc.doc_writ}"></td>
+                    <td th:text="${doc.doc_cont}"></td>
+                    <td th:text="${doc.doc_reg}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</body>
+</html>

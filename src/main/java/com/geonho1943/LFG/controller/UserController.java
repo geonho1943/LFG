@@ -38,7 +38,7 @@ public class UserController {
     }
     @PostMapping("/user_join")
     public String user_join(userForm form){
-         User user = new User();
+        User user = new User();
         user.setUser_id(form.getId());
         user.setUser_pw(form.getPw());
         user.setUser_name(form.getName());
@@ -76,7 +76,7 @@ public class UserController {
         user.setUser_id(form.getId());
         user.setUser_pw(form.getPw());
         userService.pick(user);
-        return "ok";
+        return "user/docList";
     }
 
     @GetMapping("/user_modify")
