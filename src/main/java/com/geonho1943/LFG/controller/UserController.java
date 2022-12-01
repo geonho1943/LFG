@@ -76,7 +76,7 @@ public class UserController {
         user.setUser_id(form.getId());
         user.setUser_pw(form.getPw());
         userService.pick(user);
-        return "user/docList";
+        return "doc/docList";
     }
 
     @GetMapping("/user_modify")

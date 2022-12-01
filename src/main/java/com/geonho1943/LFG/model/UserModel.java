@@ -78,6 +78,7 @@ public class UserModel implements UserRepository {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        System.out.println("pick 실행");
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
