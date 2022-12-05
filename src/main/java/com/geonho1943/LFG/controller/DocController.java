@@ -41,13 +41,22 @@ public class DocController {
         return "post success!!";
     }
 
-    @PostMapping("/doc_list")
     @GetMapping("/doc_list")
     @ResponseBody
     public List<Doc> doc_list(Model model) {
+        System.out.println("1번 실행됨");
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
         return docs;
+    }
+
+    @PostMapping("doc_List")
+    @ResponseBody
+    public String doc_List(Model model){
+        System.out.println("2번 실행됨");
+        List<Doc> docs = docService.list();
+        model.addAttribute("docs",docs);
+        return "doc/docList";
     }
 
     @GetMapping("/doc_modify")

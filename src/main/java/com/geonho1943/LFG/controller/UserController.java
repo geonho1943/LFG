@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -36,6 +37,7 @@ public class UserController {
     public String joinTemp(){
         return "user/userJoin";
     }
+
     @PostMapping("/user_join")
     public String user_join(userForm form){
         User user = new User();
@@ -65,19 +67,22 @@ public class UserController {
         return user;
        //return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
     }
+    @PostMapping("/user_Login")
+    public String user_page_login(
+            @RequestParam("id")String id, @RequestParam("pw")String pw, HttpSession httpSession) {
+        User user = new User();
+        user.setUser_id(id);
+        user.setUser_pw(pw);
+        userService.pick(user);
+        System.out.println("doc 리스트 조회 할 타이밍");
+        return "doc/docList";
+    }
 
     @GetMapping("/userlogin")
     public String loginTemp(){
         return "user/userLogin";
     }
-    @PostMapping("/user_login")
-    public String user_login(userForm form){
-        User user = new User();
-        user.setUser_id(form.getId());
-        user.setUser_pw(form.getPw());
-        userService.pick(user);
-        return "doc/docList";
-    }
+
 
     @GetMapping("/user_modify")
     @ResponseBody
@@ -101,5 +106,10 @@ public class UserController {
         user.setUser_idx(idx);
         userService.sleep(user);
             return user;
+    }
+
+    @GetMapping("/loginform")
+    public String loginform(){
+        return "loginform";
     }
 }

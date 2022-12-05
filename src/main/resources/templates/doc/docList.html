@@ -1,46 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>게시판 목록보기</title>
+    <link rel="stylesheet" href="board.css" />
 </head>
 <body>
-<section class="doc">
+<section class="board">
     <div class="page-title">
         <div class="container">
-            <h3>Doc List</h3>
+            <h3>DocList - 글 목록보기</h3>
         </div>
     </div>
 
-    <div id="doc-list">
-        <div class="container">
-            <form action="/doc_list" method="post">
-            </form>
-            <table class="doc-table">
-                <thead>
-                <tr>
-                    <th scope="col" class="th-num">번호</th>
-                    <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-name">작성자</th>
-                    <th scope="col" class="th-date">등록일</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="doc : ${list}">
-                    th:text="${docs}"
-<!--                    <td th:text="${doc.doc_idx}"></td>-->
-<!--                    <th>-->
-<!--                        <a th:href="@{/doc(docId=${doc.doc_id})}" th:text="${doc.doc_sub}"></a>-->
-<!--                    </th>-->
-<!--                    <td th:text="${doc.doc_writ}"></td>-->
-<!--                    <td th:text="${doc.doc_cont}"></td>-->
-<!--                    <td th:text="${doc.doc_reg}"></td>-->
-                </tr>
-
-                </tbody>
-            </table>
+    <form action="/doc_list" method="get">
+        <div class="form-group">
+            <!-- board list area -->
+            <div id="board-list">
+                <div class="container">
+                    <table class="board-table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="th-num">번호</th>
+                            <th scope="col" class="th-title">제목</th>
+                            <th scope="col" class="th-viewcnt">글쓴이</th>
+                            <th scope="col" class="th-name">본문</th>
+                            <th scope="col" class="th-date">등록일</th>
+                        </tr>
+                        <tr>
+                        <td th:text="${doc.doc_idx}"></td>
+                        <td th:text="${doc.doc_sub}"></td>
+                        <td th:text="${doc.doc_writ}"></td>
+                        <td th:text="${doc.doc_cont}"></td>
+                        <td th:text="${doc.doc_reg}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
+
+
 </section>
 </body>
 </html>
