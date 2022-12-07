@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -69,13 +67,13 @@ public class UserController {
     }
     @PostMapping("/user_Login")
     public String user_page_login(
-            @RequestParam("id")String id, @RequestParam("pw")String pw, HttpSession httpSession) {
+            @RequestParam("id")String id, @RequestParam("pw")String pw) {
         User user = new User();
         user.setUser_id(id);
         user.setUser_pw(pw);
         userService.pick(user);
-        System.out.println("doc 리스트 조회 할 타이밍");
-        return "doc/docList";
+        //todo 로그인 구현
+        return "/doc_LList";
     }
 
     @GetMapping("/userlogin")
@@ -106,10 +104,5 @@ public class UserController {
         user.setUser_idx(idx);
         userService.sleep(user);
             return user;
-    }
-
-    @GetMapping("/loginform")
-    public String loginform(){
-        return "loginform";
     }
 }

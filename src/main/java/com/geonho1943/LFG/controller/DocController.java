@@ -41,24 +41,6 @@ public class DocController {
         return "post success!!";
     }
 
-    @GetMapping("/doc_list")
-    @ResponseBody
-    public List<Doc> doc_list(Model model) {
-        System.out.println("1번 실행됨");
-        List<Doc> docs = docService.list();
-        model.addAttribute("docs",docs);
-        return docs;
-    }
-
-    @PostMapping("doc_List")
-    @ResponseBody
-    public String doc_List(Model model){
-        System.out.println("2번 실행됨");
-        List<Doc> docs = docService.list();
-        model.addAttribute("docs",docs);
-        return "doc/docList";
-    }
-
     @GetMapping("/doc_modify")
     @ResponseBody
     public Doc doc_modi(
@@ -80,6 +62,32 @@ public class DocController {
         doc.setDoc_idx(idx);
         docService.delete(doc);
         return doc.getDoc_idx()+" delete success!!";
+    }
+
+//
+    @GetMapping("/doc_list")//json
+    //@ResponseBody
+    public List<Doc> doc_list(Model model) {
+        List<Doc> docs = docService.list();
+        model.addAttribute("docs",docs);
+        System.out.println("1");
+        return docs;
+    }
+
+    @PostMapping("/doc_LList")//데이터 연결해서 줘야함
+    public String doc_List(Model model){
+        List<Doc> docs = docService.list();
+        model.addAttribute("docs",docs);
+        System.out.println("2");
+        return "doc/docList";
+    }
+
+    @GetMapping("/doclist")//페이지 링크 연결
+    public String doc_page_List(Model model){
+        List<Doc> docs = docService.list();
+        model.addAttribute("docs",docs);
+        System.out.println("3");
+        return "doc/docList";
     }
 
 }
