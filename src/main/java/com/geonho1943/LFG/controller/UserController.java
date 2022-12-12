@@ -68,12 +68,16 @@ public class UserController {
     @PostMapping("/user_Login")
     public String user_page_login(
             @RequestParam("id")String id, @RequestParam("pw")String pw) {
-        User user = new User();
-        user.setUser_id(id);
-        user.setUser_pw(pw);
-        userService.pick(user);
-        //todo 로그인 구현
-        return "/doc_LList";
+            User user = new User();
+            user.setUser_idx(0);
+            user.setUser_id(id);
+            user.setUser_pw(pw);
+            userService.pick(user);
+            if (user.getUser_idx()==0){
+                return "error";
+            }else {
+                return "redirect:/doclist";
+            }
     }
 
     @GetMapping("/userlogin")

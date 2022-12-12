@@ -64,13 +64,11 @@ public class DocController {
         return doc.getDoc_idx()+" delete success!!";
     }
 
-//
     @GetMapping("/doc_list")//json
     //@ResponseBody
     public List<Doc> doc_list(Model model) {
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
-        System.out.println("1");
         return docs;
     }
 
@@ -78,7 +76,6 @@ public class DocController {
     public String doc_List(Model model){
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
-        System.out.println("2");
         return "doc/docList";
     }
 
@@ -86,7 +83,6 @@ public class DocController {
     public String doc_page_List(Model model){
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
-        System.out.println("3");
         return "doc/docList";
     }
 
