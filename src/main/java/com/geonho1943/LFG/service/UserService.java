@@ -27,7 +27,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
     public User pick(User user) {
         return userRepository.pick(user);
     }
@@ -38,5 +37,8 @@ public class UserService {
 
     public User sleep(User user) {
         return userRepository.sleep(user);
+    }
+    public User check(User user) {
+        return userRepository.check(user);
     }
 }

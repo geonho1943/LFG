@@ -103,6 +103,24 @@ public class UserModel implements UserRepository {
     }
 
     @Override
+    public User check(User user){
+        String sql = "select user_id from LFGservice.lfg_user where user_id=?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getUser_id());
+            pstmt.executeUpdate();
+            return user;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+    @Override
     public User modify(User user) {
         String sql = "update lfg_user set user_id=?,user_pw=?,user_name=? where user_idx=?;";
         Connection conn = null;

@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/user_join")
     @ResponseBody
-    public String user_join(
+    public String userJoin(
             @RequestParam("id")String id,@RequestParam("pw")String pw,
             @RequestParam("name")String name){
         User user = new User();
@@ -36,10 +36,25 @@ public class UserController {
         return "user/userJoin";
     }
 
+//    @PostMapping("/user_join")
+//    public String userJoinPage(@RequestParam("id")String id,@RequestParam("pw")String pw,
+//                           @RequestParam("name")String name){
+//        User user = new User();
+//        //user.setUser_id(form.getId());
+//        user.setUser_id(id);
+//        userService.check(user);
+//        //user.setUser_pw(form.getPw());
+//        user.setUser_pw(pw);
+//        //user.setUser_name(form.getName());
+//        user.setUser_name(name);
+//        userService.join(user);
+//        return "/home";
+//    }
     @PostMapping("/user_join")
-    public String user_join(userForm form){
+    public String userJoin(userForm form){
         User user = new User();
         user.setUser_id(form.getId());
+        userService.check(user);
         user.setUser_pw(form.getPw());
         user.setUser_name(form.getName());
         userService.join(user);
@@ -48,7 +63,7 @@ public class UserController {
 
     @GetMapping("/user_list")
     @ResponseBody
-    public List<User> user_list(Model model){
+    public List<User> userList(Model model){
         List<User> users = userService.lookup();
         model.addAttribute("users",users);
         return users;
@@ -56,7 +71,7 @@ public class UserController {
 
     @GetMapping("/user_login")
     @ResponseBody
-    public User user_pick(
+    public User userPick(
             @RequestParam("id")String id,@RequestParam("pw")String pw){
         User user = new User();
         user.setUser_id(id);
@@ -66,16 +81,15 @@ public class UserController {
        //return "idx : "+user.getUser_idx()+" id : " + user.getUser_id() + " name : " + user.getUser_name()+" login success!!";
     }
     @PostMapping("/user_Login")
-    public String user_page_login(
+    public String userLoginPage(
             @RequestParam("id")String id, @RequestParam("pw")String pw) {
             User user = new User();
             user.setUser_idx(0);
             user.setUser_id(id);
             user.setUser_pw(pw);
             userService.pick(user);
-            if (user.getUser_idx()==0){
-                return "error";
-            }else {
+            if (user.getUser_idx()==0) return "/user/errPage";
+            else {
                 return "redirect:/doclist";
             }
     }
@@ -88,7 +102,7 @@ public class UserController {
 
     @GetMapping("/user_modify")
     @ResponseBody
-    public User user_modify(
+    public User userModify(
             @RequestParam("idx")int idx,@RequestParam("id")String id,
             @RequestParam("pw")String pw,@RequestParam("name")String name){
         User user = new User();
@@ -102,7 +116,7 @@ public class UserController {
 
     @GetMapping("/user_sleep")
     @ResponseBody
-    public User user_sleep(
+    public User userSleep(
             @RequestParam("idx")int idx){
         User user = new User();
         user.setUser_idx(idx);

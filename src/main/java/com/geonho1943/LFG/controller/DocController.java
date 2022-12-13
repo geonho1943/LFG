@@ -43,7 +43,7 @@ public class DocController {
 
     @GetMapping("/doc_modify")
     @ResponseBody
-    public Doc doc_modi(
+    public Doc docModi(
             @RequestParam("sub")String sub,@RequestParam("cont")String cont,
             @RequestParam("idx")int idx){
         Doc doc = new Doc();
@@ -56,7 +56,7 @@ public class DocController {
 
     @GetMapping("/doc_delete")
     @ResponseBody
-    public String doc_del(
+    public String docDel(
             @RequestParam("idx")int idx){
         Doc doc = new Doc();
         doc.setDoc_idx(idx);
@@ -66,24 +66,17 @@ public class DocController {
 
     @GetMapping("/doc_list")//json
     //@ResponseBody
-    public List<Doc> doc_list(Model model) {
+    public List<Doc> docList(Model model) {
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
         return docs;
     }
 
+    @GetMapping("/doclist")
     @PostMapping("/doc_LList")//데이터 연결해서 줘야함
-    public String doc_List(Model model){
+    public String docListPage(Model model){
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
         return "doc/docList";
     }
-
-    @GetMapping("/doclist")//페이지 링크 연결
-    public String doc_page_List(Model model){
-        List<Doc> docs = docService.list();
-        model.addAttribute("docs",docs);
-        return "doc/docList";
-    }
-
 }
