@@ -28,8 +28,10 @@ public class UserController {
         user.setUser_pw(pw);
         user.setUser_name(name);
         userService.join(user);
-        return " idx : " + user.getUser_idx() + " id : " + user.getUser_id() + " name : " + user.getUser_name() + " join success!!";
-
+        return " idx : " + user.getUser_idx() +
+               " id : " + user.getUser_id() +
+               " name : " + user.getUser_name() +
+               " join success!!";
     }
     @GetMapping("/userjoin")
     public String joinTemp(){
@@ -40,26 +42,25 @@ public class UserController {
 //    public String userJoinPage(@RequestParam("id")String id,@RequestParam("pw")String pw,
 //                           @RequestParam("name")String name){
 //        User user = new User();
-//        //user.setUser_id(form.getId());
 //        user.setUser_id(id);
-//        userService.check(user);
-//        //user.setUser_pw(form.getPw());
+//        //check test후 추가하기
 //        user.setUser_pw(pw);
-//        //user.setUser_name(form.getName());
 //        user.setUser_name(name);
 //        userService.join(user);
 //        return "/home";
 //    }
     @PostMapping("/user_join")
-    public String userJoin(userForm form){
-        User user = new User();
-        user.setUser_id(form.getId());
-        userService.check(user);
-        user.setUser_pw(form.getPw());
-        user.setUser_name(form.getName());
+    public String userJoinPage(User user){
+        try {
+            userService.check(user);
+        }catch (Exception e){
+            return "/user/userErrorPage";
+        }
         userService.join(user);
         return "/home";
     }
+
+
 
     @GetMapping("/user_list")
     @ResponseBody

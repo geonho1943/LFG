@@ -104,18 +104,22 @@ public class UserModel implements UserRepository {
 
     @Override
     public User check(User user){
-        String sql = "select user_id from LFGservice.lfg_user where user_id=?;";
+        String sql = "select user_id from lfg_user where user_id=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getUser_id());
-            pstmt.executeUpdate();
-            return user;
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+            pstmt.setString(1, user.getUser_id());//id 검색후 중복이 없으면 user return
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                throw new SQLException("중복 ID : 다른 ID를 시도하세요");
+            }else {
+                return user;
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
         } finally {
             close(conn, pstmt, rs);
         }
