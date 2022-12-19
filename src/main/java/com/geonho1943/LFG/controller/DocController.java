@@ -65,7 +65,7 @@ public class DocController {
     }
 
     @GetMapping("/doc_list")//json
-    //@ResponseBody
+    @ResponseBody
     public List<Doc> docList(Model model) {
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
