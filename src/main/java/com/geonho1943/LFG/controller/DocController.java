@@ -45,6 +45,17 @@ public class DocController {
         docService.post(doc);
         return "post success!!";
     }
+    @PostMapping("/doc_Post")
+    public String docPostPage(
+            @RequestParam("sub")String sub, @RequestParam("writ")String writ,
+            @RequestParam("cont")String cont){
+        Doc doc = new Doc();
+        doc.setDoc_sub(sub);
+        doc.setDoc_writ(writ);
+        doc.setDoc_cont(cont);
+        docService.post(doc);
+        return "redirect:/doclist";
+    }
 
     @GetMapping("/doc_modify")
     @ResponseBody
