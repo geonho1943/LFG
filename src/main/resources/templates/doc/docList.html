@@ -30,6 +30,7 @@
                     <th scope="col" class="th-date">등록일</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   <tr th:each="doc : ${docs}">
                     <td th:text="${doc.doc_idx}"></td>
@@ -39,7 +40,11 @@
                     <td th:text="${doc.doc_leg}"></td>
                   </tr>
                 </tbody>
+
               </table>
+              <div>
+                <a href="/docWrite">글쓰기</a>
+              </div>
             </div>
           </div>
         </div>
