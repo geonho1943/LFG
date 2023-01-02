@@ -29,10 +29,7 @@ public class DocController {
         return doc;
     }
 
-    @GetMapping("/docWrite")
-    public String docWritePage(){
-        return "doc/docWrite";
-    }
+
     @GetMapping("/doc_post")
     @ResponseBody
     public String post(
