@@ -1,6 +1,6 @@
 package com.geonho1943.LFG.model;
 
-import com.geonho1943.LFG.extraDB.User;
+import com.geonho1943.LFG.dto.User;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -18,6 +18,8 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
+        //권한 관리를위해 user idx 값도 담아서 넘기기
+        //+ SELECT LAST_INSERT_ID();
         String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;

@@ -10,7 +10,6 @@ Spring 으로 만들어진 파티구함(Looking For Group) http API server Java 
 ### 파티 모집을 지원하지 않은 게임? 🤷<br>
 __멀티 게임__ 이지만 인게임에서 플레이어 찾기, 모집을 __지원하지 않는__ 게임<br>
 
-
 [PICO PARK Classic_Edition](https://store.steampowered.com/app/461040/PICO_PARKClassic_Edition/)<br>
 [RAFT](https://store.steampowered.com/app/648800/Raft/)<br>
 [WE WERE HERE](https://store.steampowered.com/app/582500/We_Were_Here/)<br>
@@ -26,8 +25,8 @@ __멀티 게임__ 이지만 인게임에서 플레이어 찾기, 모집을 __지
 [파티구함](#) 에서 파티 찾기.
 
 # 이미지 1
-
+```
 파티구함 에서 하고싶은 게임을 검색하면 해당게임의 파티 List 를 살펴볼수 있습니다
 
 프로필 설정을 클릭 하면 연락 받고싶은 게임들을 설정 할수있습니다
-
+```

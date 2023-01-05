@@ -6,18 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    @GetMapping("/userlogin")
-    public String loginPage(){
+    @GetMapping("/userLogin")
+    public String userLoginPage(){
         return "user/userLogin";
     }
 
-    @GetMapping("/userjoin")
-    public String joinPage(){
+    @GetMapping("/userJoin")
+    public String userJoinPage(){
         return "user/userJoin";
     }
 
     @GetMapping("/docWrite")
     public String docWritePage(){
         return "doc/docWrite";
+    }
+    @GetMapping("/errorPage")
+    public String errorPage(){
+        return "user/userError";
     }
 }

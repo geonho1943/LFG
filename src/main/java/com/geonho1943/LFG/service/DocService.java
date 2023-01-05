@@ -1,7 +1,6 @@
 package com.geonho1943.LFG.service;
 
-import com.geonho1943.LFG.extraDB.Doc;
-import com.geonho1943.LFG.extraDB.User;
+import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.model.DocRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

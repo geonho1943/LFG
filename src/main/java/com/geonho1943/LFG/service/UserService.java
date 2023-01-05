@@ -1,6 +1,6 @@
 package com.geonho1943.LFG.service;
 
-import com.geonho1943.LFG.extraDB.User;
+import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,7 @@ public class UserService {
     }
 
     public User join(User user){
+        //유저 컨트롤러의 check를 여기서 할까..
         userRepository.join(user);
         return user;
     }

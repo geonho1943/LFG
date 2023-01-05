@@ -1,14 +1,10 @@
 package com.geonho1943.LFG.controller;
 
-import com.geonho1943.LFG.extraDB.User;
+import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -20,7 +16,7 @@ public class UserController {
 
 
     @PostMapping("/user_join")
-    public String userJoinPage(User user){
+    public String userJoin(User user){
         try {
             userService.check(user);
         }catch (Exception e){
@@ -31,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/userLogin")
-    public String userLoginPage(
+    public String userLogin(
             @RequestParam("id")String id, @RequestParam("pw")String pw) {
             User user = new User();
             user.setUser_idx(0);
@@ -40,7 +36,7 @@ public class UserController {
             userService.pick(user);
             if (user.getUser_idx()==0) return "/user/errPage";
             else {
-                return "redirect:/doclist";
+                return "redirect:/docList";
             }
     }
 

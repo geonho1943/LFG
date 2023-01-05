@@ -1,4 +1,4 @@
-package com.geonho1943.LFG.extraDB;
+package com.geonho1943.LFG.dto;
 
 public class User {
 

@@ -1,6 +1,6 @@
 package com.geonho1943.LFG.model;
 
-import com.geonho1943.LFG.extraDB.User;
+import com.geonho1943.LFG.dto.User;
 
 import java.util.List;
 
