@@ -18,8 +18,6 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        //권한 관리를위해 user idx 값도 담아서 넘기기
-        //+ SELECT LAST_INSERT_ID();
         String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -37,6 +35,24 @@ public class UserModel implements UserRepository {
             } else {
                 throw new SQLException("idx 조회 실패");
             }
+            return user;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+    @Override
+    public User mappingUserRole(User user){
+        String sql = "insert into lfg_user_role(user_idx,user_role) values (?,2)";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user.getUser_idx());
+            pstmt.executeUpdate();
             return user;
         } catch (Exception e) {
             throw new IllegalStateException(e);

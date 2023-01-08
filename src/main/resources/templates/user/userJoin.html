@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>userJoin</title>
@@ -7,14 +7,18 @@
 <body>
 <h1>회원가입</h1>
 <div class="container">
-  <form action="/user_join" method="post">
+  <form action="/userJoin" method="post" >
     <div class="form-group">
       <label for="id">ID</label>
         <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요"><br>
-      <label for="pw">PW</label>
-        <input type="text" id="pw" name="user_pw" placeholder="PW을 입력하세요"><br>
       <label for="name">이름</label>
         <input type="text" id="name" name="user_name" placeholder="이름을 입력하세요"><br>
+
+      <label for="pw1">PW</label>
+        <input type="text" id="pw1" name="user_pw" placeholder="PW을 입력하세요"><br>
+<!--      <label for="pw2">PW</label>-->
+<!--        <input type="text" id="pw2" name="user_pw2" placeholder="PW을 다시 입력하세요"><br>-->
+<!--      <span th:if="${user_pw1} == ${user_pw2}"><button type="submit">등록</button></span>-->
     </div>
     <button type="submit">등록</button>
   </form>

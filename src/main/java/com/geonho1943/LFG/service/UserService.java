@@ -19,8 +19,14 @@ public class UserService {
     }
 
     public User join(User user){
-        //유저 컨트롤러의 check를 여기서 할까..
+//    UserController의 check를 여기서 할까..
+//        try {
+//            userService.check(user);
+//        }catch (Exception e){
+//            return "/user/userErrorPage";
+//        }
         userRepository.join(user);
+        userRepository.mappingUserRole(user);
         return user;
     }
 

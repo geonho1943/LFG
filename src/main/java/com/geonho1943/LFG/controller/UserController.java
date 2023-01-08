@@ -15,13 +15,8 @@ public class UserController {
     }
 
 
-    @PostMapping("/user_join")
+    @PostMapping("/userJoin")
     public String userJoin(User user){
-        try {
-            userService.check(user);
-        }catch (Exception e){
-            return "/user/userErrorPage";
-        }
         userService.join(user);
         return "/home";
     }
@@ -35,9 +30,7 @@ public class UserController {
             user.setUser_pw(pw);
             userService.pick(user);
             if (user.getUser_idx()==0) return "/user/errPage";
-            else {
-                return "redirect:/docList";
-            }
+            else {return "redirect:/docList";}
     }
 
 

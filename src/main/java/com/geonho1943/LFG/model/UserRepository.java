@@ -16,4 +16,6 @@ public interface UserRepository {
     User modify(User user);
 
     User sleep(User user);
+
+    User mappingUserRole(User user);
 }
