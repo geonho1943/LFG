@@ -43,7 +43,7 @@ public class UserModel implements UserRepository {
         }
     }
     @Override
-    public User mappingUserRole(User user){
+    public User role(User user){
         String sql = "insert into lfg_user_role(user_idx,user_role) values (?,2)";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -91,7 +91,7 @@ public class UserModel implements UserRepository {
     }
 
     @Override
-    public User pick(User user) {
+    public User login(User user) {
         String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;

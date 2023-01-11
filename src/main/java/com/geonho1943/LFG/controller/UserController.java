@@ -22,13 +22,8 @@ public class UserController {
     }
 
     @PostMapping("/userLogin")
-    public String userLogin(
-            @RequestParam("id")String id, @RequestParam("pw")String pw) {
-            User user = new User();
-            user.setUser_idx(0);
-            user.setUser_id(id);
-            user.setUser_pw(pw);
-            userService.pick(user);
+    public String userLogin(User user) {
+            userService.login(user);
             if (user.getUser_idx()==0) return "/user/errPage";
             else {return "redirect:/docList";}
     }

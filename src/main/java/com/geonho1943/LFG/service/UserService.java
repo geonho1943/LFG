@@ -26,7 +26,7 @@ public class UserService {
 //            return "/user/userErrorPage";
 //        }
         userRepository.join(user);
-        userRepository.mappingUserRole(user);
+        userRepository.role(user);
         return user;
     }
 
@@ -34,8 +34,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User pick(User user) {
-        return userRepository.pick(user);
+    public User login(User user) {
+        userRepository.login(user);
+        userRepository.auth(user);
+        return user;
+
     }
 
     public User modify(User user) {
@@ -48,4 +51,5 @@ public class UserService {
     public User check(User user) {
         return userRepository.check(user);
     }
+
 }

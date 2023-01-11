@@ -9,7 +9,9 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    User pick(User user);
+    User login(User user);
+
+    User auth(User user);
 
     User check(User user);
 
@@ -17,5 +19,5 @@ public interface UserRepository {
 
     User sleep(User user);
 
-    User mappingUserRole(User user);
+    User role(User user);
 }
