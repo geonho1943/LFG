@@ -110,7 +110,7 @@ public class UserModel implements UserRepository {
                 user.setUser_reg(rs.getString("user_reg"));
                 return user;
             }else {
-                throw new SQLException("idx 조회 실패");
+                throw new SQLException("회원정보를 다시 입력하세요");
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
@@ -118,6 +118,29 @@ public class UserModel implements UserRepository {
             close(conn, pstmt, rs);
         }
 
+    }
+    @Override
+    public User auth(User user){
+        String sql = "select user_role from lfg_user_role where user_idx = ?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,user.getUser_idx());
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                user.setUser_role(rs.getInt("user_role"));
+                return user;
+            }else {
+                throw new SQLException("! 관리자에게 문의 하세요 사유 : 권한");
+            }
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
 
     @Override
