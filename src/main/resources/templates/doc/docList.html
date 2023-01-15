@@ -14,41 +14,47 @@
           <h3>Doc List</h3>
         </div>
       </div>
+<!--      <div id="user-info">-->
+<!--        <div class="container">-->
+<!--          <span class="user-info" th:if="${user == null}">-->
+<!--            <a>"실패"</a>-->
+<!--&lt;!&ndash;            <span th:text="${user.user_name}"></span>&ndash;&gt;-->
+<!--          </span>-->
 
-      <form action="docList" method="get">
-        <div class="form-group">
-          <!-- board list area -->
-          <div id="board-list">
-            <div class="container">
-              <table class="board-table">
-                <thead>
-                  <tr>
-                    <th scope="col" class="th-num">번호</th>
-                    <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-viewcnt">글쓴이</th>
-                    <th scope="col" class="th-name">본문</th>
-                    <th scope="col" class="th-date">등록일</th>
-                  </tr>
-                </thead>
+<!--          <span class="test" th:if="${sessionLogin=! null}">-->
+<!--            <span th:text="@{sessionLogin.user_name}">asd</span>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+      <!-- board list area -->
+      <div id="board-list">
+        <div class="container">
+          <table class="board-table">
+            <thead>
+              <tr>
+                <th scope="col" class="th-num">번호</th>
+                <th scope="col" class="th-title">제목</th>
+                <th scope="col" class="th-viewcnt">글쓴이</th>
+                <th scope="col" class="th-name">본문</th>
+                <th scope="col" class="th-date">등록일</th>
+              </tr>
+            </thead>
 
-                <tbody>
-                  <tr th:each="doc : ${docs}">
-                    <td th:text="${doc.doc_idx}"></td>
-                    <td th:text="${doc.doc_sub}"></td>
-                    <td th:text="${doc.doc_writ}"></td>
-                    <td th:text="${doc.doc_cont}"></td>
-                    <td th:text="${doc.doc_leg}"></td>
-                  </tr>
-                </tbody>
-
-              </table>
-              <div>
-                <a href="/docWrite">글쓰기</a>
-              </div>
-            </div>
+            <tbody>
+              <tr th:each="doc : ${docs}">
+                <td th:text="${doc.doc_idx}"></td>
+                <td th:text="${doc.doc_sub}"></td>
+                <td th:text="${doc.doc_writ}"></td>
+                <td th:text="${doc.doc_cont}"></td>
+                <td th:text="${doc.doc_leg}"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <a href="/docWrite">글쓰기</a>
           </div>
         </div>
-      </form>
+      </div>
     </section>
   </body>
 </html>

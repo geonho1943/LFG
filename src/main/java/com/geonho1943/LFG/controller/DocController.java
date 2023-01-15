@@ -2,12 +2,14 @@ package com.geonho1943.LFG.controller;
 
 import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.service.DocService;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,9 +34,14 @@ public class DocController {
     }
 
     @GetMapping("/docList")
-    public String docList(Model model){
+    public String docList(HttpSession httpSession,Model model){
+        User user = (User)httpSession.getAttribute("user");
+        model.addAttribute("user",user);
+
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);
+
         return "doc/docList";
     }
+
 }

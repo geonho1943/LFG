@@ -20,7 +20,7 @@ public class PageController {
     public String docWritePage(){
         return "doc/docWrite";
     }
-    @GetMapping("/errorPage")
+    @GetMapping("/userError")
     public String errorPage(){
         return "user/userError";
     }

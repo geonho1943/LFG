@@ -16,12 +16,17 @@
 
       <label for="pw1">PW</label>
         <input type="text" id="pw1" name="user_pw" placeholder="PW을 입력하세요"><br>
-<!--      <label for="pw2">PW</label>-->
-<!--        <input type="text" id="pw2" name="user_pw2" placeholder="PW을 다시 입력하세요"><br>-->
-<!--      <span th:if="${user_pw1} == ${user_pw2}"><button type="submit">등록</button></span>-->
+      <label for="pw2">PW</label>
+        <input type="text" id="pw2" name="user_pw2" placeholder="PW을 다시 입력하세요"><br>
+      <span th:disabled><button type="submit">등록</button></span>
+<!--      <button type="submit" id="sub_btn"disabled="disabled">등록</button>-->
     </div>
-    <button type="submit">등록</button>
   </form>
+  <span th:if="user_pw == user_pw2" > <button th>PW 확인</button> </span>
+
+
+
+
 </div>
 </body>
 </html>
