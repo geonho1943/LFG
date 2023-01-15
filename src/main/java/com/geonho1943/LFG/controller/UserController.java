@@ -1,8 +1,10 @@
 package com.geonho1943.LFG.controller;
 
+import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,13 +29,21 @@ public class UserController {
     public String userLogin(User user, HttpSession httpSession) {
         try {
             userService.login(user);
-            httpSession.setAttribute("sessionLogin",user);
-            System.out.println("세션 사용됨!");
-            System.out.println();
+            LoginInfo loginInfo = new LoginInfo(
+                    user.getUser_idx(),user.getUser_id(),
+                    user.getUser_name(),user.getUser_role()
+            );
+            httpSession.setAttribute("loginInfo",loginInfo );
         }catch (Exception e){
             return "redirect:/userError?error=ture";
         }
         return "redirect:/docList";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        httpSession.removeAttribute("loginInfo");
+        return "redirect:/";
     }
 
 

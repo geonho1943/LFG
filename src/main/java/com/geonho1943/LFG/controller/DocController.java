@@ -1,6 +1,7 @@
 package com.geonho1943.LFG.controller;
 
 import com.geonho1943.LFG.dto.Doc;
+import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.service.DocService;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,8 @@ public class DocController {
 
     @GetMapping("/docList")
     public String docList(HttpSession httpSession,Model model){
-        User user = (User)httpSession.getAttribute("user");
-        model.addAttribute("user",user);
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
 
         List<Doc> docs = docService.list();
         model.addAttribute("docs",docs);

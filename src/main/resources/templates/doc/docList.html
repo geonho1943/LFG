@@ -14,18 +14,20 @@
           <h3>Doc List</h3>
         </div>
       </div>
-<!--      <div id="user-info">-->
-<!--        <div class="container">-->
-<!--          <span class="user-info" th:if="${user == null}">-->
-<!--            <a>"실패"</a>-->
-<!--&lt;!&ndash;            <span th:text="${user.user_name}"></span>&ndash;&gt;-->
-<!--          </span>-->
+      <div id="user-info">
+        <div class="container">
+          <span class="user-info" th:if="${loginInfo =! null}">
+            <span th:text="${loginInfo.name}"></span>
+          </span>
+<!--          <span th:text="@{loginInfo.user_name}"></span>-->
+          <span class="user-info_null" th:if="${loginInfo == null}">
+            <a href="/#">#==null</a>
+          </span>
 
-<!--          <span class="test" th:if="${sessionLogin=! null}">-->
-<!--            <span th:text="@{sessionLogin.user_name}">asd</span>-->
-<!--          </span>-->
-<!--        </div>-->
-<!--      </div>-->
+          <a href="/">메인에서 세션초기화</a>
+
+        </div>
+      </div>
       <!-- board list area -->
       <div id="board-list">
         <div class="container">
