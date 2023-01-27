@@ -37,9 +37,8 @@ public class DocController {
     @GetMapping("/docList")
     public String docList(HttpSession httpSession,Model model){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
-        model.addAttribute("loginInfo",loginInfo);
-
         List<Doc> docs = docService.list();
+        model.addAttribute("loginInfo",loginInfo);
         model.addAttribute("docs",docs);
 
         return "doc/docList";
