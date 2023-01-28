@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/userJoin")
     public String userJoin(User user){
         userService.join(user);
-        return "/";
+        return "redirect:/";
     }
 
     @PostMapping("/userLogin")
