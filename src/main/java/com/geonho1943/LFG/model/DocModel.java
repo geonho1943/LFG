@@ -69,7 +69,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public List<Doc> list() {
-        String sql = "select * from lfg_doc;";
+        String sql = "select * from lfg_doc order by doc_idx desc;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
