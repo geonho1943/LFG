@@ -20,11 +20,14 @@
         <input type="text" id="pw1" name="user_pw" placeholder="PW을 입력하세요" /><br />
         <label for="pw2">PW</label>
         <input type="text" id="pw2" placeholder="PW을 다시 입력하세요" /><br />
-        <spen>
-          <button type="button" th:onclick="showAlert()">pw 확인</button>
-          <button id="subbtn" disabled="disabled" type="submit">등록</button>
-        </spen>
-        <script>
+        <button type="button" onclick="showAlert()">pw 확인</button>
+        <button id="subbtn" disabled="disabled" type="submit">등록</button>
+
+      </div>
+    </form>
+  </div>
+</body>
+<script type="text/javascript">
           function showAlert() {
             const pw1 = document.getElementById('pw1').value;
             const pw2 = document.getElementById('pw2').value;
@@ -36,9 +39,4 @@
             }
           }
         </script>
-      </div>
-    </form>
-  </div>
-</body>
-
 </html>
