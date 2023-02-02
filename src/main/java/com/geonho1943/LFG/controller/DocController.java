@@ -3,7 +3,6 @@ package com.geonho1943.LFG.controller;
 import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.service.DocService;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +23,16 @@ public class DocController {
 
     @PostMapping("/docPost")
     public String docPost(
-            @RequestParam("sub")String sub, @RequestParam("writ")String writ,
-            @RequestParam("cont")String cont){
+            @RequestParam("sub")String sub,
+//            @RequestParam("writ")String writ,
+            @RequestParam("cont")String cont,HttpSession httpSession,Model model
+    ){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
         Doc doc = new Doc();
         doc.setDoc_sub(sub);
-        doc.setDoc_writ(writ);
+        //doc.setDoc_writ(writ);
+        doc.setDoc_writ(loginInfo.getUser_name());
         doc.setDoc_cont(cont);
         docService.post(doc);
         return "redirect:/docList";

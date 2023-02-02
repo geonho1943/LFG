@@ -9,12 +9,13 @@
 <body>
 <H1>글쓰기 폼</H1>
 <form action="/docPost" method="post">
-    이름 : <input type="text" name="writ" /><br />
-<!--    세션으로 이름 읽기 -->
-    제목 : <input type="text" name="sub" /><br />
+<!--    이름 : <input type="text" name="writ" /><br />-->
+이름 : <a th:text="${loginInfo.user_name}"></a><br>
+    제목 : <input type="text" name="sub" /><br>
     내용 : <br>
     <textarea name="cont" cols="50" rows="5"></textarea><br>
     <input type="submit" value="등록" />
 </form>
+<!--<span th:text="${loginInfo.user_name}"></span>-->
 </body>
 </html>
