@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -47,7 +47,9 @@
                 <td th:text="${doc.doc_idx}"></td>
                 <td th:text="${doc.doc_sub}"></td>
                 <td th:text="${doc.doc_writ}"></td>
-                <td th:text="${doc.doc_cont}"></td>
+                <th>
+                <a th:href="@{/docDetail(doc_idx=${doc.doc_idx})}" th:text="${doc.doc_cont}"></a>
+                </th>
                 <td th:text="${doc.doc_leg}"></td>
               </tr>
             </tbody>

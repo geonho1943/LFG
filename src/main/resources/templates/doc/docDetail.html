@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시물 상세보기</title>
+</head>
+<body>
+<H1 th:text="${doc.doc_sub}"></H1>
+<div>글쓴이 : <span th:text="${doc.doc_writ}">asd</span></div>
+<div>제목 : <span th:text="${doc.doc_sub}">asd</span></div>
+<div>작성일 : <span th:text="${doc.doc_leg}"></span></div>
+<div>내용 : <span th:text="${doc.doc_cont}">asd</span></div>
+
+<div><a href="/docList">목록으로 돌아가기</a></div>
+
+</body>
+</html>

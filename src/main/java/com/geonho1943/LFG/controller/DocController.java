@@ -48,4 +48,19 @@ public class DocController {
         return "doc/docList";
     }
 
+    @GetMapping("/docDetail")
+    public String docDetail(@RequestParam("doc_idx")int idx,Model model){
+        Doc doc = new Doc();
+        doc.setDoc_idx(idx);
+        docService.read(doc);
+        model.addAttribute("doc",doc);
+        return "doc/docDetail";
+    }
+
+    @GetMapping("/docWrite")
+    public String docWritePage(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "doc/docWrite";
+    }
 }

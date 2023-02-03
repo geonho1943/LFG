@@ -41,19 +41,17 @@ public class DocModel implements DocRepository{
         }
     }
 
-    @Override
     public Doc read(Doc doc) {
-        String sql = "select * from lfg_doc where doc_sub=?";
+        String sql = "select * from lfg_doc where doc_idx=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, doc.getDoc_sub());
+            pstmt.setInt(1,doc.getDoc_idx());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                doc.setDoc_idx(rs.getInt("doc_idx"));
                 doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
