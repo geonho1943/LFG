@@ -5,7 +5,7 @@ public class Doc {
     private String doc_sub;
     private String doc_writ;
     private String doc_cont;
-    private String doc_leg;
+    private String doc_reg;
 
     public int getDoc_idx() {
         return doc_idx;
@@ -31,12 +31,12 @@ public class Doc {
         this.doc_cont = doc_cont;
     }
 
-    public String getDoc_leg() {
-        return doc_leg;
+    public String getDoc_reg() {
+        return doc_reg;
     }
 
-    public void setDoc_leg(String doc_leg) {
-        this.doc_leg = doc_leg;
+    public void setDoc_reg(String doc_reg) {
+        this.doc_reg = doc_reg;
     }
 
     public String getDoc_sub() {

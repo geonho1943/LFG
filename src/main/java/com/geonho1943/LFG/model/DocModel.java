@@ -55,7 +55,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
-                doc.setDoc_leg(rs.getString("doc_reg"));
+                doc.setDoc_reg(rs.getString("doc_reg"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,7 +83,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
-                doc.setDoc_leg(rs.getString("doc_reg"));
+                doc.setDoc_reg(rs.getString("doc_reg"));
                 docs.add(doc);
             }
             return docs;
