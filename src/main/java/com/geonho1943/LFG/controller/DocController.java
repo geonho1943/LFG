@@ -24,7 +24,6 @@ public class DocController {
     @PostMapping("/docPost")
     public String docPost(
             @RequestParam("sub")String sub,
-//            @RequestParam("writ")String writ,
             @RequestParam("cont")String cont,HttpSession httpSession,Model model
     ){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
@@ -44,23 +43,28 @@ public class DocController {
         List<Doc> docs = docService.list();
         model.addAttribute("loginInfo",loginInfo);
         model.addAttribute("docs",docs);
-
         return "doc/docList";
     }
 
     @GetMapping("/docDetail")
-    public String docDetail(@RequestParam("doc_idx")int idx,Model model){
+    public String docDetail(@RequestParam("doc_idx")int idx,HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
         Doc doc = new Doc();
         doc.setDoc_idx(idx);
         docService.read(doc);
         model.addAttribute("doc",doc);
         return "doc/docDetail";
     }
-
-    @GetMapping("/docWrite")
-    public String docWritePage(HttpSession httpSession, Model model){
+    @PostMapping("/docUpdate")
+    public String docUpdate(Doc doc,HttpSession httpSession, Model model){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
-        return "doc/docWrite";
+        docService.modify(doc);
+        model.addAttribute("doc",doc);
+        return "redirect:/docList";
     }
-}
+
+
+
+    }

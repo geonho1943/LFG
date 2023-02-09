@@ -41,11 +41,4 @@ public class UserController {
         return "redirect:/docList";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession){
-        httpSession.removeAttribute("loginInfo");
-        return "redirect:/";
-    }
-
-
 }
