@@ -96,24 +96,24 @@ public class DocModel implements DocRepository{
     @Override
 
     public Doc modify(Doc doc) {
-        String sql = "update `lfg_doc` set doc_sub = ?,doc_cont = ? where doc_idx = ?;";
+        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ? where doc_idx = ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, doc.getDoc_sub());
             pstmt.setString(2, doc.getDoc_cont());
             pstmt.setInt(3, doc.getDoc_idx());
             pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
             return doc;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
             close(conn, pstmt, rs);
         }
-
     }
 
     @Override

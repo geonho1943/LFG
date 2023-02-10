@@ -4,12 +4,9 @@ import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 @Controller
 public class UserController {

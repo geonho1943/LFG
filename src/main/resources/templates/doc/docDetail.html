@@ -12,11 +12,7 @@
 <div>제목 : <span th:text="${doc.doc_sub}">asd</span></div>
 <div>작성일 : <span th:text="${doc.doc_reg}"></span></div>
 <div>내용 : <span th:text="${doc.doc_cont}">asd</span></div>
-
 <div><a th:href="@{/docUpdate(doc_idx=${doc.doc_idx})}">수정하기</a></div>
-<!--doc,세션 정보가 다 넘어옴 ㅇㅇ-->
-<div><a th:href="@{/delete(doc_idx=${doc.doc_idx})}">삭제하기</a></div>
-<div><a href="/docList">목록으로 돌아가기</a></div>
 
 </body>
 </html>

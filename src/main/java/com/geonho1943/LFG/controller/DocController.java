@@ -21,21 +21,6 @@ public class DocController {
         this.docService = docService;
     }
 
-    @PostMapping("/docPost")
-    public String docPost(
-            @RequestParam("sub")String sub,
-            @RequestParam("cont")String cont,HttpSession httpSession,Model model
-    ){
-        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
-        model.addAttribute("loginInfo",loginInfo);
-        Doc doc = new Doc();
-        doc.setDoc_sub(sub);
-        //doc.setDoc_writ(writ);
-        doc.setDoc_writ(loginInfo.getUser_name());
-        doc.setDoc_cont(cont);
-        docService.post(doc);
-        return "redirect:/docList";
-    }
 
     @GetMapping("/docList")
     public String docList(HttpSession httpSession,Model model){
@@ -56,15 +41,45 @@ public class DocController {
         model.addAttribute("doc",doc);
         return "doc/docDetail";
     }
-    @PostMapping("/docUpdate")
-    public String docUpdate(Doc doc,HttpSession httpSession, Model model){
+
+    @PostMapping("/docPost")
+    public String docPost(
+            @RequestParam("sub")String sub,
+            @RequestParam("cont")String cont,HttpSession httpSession,Model model
+    ){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
+        Doc doc = new Doc();
+        doc.setDoc_sub(sub);
+        doc.setDoc_writ(loginInfo.getUser_name());
+        doc.setDoc_cont(cont);
+        docService.post(doc);
+        return "redirect:/docList";
+    }
+
+    @PostMapping("/docUpdate")
+    public String docUpdate(@RequestParam("doc_idx")int idx,@RequestParam("doc_sub")String sub,
+                            @RequestParam("doc_cont")String cont,HttpSession httpSession,Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        Doc doc = new Doc();
+        doc.setDoc_idx(idx);
+        doc.setDoc_sub(sub);
+        doc.setDoc_cont(cont);
         docService.modify(doc);
         model.addAttribute("doc",doc);
         return "redirect:/docList";
     }
 
-
-
+    @GetMapping("/docUpdate")//Page
+    public String docUpdatePage(@RequestParam("doc_idx")int doc_idx,HttpSession httpSession, Model model) {
+        LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo", loginInfo);
+        Doc doc = new Doc();
+        doc.setDoc_idx(doc_idx);
+        docService.read(doc);
+        model.addAttribute("doc",doc);
+        return "doc/docUpdate";
     }
+
+}
