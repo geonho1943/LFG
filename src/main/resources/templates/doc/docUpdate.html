@@ -9,7 +9,7 @@
 <body>
 <H1>글 수정하기</H1>
 <form action="/docUpdate" method="post">
-  글 번호 : <input name="doc_idx" th:value="${doc.doc_idx}"/><br>
+  <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
   이름 : <a th:text="${loginInfo.user_name}"></a><br>
   제목 : <input name="doc_sub" th:value="${doc.doc_sub}"/><br>
   내용 : <br>

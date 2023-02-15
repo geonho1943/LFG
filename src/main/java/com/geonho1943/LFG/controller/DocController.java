@@ -58,18 +58,9 @@ public class DocController {
     }
 
     @PostMapping("/docUpdate")
-    public String docUpdate(Doc doc,
-//                            @RequestParam("doc_idx")int idx,
-//                            @RequestParam("doc_sub")String sub,
-//                            @RequestParam("doc_cont")String cont,
-                            HttpSession httpSession,Model model){
+    public String docUpdate(Doc doc, HttpSession httpSession,Model model){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
-
-//        Doc doc = new Doc();
-//        doc.setDoc_idx(idx);
-//        doc.setDoc_sub(sub);
-//        doc.setDoc_cont(cont);
         docService.modify(doc);
         model.addAttribute("doc",doc);
         return "redirect:/docList";
