@@ -2,12 +2,8 @@ package com.geonho1943.LFG.model;
 
 import com.geonho1943.LFG.dto.User;
 
-import java.util.List;
-
 public interface UserRepository {
     User join(User user);
-
-    List<User> findAll();
 
     User login(User user);
 

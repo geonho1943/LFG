@@ -5,9 +5,6 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class UserModel implements UserRepository {
 
@@ -18,7 +15,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,?,?,sysdate());";
+        String sql = "INSERT INTO LFGservice.lfg_user (user_id,user_pw,user_name,user_reg) VALUES (?,MD5(?),?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -62,37 +59,8 @@ public class UserModel implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        String sql = "select * from lfg_user;";
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-
-            List<User> users = new ArrayList<>();
-            while (rs.next()) {
-                User user = new User();
-                user.setUser_idx(rs.getInt("user_idx"));
-                user.setUser_id(rs.getString("user_id"));
-                user.setUser_name(rs.getString("user_name"));
-                user.setUser_pw(rs.getString("user_pw"));
-                user.setUser_reg(rs.getString("user_reg"));
-                users.add(user);
-            }
-            return users;
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        } finally {
-            close(conn, pstmt, rs);
-        }
-    }
-
-    @Override
     public User login(User user) {
-        String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw=?;";
+        String sql = "SELECT*FROM lfg_user WHERE user_id=? AND user_pw=MD5(?);";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -105,7 +73,7 @@ public class UserModel implements UserRepository {
             if (rs.next()) {
                 user.setUser_idx(rs.getInt("user_idx"));
                 user.setUser_id(rs.getString("user_id"));
-                user.setUser_pw(rs.getString("user_pw"));
+                //user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_reg(rs.getString("user_reg"));
                 return user;
@@ -167,7 +135,8 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User modify(User user) {
-        String sql = "update lfg_user set user_id=?,user_pw=?,user_name=? where user_idx=?;";
+        String sql = "update lfg_user set user_id=?,user_pw=MD5(?),user_name=? where user_idx=?;";
+        //문제 있을시 XXX 참조
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
