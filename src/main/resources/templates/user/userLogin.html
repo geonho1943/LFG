@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<h1>로그인</h1>
-<div class="container">
 
-    <form action="/userLogin" method="post">
-        <div class="form-group">
-            <label for="id">ID</label>
-            <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요"><br>
-            <label for="pw">PW</label>
-            <input type="text" id="pw" name="user_pw" placeholder="PW을 입력하세요"><br>
-        </div>
-        <button type="submit">로그인</button>
-    </form>
-</div>
+<body>
+    <h1>로그인</h1>
+    <div class="container">
+
+        <form action="/userLogin" method="post">
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요"><br>
+                <label for="pw">PW</label>
+                <input type="text" id="pw" name="user_pw" placeholder="PW을 입력하세요"><br>
+            </div>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
 </body>
+
 </html>

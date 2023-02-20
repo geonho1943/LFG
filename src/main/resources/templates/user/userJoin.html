@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>userJoin</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -28,15 +30,16 @@
   </div>
 </body>
 <script type="text/javascript">
-          function showAlert() {
-            const pw1 = document.getElementById('pw1').value;
-            const pw2 = document.getElementById('pw2').value;
-            if (pw1 == pw2) {
-              console.log('pw1과 pw2가 같습니다');
-              alert('pw가 일치 합니다');
-              const target = document.getElementById('subbtn');
-              target.disabled = false;
-            }
-          }
-        </script>
+  function showAlert() {
+    const pw1 = document.getElementById('pw1').value;
+    const pw2 = document.getElementById('pw2').value;
+    if (pw1 == pw2) {
+      console.log('pw1과 pw2가 같습니다');
+      alert('pw가 일치 합니다');
+      const target = document.getElementById('subbtn');
+      target.disabled = false;
+    }
+  }
+</script>
+
 </html>

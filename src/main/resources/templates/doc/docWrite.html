@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>글쓰기 폼</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>글 쓰기 폼</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<H1>글쓰기 폼</H1>
-<form action="/docPost" method="post">
-이름 : <a th:text="${loginInfo.user_name}"></a><br>
-    제목 : <input type="text" name="sub" /><br>
-    내용 : <br>
-    <textarea name="cont" cols="50" rows="5"></textarea><br>
+  <h1>글쓰기 폼</h1>
+  <form action="/docPost" method="post">
+    이름 : <a th:text="${loginInfo.user_name}"></a><br />
+    제목 : <input type="text" name="sub" /><br />
+    내용 : <br />
+    <textarea name="cont" cols="50" rows="5"></textarea><br />
     <input type="submit" value="등록" />
-</form>
+  </form>
 </body>
+
 </html>
