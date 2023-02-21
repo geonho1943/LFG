@@ -1,0 +1,35 @@
+html {
+    /*tag 선택*/
+    background-color: #4B515D;
+}
+
+.container {
+    /*class 선택*/
+    background-color: #4B515D;
+    /* border-radius: 15px; */
+    max-width: 1000px;
+    /* margin: auto; */
+    min-height: 100%;
+    padding-bottom: 8%
+}
+
+header {
+    background-color: #3E4551;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    min-height: 80px;
+    padding: 10px 20px;
+    bottom: unset;
+
+}
+
+.header_logo a h1 {
+    font-size: 40px;
+    color: black;
+    text-decoration-line: none;
+}
+
+.header_interface div ul span a {
+    float: right;
+    padding-left: 10px;
+}
