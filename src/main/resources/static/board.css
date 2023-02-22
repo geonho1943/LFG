@@ -1,0 +1,63 @@
+html {
+    background-color: #4B515D;
+}
+
+.container {
+    background-color: #4B515D;
+    margin: auto;
+    max-width: 800px;
+    min-width: 350px;
+}
+
+tbody tr {
+    /* background-color: aqua; */
+}
+
+.board-list table {
+    /* min-width: ; */
+
+}
+
+/* .board-table tbody tr{
+    width: 100%;
+    min-width: 800px;
+} 
+
+.board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+.board-table th {
+    text-align: center;
+}
+
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+}
+
+.board-table .th-date {
+    width: 200px;
+}
+
+.board-table th,
+.board-table td {
+    리스트 꾸미는거임 이거 수정하기 
+    padding: 14px 0;
+}
+
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+    text-align: left;
+} */

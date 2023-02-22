@@ -9,19 +9,19 @@
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="header.css">
-  <link rel="stylesheet" href="board.css"/>
+  <link rel="stylesheet" href="board.css" />
 </head>
-<body>
 
+<body>
   <div class="container">
-    <header class="header">
-      <div class="header_logo">
-        <a href="/docList">
-          <H1> LFG_DocList</H1>
-        </a>
-      </div>
-      <span class="header_interface">
-        <div>
+    <div class="header_dis">
+      <header class="header">
+        <div class="header_logo">
+          <a href="/docList">
+            <H1> LFG Doc</H1>
+          </a>
+        </div>
+        <span class="header_interface">
           <ul>
             <span class="user-info" th:if="${loginInfo != null}">
               <a th:text="${loginInfo.user_name}"></a>
@@ -33,24 +33,12 @@
               <a href="/userJoin">회원가입</a>
             </span>
           </ul>
-        </div>
-      </span>
-    </header>
-  </div>
-
-  <!-- board list area -->
-  <div id="board-list">
-    <div class="container">
-      <table class="board-table">
-        <thead>
-          <tr>
-            <th scope="col" class="th-num">번호</th>
-            <th scope="col" class="th-title">제목</th>
-            <th scope="col" class="th-viewcnt">글쓴이</th>
-            <th scope="col" class="th-name">본문</th>
-            <th scope="col" class="th-date">등록일</th>
-          </tr>
-        </thead>
+        </span>
+      </header>
+    </div>
+    <!-- board list area -->
+    <div id="board-list">
+      <table>
         <tbody>
           <tr th:each="doc : ${docs}">
             <td th:text="${doc.doc_idx}"></td>
@@ -60,11 +48,10 @@
               <a th:href="@{/docDetail(doc_idx=${doc.doc_idx})}" th:text="${doc.doc_cont}"></a>
             </th>
             <td th:text="${doc.doc_reg}"></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
-      <div>
-      </div>
     </div>
   </div>
 </body>
