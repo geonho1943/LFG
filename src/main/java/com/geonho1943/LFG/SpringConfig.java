@@ -1,10 +1,6 @@
 package com.geonho1943.LFG;
 
-import com.geonho1943.LFG.model.DocModel;
-import com.geonho1943.LFG.model.DocRepository;
-import com.geonho1943.LFG.model.UserModel;
-import com.geonho1943.LFG.model.UserRepository;
-import com.geonho1943.LFG.service.UserService;
+import com.geonho1943.LFG.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +19,11 @@ public class SpringConfig {
     @Bean
     public DocRepository docRepository(){
         return new DocModel(dataSource);
+    }
+
+    @Bean
+    public AppRepository appRepository(){
+        return new AppModel(dataSource);
     }
 
 }

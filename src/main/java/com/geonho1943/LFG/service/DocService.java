@@ -2,6 +2,7 @@ package com.geonho1943.LFG.service;
 
 import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.model.DocRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class DocService {
     
     private final DocRepository docRepository;
+    @Autowired
     public DocService(DocRepository docRepository) {
         this.docRepository = docRepository;
     }
