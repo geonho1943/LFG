@@ -5,6 +5,6 @@ import com.geonho1943.LFG.dto.App;
 import java.util.List;
 
 public interface AppRepository {
+    void rowClear();
     void save(List<App> apps);
-
 }

@@ -15,6 +15,7 @@ public class AppController {
 
     @GetMapping("/appList")
     public String appList() {
+        appService.rowClear();
         appService.apiParsing();
         return "home";
     }

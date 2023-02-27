@@ -23,6 +23,10 @@ public class AppService {
         this.appRepository = appRepository;
     }
 
+    public void rowClear() {
+        appRepository.rowClear();
+    }
+
     public void apiParsing() {
         String steamUrl = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
         RestTemplate restTemplate = new RestTemplate();
@@ -35,7 +39,7 @@ public class AppService {
             e.printStackTrace();
         }
         JsonNode appList = root.path("applist").path("apps");
-        List<App> apps = new ArrayList<>();// 리턴할 apps
+        List<App> apps = new ArrayList<>();
         for (JsonNode app : appList) {
             int app_id = app.path("appid").asInt();
             String name = app.path("name").asText();

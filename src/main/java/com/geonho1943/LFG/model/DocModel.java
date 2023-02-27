@@ -75,7 +75,6 @@ public class DocModel implements DocRepository{
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-
             List<Doc> docs = new ArrayList<>();
             while (rs.next()) {
                 Doc doc = new Doc();
@@ -121,7 +120,6 @@ public class DocModel implements DocRepository{
         String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?);";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
@@ -131,11 +129,9 @@ public class DocModel implements DocRepository{
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
-            close(conn, pstmt, rs);
+            close(conn, pstmt, null);
         }
     }
-
-
 
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);

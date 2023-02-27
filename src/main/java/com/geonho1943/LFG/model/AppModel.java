@@ -22,16 +22,38 @@ public class AppModel implements AppRepository {
             conn = getConnection();
             String sql = "INSERT INTO `LFGservice`.`lfg_app_list` (app_id, app_name) VALUES (?, ?);";
             pstmt = conn.prepareStatement(sql);
-
+            int maxNum = 10000;
+            int count=0;
             for (App app : apps) {
+                count+=1;
                 pstmt.setInt(1, app.getApp_id());
                 pstmt.setString(2, app.getName());
                 pstmt.addBatch();
+                if (maxNum-count == 0) {
+                    pstmt.executeBatch();
+                    count=0;
+                }
             }
             pstmt.executeBatch();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
+            close(conn, pstmt, null);
+        }
+    }
+
+    @Override
+    public void rowClear() {
+        String sql ="DELETE FROM `LFGservice`.`lfg_app_list`";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
             close(conn, pstmt, null);
         }
     }
