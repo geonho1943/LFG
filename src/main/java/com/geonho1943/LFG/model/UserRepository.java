@@ -9,7 +9,7 @@ public interface UserRepository {
 
     User auth(User user);
 
-    User check(User user);
+    boolean check(User user);
 
     User modify(User user);
 

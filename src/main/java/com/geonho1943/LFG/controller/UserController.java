@@ -5,6 +5,8 @@ import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,6 +38,14 @@ public class UserController {
             return "redirect:/userError?error=ture";
         }
         return "redirect:/docList";
+    }
+
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public boolean idCheck(@RequestParam("id") String id) {
+    //회원가입의 id 중복체크
+        System.out.println("id check 실행 id= "+id);
+        return userService.check(id);
     }
 
 }

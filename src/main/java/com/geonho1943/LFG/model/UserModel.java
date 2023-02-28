@@ -112,7 +112,7 @@ public class UserModel implements UserRepository {
     }
 
     @Override
-    public User check(User user){
+    public boolean check(User user){
         String sql = "select user_id from lfg_user where user_id=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -123,9 +123,9 @@ public class UserModel implements UserRepository {
             pstmt.setString(1, user.getUser_id());//id 검색후 중복이 없으면 user return
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                throw new SQLException("중복 ID : 다른 ID를 시도하세요");
+                return false;
             }else {
-                return user;
+                return true;
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);

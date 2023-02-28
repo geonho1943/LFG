@@ -36,8 +36,11 @@ public class UserService {
     public User sleep(User user) {
         return userRepository.sleep(user);
     }
-    public User check(User user) {
+    public boolean check(String id) {
+        User user = new User();
+        user.setUser_id(id);
         return userRepository.check(user);
+
     }
 
 }
