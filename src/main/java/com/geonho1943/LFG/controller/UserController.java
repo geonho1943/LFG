@@ -37,7 +37,14 @@ public class UserController {
         }catch (Exception e){
             return "redirect:/userError?error=ture";
         }
-        return "redirect:/docList";
+        return "redirect:/";
+    }
+
+    @PostMapping("/userModify")
+    public String userModify(HttpSession httpSession,User user){
+        //httpSession.removeAttribute("loginInfo");
+        userService.modify(user);
+        return "redirect:";
     }
 
     @PostMapping("/idCheck")

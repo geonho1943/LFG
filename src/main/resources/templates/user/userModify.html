@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyProfile</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="board.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header_dis">
+            <header class="header">
+                <div class="header_logo">
+                    <a href="/">
+                        <H1> LFG MyProfile 수정</H1>
+                    </a>
+                </div>
+                <span class="header_interface">
+                    <ul>
+                        <span class="user-info" th:if="${loginInfo != null}">
+                            <a href="/logout">로그아웃</a>
+                            <a th:text="${loginInfo.user_name}"></a>
+                            <a href="/myProfile">내 프로필</a>
+                            <a href="/docWrite">글쓰기</a>
+
+                        </span>
+                        <span class="user-info_null" th:if="${loginInfo == null}">
+                            <a href="/userLogin">로그인</a>
+                            <a href="/userJoin">회원가입</a>
+                        </span>
+                    </ul>
+                </span>
+            </header>
+        </div>
+        <div class="profile_container" style="background-color: #3E4551;">
+            <div class="userprofile">
+                <form action="/userModify" method="post">
+                    <ul>
+                        <h1>내정보 변경</h1><br>
+                        <a th:text="${loginInfo.user_name}"></a><br>
+                        <input type="hidden" name="user_idx" th:value="${loginInfo.user_idx}" />
+                        <label for="name">이름변경 :</label>
+                        <input type="text" id="name" name="user_name" th:value="${loginInfo.user_name}" /><br />
+
+                        <label for="id">ID변경 :</label>
+                        <input type="text" id="id" name="user_id" th:value="${loginInfo.user_id}" /><br>
+                        <button type="button" onclick="idCheck()">ID 확인</button><br />
+                        <label for="pw1">PW 변경 :</label>
+                        <input type="text" id="pw1" name="user_pw" /><br />
+                        <label for="pw2">pw 확인 :</label>
+                        <input type="text" id="pw2" /><br />
+
+                        <button type="button" onclick="pwCheck()">pw 확인</button>
+                        <button id="subbtn" disabled="disabled" type="submit" onclick="logout_msg">등록</button>
+                    </ul>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    function idCheck() {
+        var id = document.getElementById('id').value;
+        //var id = $('#id').val();
+
+        $.ajax({
+            url: './idCheck', type: 'post', data: { id: id },
+            success: function (ans) {
+                if (ans == true) {
+                    alert("사용가능한 ID 입니다!");
+                } else {
+                    alert("아이디를 다시 입력해주세요");
+                    // $('#id').val('');
+                }
+            },
+            error: function () {
+                alert("나중에 다시 시도해주세요");
+            }
+        })
+    }
+
+    function pwCheck() {
+        const pw1 = document.getElementById('pw1').value;
+        const pw2 = document.getElementById('pw2').value;
+        if (pw1 == pw2) {
+            alert('pw가 일치 합니다');
+            const target = document.getElementById('subbtn');
+            target.disabled = false;
+        }
+    }
+    function logout_msg() {
+        alert("다시 로그인 해주세요!");
+    }
+</script>
+
+</html>

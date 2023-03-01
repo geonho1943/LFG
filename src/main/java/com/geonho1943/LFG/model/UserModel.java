@@ -136,10 +136,8 @@ public class UserModel implements UserRepository {
     @Override
     public User modify(User user) {
         String sql = "update lfg_user set user_id=?,user_pw=MD5(?),user_name=? where user_idx=?;";
-        //문제 있을시 XXX 참조
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
@@ -152,7 +150,7 @@ public class UserModel implements UserRepository {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
-            close(conn, pstmt, rs);
+            close(conn, pstmt, null);
         }
     }
 
@@ -161,7 +159,6 @@ public class UserModel implements UserRepository {
         String sql = "DELETE FROM lfg_user WHERE user_idx=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
@@ -171,7 +168,7 @@ public class UserModel implements UserRepository {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
-            close(conn, pstmt, rs);
+            close(conn, pstmt, null);
         }
     }
 

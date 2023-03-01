@@ -33,10 +33,23 @@ public class PageController {
         return "doc/docWrite";
     }
 
-
     @GetMapping("/logout")
     public String logout(HttpSession httpSession){
         httpSession.removeAttribute("loginInfo");
         return "redirect:/";
     }
+
+    @GetMapping("/myProfile")
+    public String userProfile(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "user/userProfile";
+    }
+    @GetMapping("/userModify")
+    public String userModify(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "user/userModify";
+    }
+
 }
