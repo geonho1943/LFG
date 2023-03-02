@@ -5,6 +5,7 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppModel implements AppRepository {
@@ -39,6 +40,27 @@ public class AppModel implements AppRepository {
             throw new IllegalStateException(e);
         } finally {
             close(conn, pstmt, null);
+        }
+    }
+
+    @Override
+    public List<String> searchApp(String name) {
+        String sql = "select app_name from `LFGservice`.`lfg_app_list` WHERE app_name Like ?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,"%"+name+"%");
+            rs = pstmt.executeQuery();
+            List<String> apps = new ArrayList<>();
+            while (rs.next()){
+                apps.add(rs.getString(1));
+            }
+            return apps;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

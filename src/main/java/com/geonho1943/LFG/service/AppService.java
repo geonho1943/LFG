@@ -48,4 +48,9 @@ public class AppService {
         }
         appRepository.save(apps);
     }
+
+    public List<String> searchApp(String name) {
+        return appRepository.searchApp(name);
+
+    }
 }

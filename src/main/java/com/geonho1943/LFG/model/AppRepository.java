@@ -7,4 +7,5 @@ import java.util.List;
 public interface AppRepository {
     void rowClear();
     void save(List<App> apps);
+    List<String> searchApp(String name);
 }
