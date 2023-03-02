@@ -18,7 +18,7 @@
     <div class="header_dis">
       <header class="header">
         <div class="header_logo">
-          <a href="/docList">
+          <a href="/">
             <H1> LFG Doc</H1>
           </a>
         </div>
@@ -42,8 +42,10 @@
     <!-- board list area -->
     <div id="board-list">
       <table>
-        <label for="search_name">게임 검색 : </label>
-        <input id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요">
+        <label for="search_name">게임 검색: </label>
+        <input
+          style="width: 400px; height: 30px; border: 0; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
+          id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요">
         <ul id="name-list-container"></ul>
         <tbody>
           <!-- <button type="button" onclick="">검색</button> -->
@@ -70,13 +72,24 @@
       $.ajax({
         url: './searchApp', type: 'post', data: { name: name },
         success: function (apps) {
-          console.log(apps);//로그 완성후 삭제
           var listContainer = document.getElementById('name-list-container');
           while (listContainer.firstChild) {
             listContainer.removeChild(listContainer.firstChild);
           }
           apps.forEach(function (name) {
             var item = document.createElement('li');
+            $('li').css({
+              "background-color": "#DCDDD8",
+              "display": "inline-block",
+              "width": "400px",
+              "height": "30px",
+              "border": "0",
+              "border-radius": "10px",
+              "outline": "none",
+              "padding-left": "10px",
+              "padding-bottom": "5px",
+              "margin-left": "70px"
+            })
             item.textContent = name;
             listContainer.appendChild(item);
           });

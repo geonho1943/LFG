@@ -9,13 +9,9 @@ html {
     min-width: 350px;
 }
 
-tbody tr {
-    /* background-color: aqua; */
-}
-
-.board-list table {
-    /* min-width: ; */
-
+#board-list {
+    max-width: 800px;
+    /* height: 200px; */
 }
 
 /* .board-table tbody tr{
