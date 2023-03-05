@@ -73,7 +73,6 @@ public class UserModel implements UserRepository {
             if (rs.next()) {
                 user.setUser_idx(rs.getInt("user_idx"));
                 user.setUser_id(rs.getString("user_id"));
-                //user.setUser_pw(rs.getString("user_pw"));
                 user.setUser_name(rs.getString("user_name"));
                 user.setUser_reg(rs.getString("user_reg"));
                 return user;

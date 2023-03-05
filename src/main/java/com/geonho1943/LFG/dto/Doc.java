@@ -6,6 +6,24 @@ public class Doc {
     private String doc_writ;
     private String doc_cont;
     private String doc_reg;
+    private String doc_app_name;
+    private int Doc_app_id;
+
+    public int getDoc_app_id() {
+        return Doc_app_id;
+    }
+
+    public void setDoc_app_id(int doc_app_id) {
+        Doc_app_id = doc_app_id;
+    }
+
+    public String getDoc_app_name() {
+        return doc_app_name;
+    }
+
+    public void setDoc_app_name(String doc_app_name) {
+        this.doc_app_name = doc_app_name;
+    }
 
     public int getDoc_idx() {
         return doc_idx;

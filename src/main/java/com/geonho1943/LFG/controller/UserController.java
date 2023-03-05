@@ -42,16 +42,14 @@ public class UserController {
 
     @PostMapping("/userModify")
     public String userModify(HttpSession httpSession,User user){
-        //httpSession.removeAttribute("loginInfo");
         userService.modify(user);
+        httpSession.removeAttribute("loginInfo");
         return "redirect:";
     }
 
     @PostMapping("/idCheck")
     @ResponseBody
     public boolean idCheck(@RequestParam("id") String id) {
-    //회원가입의 id 중복체크
-        System.out.println("id check 실행 id= "+id);
         return userService.check(id);
     }
 

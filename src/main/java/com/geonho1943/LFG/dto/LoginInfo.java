@@ -5,7 +5,12 @@ public class LoginInfo {
     private int user_idx;
     private String user_id;
     private String user_name;
+    private String user_reg;
     private int user_role;
+
+    public String getUser_reg() {
+        return user_reg;
+    }
 
     public int getUser_idx() {
         return user_idx;
@@ -39,10 +44,11 @@ public class LoginInfo {
         this.user_role = user_role;
     }
 
-    public LoginInfo(int user_idx, String user_id, String user_name, int user_role) {
+    public LoginInfo(int user_idx, String user_id, String user_name, int user_role, String user_reg) {
         this.user_idx = user_idx;
         this.user_id = user_id;
         this.user_name = user_name;
         this.user_role = user_role;
+        this.user_reg = user_reg;
     }
 }

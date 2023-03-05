@@ -95,7 +95,7 @@ public class DocModel implements DocRepository{
     @Override
 
     public Doc modify(Doc doc) {
-        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ? where doc_idx = ?;";
+        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ?, where doc_idx = ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -104,7 +104,9 @@ public class DocModel implements DocRepository{
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, doc.getDoc_sub());
             pstmt.setString(2, doc.getDoc_cont());
-            pstmt.setInt(3, doc.getDoc_idx());
+            pstmt.setInt(3,doc.getDoc_app_id());
+            pstmt.setString(4,doc.getDoc_app_name());
+            pstmt.setInt(5, doc.getDoc_idx());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             return doc;

@@ -14,9 +14,13 @@
   <h1>글쓰기 폼</h1>
   <form action="/docPost" method="post">
     이름 : <a th:text="${loginInfo.user_name}"></a><br />
-    제목 : <input type="text" name="sub" /><br />
+    제목 : <input type="text" name="doc_sub" /><br />
+    게임 타이틀 검색: <input name="doc_app_name" /><br>
+    <!-- th:value="${temp.doc_app_name}" -->
+    <!-- 게임 id: <input name="id" th:value="${doc.doc_app_id}" /><br>  -->
+    <!-- th:value="${temp.doc_app_id}" -->
     내용 : <br />
-    <textarea name="cont" cols="50" rows="5"></textarea><br />
+    <textarea name="doc_cont" cols="50" rows="5"></textarea><br />
     <input type="submit" value="등록" />
   </form>
 </body>

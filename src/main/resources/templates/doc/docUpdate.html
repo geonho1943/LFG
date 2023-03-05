@@ -16,6 +16,8 @@
     <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
     이름 : <a th:text="${loginInfo.user_name}"></a><br>
     제목 : <input name="doc_sub" th:value="${doc.doc_sub}" /><br>
+    게임 타이틀: <input name="doc_app_name" th:value="${doc.doc_app_name}" /><br>
+    게임 id: <input name="doc_app_id" th:value="${doc.doc_app_id}" /><br>
     내용 : <br>
     <textarea name="doc_cont" cols="50" rows="5" th:text="${doc.doc_cont}"></textarea><br>
     <input type="submit" value="등록" />
