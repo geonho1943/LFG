@@ -40,7 +40,8 @@
       </header>
     </div>
     <!-- board list area -->
-    <div id="board-list">
+    <div id="board-list"
+      style="background-color: #3E4551; border-top-right-radius: 10px;border-top-left-radius: 10px; padding: 10px;">
       <table>
         <label for="search_name">게임 검색: </label>
         <input
@@ -48,24 +49,28 @@
           id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요">
         <ul id="name-list-container"></ul>
         <tbody>
-          <!-- <button type="button" onclick="">검색</button> -->
-          <tr th:each="doc : ${docs}">
-            <td th:text="${doc.doc_idx}"></td>
-            <td th:text="${doc.doc_sub}"></td>
-            <td th:text="${doc.doc_writ}"></td>
-            <th>
-              <a th:href="@{/docDetail(doc_idx=${doc.doc_idx})}" th:text="${doc.doc_cont}"></a>
-            </th>
-            <td th:text="${doc.doc_reg}"></td>
-            <td></td>
-          </tr>
+          <div th:each="doc : ${docs}"
+            style="background-color: #4B515D; margin: 20px; margin: 5px; border-radius: 10px; padding: 10px; height: 150px;">
+            <div th:text="${doc.doc_idx}"></div>
+            <a th:href="@{/docDetail(doc_idx=${doc.doc_idx})}" th:text="${doc.doc_sub}"></a>
+            <div th:text="${doc.doc_writ}"></div>
+            <div class="appid" th:data-appid="${doc.doc_app_id}"></div>
+            <img class="game-image" alt="이미지 위치">
+            <div th:text="${doc.doc_reg}"></div>
+          </div>
         </tbody>
       </table>
     </div>
   </div>
 </body>
-
 <script>
+  $('.appid').each(function () {
+    var appid = $(this).data('appid');
+    var url = "https://cdn.akamai.steamstatic.com/steam/apps/" + appid + "/header.jpg";
+    $(this).next('.game-image').attr("src", url);
+  });
+
+
   function search_name() {
     var name = document.getElementById('search_name').value;
     if (name.length > 3) {

@@ -11,14 +11,9 @@ html {
 
 #board-list {
     max-width: 800px;
-    /* height: 200px; */
 }
 
-/* .board-table tbody tr{
-    width: 100%;
-    min-width: 800px;
-} 
-
+/* 
 .board-table a {
     color: #333;
     display: inline-block;

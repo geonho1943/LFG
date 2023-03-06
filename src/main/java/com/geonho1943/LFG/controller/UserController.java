@@ -31,7 +31,8 @@ public class UserController {
             userService.login(user);
             LoginInfo loginInfo = new LoginInfo(
                     user.getUser_idx(),user.getUser_id(),
-                    user.getUser_name(),user.getUser_role()
+                    user.getUser_name(),user.getUser_role(),
+                    user.getUser_reg()
             );
             httpSession.setAttribute("loginInfo",loginInfo );
         }catch (Exception e){

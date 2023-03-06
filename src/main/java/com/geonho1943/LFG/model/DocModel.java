@@ -16,7 +16,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc post(Doc doc) {
-        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_reg`) VALUES (?,?,?,sysdate());";
+        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_app_id`,`doc_app_name`,`doc_reg`) VALUES (?,?,?,?,?,sysdate());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -26,6 +26,8 @@ public class DocModel implements DocRepository{
             pstmt.setString(1, doc.getDoc_sub());
             pstmt.setString(2, doc.getDoc_writ());
             pstmt.setString(3, doc.getDoc_cont());
+            pstmt.setInt(4, doc.getDoc_app_id());
+            pstmt.setString(5, doc.getDoc_app_name());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
@@ -56,6 +58,8 @@ public class DocModel implements DocRepository{
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_reg(rs.getString("doc_reg"));
+                doc.setDoc_app_id(rs.getInt("doc_app_id"));
+                doc.setDoc_app_name(rs.getString("doc_app_name"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,6 +87,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_writ(rs.getString("doc_writ"));
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_reg(rs.getString("doc_reg"));
+                doc.setDoc_app_id(rs.getInt("doc_app_id"));
                 docs.add(doc);
             }
             return docs;

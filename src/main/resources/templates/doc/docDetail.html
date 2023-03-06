@@ -8,15 +8,25 @@
   <title>게시물 상세보기</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
   <H1 th:text="${doc.doc_sub}"></H1>
-  <div>글쓴이 : <span th:text="${doc.doc_writ}">asd</span></div>
-  <div>제목 : <span th:text="${doc.doc_sub}">asd</span></div>
+  <div>글쓴이 : <span th:text="${doc.doc_writ}"></span></div>
+  <div>제목 : <span th:text="${doc.doc_sub}"></span></div>
   <div>작성일 : <span th:text="${doc.doc_reg}"></span></div>
-  <div>내용 : <span th:text="${doc.doc_cont}">asd</span></div>
+  <div id="appId" th:data-appid="${doc.doc_app_id}"></div>
+  <img alt="이미지 위치">
+  <div>게임이름 : <span th:text="${doc.doc_app_name}"></span></div>
+  <div>내용 : <span th:text="${doc.doc_cont}"></span></div>
   <div><a th:href="@{/docUpdate(doc_idx=${doc.doc_idx})}">수정하기</a></div>
 </body>
+
+<script>
+  var appid = $('#appId').data('appid');
+  var url = "https://cdn.akamai.steamstatic.com/steam/apps/" + appid + "/header.jpg";
+  $('img').attr("src", url);
+</script>
 
 </html>
