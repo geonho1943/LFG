@@ -12,4 +12,6 @@ public interface DocRepository {
     Doc delete(Doc doc);//삭제
 
     List<Doc> list();
+
+    List<Doc> appNameList(Doc doc);
 }

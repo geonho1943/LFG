@@ -45,7 +45,7 @@ public class AppModel implements AppRepository {
 
     @Override
     public List<String> searchApp(String name) {
-        String sql = "select app_name from `LFGservice`.`lfg_app_list` WHERE app_name Like ?;";
+        String sql = "select * from `LFGservice`.`lfg_app_list` WHERE app_name Like ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -56,7 +56,8 @@ public class AppModel implements AppRepository {
             rs = pstmt.executeQuery();
             List<String> apps = new ArrayList<>();
             while (rs.next()){
-                apps.add(rs.getString(1));
+                apps.add(rs.getString("app_name"));
+                apps.add(String.valueOf(rs.getInt("app_id")));
             }
             return apps;
         } catch (SQLException e) {

@@ -62,13 +62,29 @@ public class DocController {
 
     @GetMapping("/docUpdate")//Page
     public String docUpdatePage(@RequestParam("doc_idx")int doc_idx,HttpSession httpSession, Model model) {
-        LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
-        model.addAttribute("loginInfo", loginInfo);
+        try {
+            LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
+            model.addAttribute("loginInfo", loginInfo);
+            if (loginInfo == null){
+                throw new NullPointerException("로그인을 하고 접속 해주세요!");
+            }
+        }catch (NullPointerException e){
+            return "redirect:/userError?error=ture";//e 는 출력 x
+        }
         Doc doc = new Doc();
         doc.setDoc_idx(doc_idx);
         docService.read(doc);
         model.addAttribute("doc",doc);
         return "doc/docUpdate";
+    }
+
+    @GetMapping("/docSearch")
+    public String docSearch(@RequestParam("name")String name,Model model){
+        Doc doc = new Doc();
+        doc.setDoc_app_name(name);
+        List<Doc> docs = docService.appNameList(doc);
+        model.addAttribute("docs",docs);
+        return "doc/docList";
     }
 
 }

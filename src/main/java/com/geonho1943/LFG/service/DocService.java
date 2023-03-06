@@ -38,5 +38,9 @@ public class DocService {
         return docRepository.delete(doc);
     }
 
+    public List<Doc> appNameList(Doc doc) {
+        return docRepository.appNameList(doc);
+    }
+
 
 }

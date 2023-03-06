@@ -45,9 +45,18 @@
       <table>
         <label for="search_name">게임 검색: </label>
         <input
-          style="width: 400px; height: 30px; border: 0; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
-          id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요">
-        <ul id="name-list-container"></ul>
+          style="width: 400px; height: 30px; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
+          id="search_name" oninput="search_name()" name="name" type="text" placeholder="게임명을 입력하세요">
+        <br>
+        <form action="/docSearch" method="get">
+          <input id="asdasd" type="hidden" name="name" />
+          <input type="submit" value="검색"
+            style="height: 35px;width: 60px;border: 0px;border-radius: 10px;background-color: #4B515D;" />
+        </form>
+
+        <div id="name-list-container"
+          style="background-color: #DCDDD8; display: inline-block; width: 400px; border-radius: 10px;margin-left: 70px; margin-bottom: 20px;">
+        </div>
         <tbody>
           <div th:each="doc : ${docs}"
             style="background-color: #4B515D; margin: 20px; margin: 5px; border-radius: 10px; padding: 10px; height: 150px;">
@@ -73,35 +82,33 @@
 
   function search_name() {
     var name = document.getElementById('search_name').value;
-    if (name.length > 3) {
-      $.ajax({
-        url: './searchApp', type: 'post', data: { name: name },
-        success: function (apps) {
-          var listContainer = document.getElementById('name-list-container');
-          while (listContainer.firstChild) {
-            listContainer.removeChild(listContainer.firstChild);
-          }
-          apps.forEach(function (name) {
-            var item = document.createElement('li');
-            $('li').css({
-              "background-color": "#DCDDD8",
-              "display": "inline-block",
-              "width": "400px",
-              "height": "30px",
-              "border": "0",
-              "border-radius": "10px",
-              "outline": "none",
-              "padding-left": "10px",
-              "padding-bottom": "5px",
-              "margin-left": "70px"
-            })
-            item.textContent = name;
-            listContainer.appendChild(item);
-          });
-        },
-      });
-    }
-
+    $.ajax({
+      url: './searchApp', type: 'post', data: { name: name },
+      success: function (apps) {
+        var listContainer = document.getElementById('name-list-container');
+        while (listContainer.firstChild) {
+          listContainer.removeChild(listContainer.firstChild);
+        }
+        var maxItems = 15;
+        for (var i = 0; i < Math.min(apps.length, maxItems); i = i + 2) {
+          var item = document.createElement('button');
+          item.style.borderRadius = "10px";
+          item.style.backgroundColor = "#DCDDD8";
+          item.style.border = "0px";
+          item.style.width = "400px";
+          item.style.height = "30px";
+          item.style.paddingTop = "5px";
+          item.style.marginRight = "10px";
+          item.textContent = apps[i];
+          item.onclick = function () {
+            document.getElementById('search_name').value = this.textContent;
+            document.getElementById('asdasd').value = this.textContent;
+            // search();
+          };
+          listContainer.appendChild(item);
+        }
+      },
+    });
   }
 </script>
 

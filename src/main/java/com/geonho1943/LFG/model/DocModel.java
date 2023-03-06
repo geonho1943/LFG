@@ -97,8 +97,9 @@ public class DocModel implements DocRepository{
             close(conn, pstmt, rs);
         }
     }
-    @Override
 
+
+    @Override
     public Doc modify(Doc doc) {
         String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ?, where doc_idx = ?;";
         Connection conn = null;
@@ -137,6 +138,35 @@ public class DocModel implements DocRepository{
             throw new IllegalStateException(e);
         } finally {
             close(conn, pstmt, null);
+        }
+    }
+
+    @Override
+    public List<Doc> appNameList(Doc doc) {
+        String sql = "select * from lfg_doc where doc_app_name=? order by doc_idx desc;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,doc.getDoc_app_name());
+            rs = pstmt.executeQuery();
+            List<Doc> docs = new ArrayList<>();
+            while (rs.next()) {
+                doc.setDoc_idx(rs.getInt("doc_idx"));
+                doc.setDoc_sub(rs.getString("doc_sub"));
+                doc.setDoc_writ(rs.getString("doc_writ"));
+                doc.setDoc_cont(rs.getString("doc_cont"));
+                doc.setDoc_reg(rs.getString("doc_reg"));
+                doc.setDoc_app_id(rs.getInt("doc_app_id"));
+                docs.add(doc);
+            }
+            return docs;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
