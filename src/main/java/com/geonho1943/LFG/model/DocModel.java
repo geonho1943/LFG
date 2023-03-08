@@ -101,7 +101,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc modify(Doc doc) {
-        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ?, where doc_idx = ?;";
+        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ? where doc_idx = ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

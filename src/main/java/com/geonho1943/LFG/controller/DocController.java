@@ -79,7 +79,9 @@ public class DocController {
     }
 
     @GetMapping("/docSearch")
-    public String docSearch(@RequestParam("name")String name,Model model){
+    public String docSearch(@RequestParam("name")String name,HttpSession httpSession,Model model){
+        LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
         Doc doc = new Doc();
         doc.setDoc_app_name(name);
         List<Doc> docs = docService.appNameList(doc);
