@@ -1,6 +1,7 @@
 package com.geonho1943.LFG.model;
 
 import com.geonho1943.LFG.dto.App;
+import com.geonho1943.LFG.dto.Doc;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -28,7 +29,7 @@ public class AppModel implements AppRepository {
             for (App app : apps) {
                 count+=1;
                 pstmt.setInt(1, app.getApp_id());
-                pstmt.setString(2, app.getName());
+                pstmt.setString(2, app.getApp_name());
                 pstmt.addBatch();
                 if (maxNum-count == 0) {
                     pstmt.executeBatch();
@@ -44,7 +45,7 @@ public class AppModel implements AppRepository {
     }
 
     @Override
-    public List<String> searchApp(String name) {
+    public List<String> searchAppName(String name) {
         String sql = "select * from `LFGservice`.`lfg_app_list` WHERE app_name Like ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -57,12 +58,31 @@ public class AppModel implements AppRepository {
             List<String> apps = new ArrayList<>();
             while (rs.next()){
                 apps.add(rs.getString("app_name"));
-                apps.add(String.valueOf(rs.getInt("app_id")));
             }
             return apps;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Doc searchAppId(Doc doc) {
+        String sql = "select app_id from `LFGservice`.`lfg_app_list` WHERE app_name=?;";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,doc.getDoc_app_name());
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                doc.setDoc_app_id(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return doc;
     }
 
     @Override

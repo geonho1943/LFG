@@ -2,12 +2,8 @@ package com.geonho1943.LFG.dto;
 
 public class App {
     private int app_id;
-    private String name;
+    private String app_name;
 
-    public App(int app_id, String name) {
-        this.app_id = app_id;
-        this.name = name;
-    }
 
     public int getApp_id() {
         return app_id;
@@ -17,12 +13,11 @@ public class App {
         this.app_id = app_id;
     }
 
-    public String getName() {
-        return name;
+    public String getApp_name() {
+        return app_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setApp_name(String app_name) {
+        this.app_name = app_name;
     }
-
 }

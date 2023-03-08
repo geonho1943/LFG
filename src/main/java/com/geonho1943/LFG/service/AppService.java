@@ -2,6 +2,7 @@ package com.geonho1943.LFG.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.geonho1943.LFG.dto.App;
+import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.model.AppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,16 +42,20 @@ public class AppService {
         JsonNode appList = root.path("applist").path("apps");
         List<App> apps = new ArrayList<>();
         for (JsonNode app : appList) {
-            int app_id = app.path("appid").asInt();
-            String name = app.path("name").asText();
-            App app1 = new App(app_id, name);
+            App app1 = new App();
+            app1.setApp_id(app.path("appid").asInt());
+            app1.setApp_name(app.path("name").asText());
             apps.add(app1);
         }
         appRepository.save(apps);
     }
 
-    public List<String> searchApp(String name) {
-        return appRepository.searchApp(name);
+    public List<String> searchAppName(String name) {
+        return appRepository.searchAppName(name);
 
+    }
+
+    public Doc searchAppId(Doc doc) {
+        return appRepository.searchAppId(doc);
     }
 }

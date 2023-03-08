@@ -8,21 +8,67 @@
   <title>글 쓰기 폼</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
   <h1>글쓰기 폼</h1>
+  <input
+    style="width: 400px; height: 30px; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
+    id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
+  <div id="name-list-container"
+    style="background-color: #DCDDD8; display: inline-block; width: 400px; border-radius: 10px;margin-left: 70px; margin-bottom: 20px;">
+  </div>
   <form action="/docPost" method="post">
     이름 : <a th:text="${loginInfo.user_name}"></a><br />
     제목 : <input type="text" name="doc_sub" /><br />
-    게임 타이틀 검색: <input name="doc_app_name" /><br>
-    <!-- th:value="${temp.doc_app_name}" -->
-    <!-- 게임 id: <input name="id" th:value="${doc.doc_app_id}" /><br>  -->
-    <!-- th:value="${temp.doc_app_id}" -->
+    <input id="app_name" name="doc_app_name" />
     내용 : <br />
     <textarea name="doc_cont" cols="50" rows="5"></textarea><br />
     <input type="submit" value="등록" />
   </form>
 </body>
+<script>
+  $('.appid').each(function () {
+    var appid = $(this).data('appid');
+    var url = "https://cdn.akamai.steamstatic.com/steam/apps/" + appid + "/header.jpg";
+    $(this).next('.game-image').attr("src", url);
+  });
+
+
+  function search_name() {
+    var name = document.getElementById('search_name').value;
+    $.ajax({
+      url: './searchApp', type: 'post', data: { name: name },
+
+      success: function (apps) {
+        var listContainer = document.getElementById('name-list-container');
+        while (listContainer.firstChild) {
+          listContainer.removeChild(listContainer.firstChild);
+        }
+        var maxItems = 16;
+        for (var i = 0; i < Math.min(apps.length, maxItems); i++) {
+          var item = document.createElement('button');
+          item.style.borderRadius = "10px";
+          item.style.backgroundColor = "#DCDDD8";
+          item.style.border = "0px";
+          item.style.width = "400px";
+          item.style.height = "30px";
+          item.style.paddingTop = "5px";
+          item.style.marginRight = "10px";
+          item.textContent = apps[i];
+          listContainer.appendChild(item);
+          item.onclick = function () {
+            document.getElementById('search_name').value = this.textContent;
+            document.getElementById('app_name').value = this.textContent;
+            while (listContainer.firstChild) {
+              listContainer.removeChild(listContainer.firstChild);
+            }
+          };
+        }
+      },
+    });
+  }
+</script>
 
 </html>

@@ -2,6 +2,7 @@ package com.geonho1943.LFG.controller;
 
 import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.dto.LoginInfo;
+import com.geonho1943.LFG.service.AppService;
 import com.geonho1943.LFG.service.DocService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +15,11 @@ import java.util.List;
 public class DocController {
 
     private final DocService docService;
+    private final AppService appService;
 
-    public DocController(DocService docService) {
+    public DocController(DocService docService, AppService appService) {
         this.docService = docService;
+        this.appService = appService;
     }
 
 
@@ -41,12 +44,12 @@ public class DocController {
     }
 
     @PostMapping("/docPost")
-    public String docPost(Doc doc,
-            HttpSession httpSession,Model model
+    public String docPost(Doc doc,HttpSession httpSession,Model model
     ){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
         doc.setDoc_writ(loginInfo.getUser_name());
+        appService.searchAppId(doc);
         docService.post(doc);
         return "redirect:";
     }
@@ -60,7 +63,7 @@ public class DocController {
         return "redirect:";
     }
 
-    @GetMapping("/docUpdate")//Page
+    @GetMapping("/docUpdate")
     public String docUpdatePage(@RequestParam("doc_idx")int doc_idx,HttpSession httpSession, Model model) {
         try {
             LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");

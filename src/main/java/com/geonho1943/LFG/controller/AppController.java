@@ -27,7 +27,7 @@ public class AppController {
     @PostMapping("/searchApp")
     @ResponseBody
     public List<String> searchApp(@RequestParam("name") String name){
-        return appService.searchApp(name);
+        return appService.searchAppName(name);
     }
 
 }

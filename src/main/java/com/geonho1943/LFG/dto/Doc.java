@@ -7,14 +7,14 @@ public class Doc {
     private String doc_cont;
     private String doc_reg;
     private String doc_app_name;
-    private int Doc_app_id;
+    private int doc_app_id;
 
     public int getDoc_app_id() {
-        return Doc_app_id;
+        return doc_app_id;
     }
 
     public void setDoc_app_id(int doc_app_id) {
-        Doc_app_id = doc_app_id;
+        this.doc_app_id = doc_app_id;
     }
 
     public String getDoc_app_name() {
