@@ -21,6 +21,13 @@
   <div>게임이름 : <span th:text="${doc.doc_app_name}"></span></div>
   <div>내용 : <span th:text="${doc.doc_cont}"></span></div>
   <div><a th:href="@{/docUpdate(doc_idx=${doc.doc_idx})}">수정하기</a></div>
+  <form action="/docDelete" method="post">
+    <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
+    <button style="height: 35px;width: 60px;border: 0px;border-radius: 10px;background-color: #4B515D;" id="delete_doc"
+      type="submit" value="삭제"
+      th:if="${loginInfo.user_name} == ${doc.doc_writ} or ${loginInfo.user_role} == 1">삭제</button>
+  </form>
+
 </body>
 
 <script>

@@ -126,6 +126,8 @@ public class DocModel implements DocRepository{
     @Override
     public Doc delete(Doc doc) {
         String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?);";
+        System.out.println("doc delete 실행됨");
+        System.out.println(doc.getDoc_idx());
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {

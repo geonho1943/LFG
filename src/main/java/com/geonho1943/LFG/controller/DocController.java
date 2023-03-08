@@ -92,4 +92,13 @@ public class DocController {
         return "doc/docList";
     }
 
+    @PostMapping("/docDelete")
+    public String docDelete(Doc doc,HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+
+        docService.delete(doc);
+        return "redirect:/";
+    }
+
 }
