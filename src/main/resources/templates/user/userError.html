@@ -1,18 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8" />
-  <title>fail</title>
-  <link rel="stylesheet" href="style.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="board.css" />
 </head>
 
 <body>
-  <h1>!</h1>
-  <p>유저정보를 다시 입력 하세요!</p>
-  <div th:text="${e}"></div>
-  <a href="/userJoin">회원가입</a>
-  <a href="/userLogin">로그인</a>
+  <div class="container">
+    <div class="header_dis">
+      <header class="header">
+        <div class="header_logo">
+          <a href="/">
+            <h1>LFG Doc</h1>
+          </a>
+        </div>
+        <span class="header_interface">
+          <ul>
+            <span class="user-info" th:if="${loginInfo != null}">
+              <a href="/logout">로그아웃</a>
+              <a th:text="${loginInfo.user_name}"></a>
+              <a href="/myProfile">내 프로필</a>
+              <a href="/docWrite">글쓰기</a>
+            </span>
+            <span class="user-info_null" th:if="${loginInfo == null}">
+              <a href="/userLogin">로그인</a>
+              <a href="/userJoin">회원가입</a>
+            </span>
+          </ul>
+        </span>
+      </header>
+    </div>
+    <div id="board-list" style="background-color: #3e4551; border-radius: 10px; padding: 10px">
+      <div>
+        <h1>!</h1>
+        <p>유저정보를 다시 입력 하세요!</p>
+        <a href="/userJoin">회원가입</a>
+        <a href="/userLogin">로그인</a>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

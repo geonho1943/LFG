@@ -5,31 +5,69 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>게시물 상세보기</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
+  <title>게시판 목록보기</title>
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="board.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-  <H1 th:text="${doc.doc_sub}"></H1>
-  <div>글쓴이 : <span th:text="${doc.doc_writ}"></span></div>
-  <div>제목 : <span th:text="${doc.doc_sub}"></span></div>
-  <div>작성일 : <span th:text="${doc.doc_reg}"></span></div>
-  <div id="appId" th:data-appid="${doc.doc_app_id}"></div>
-  <img alt="이미지 위치">
-  <div>게임이름 : <span th:text="${doc.doc_app_name}"></span></div>
-  <div>내용 : <span th:text="${doc.doc_cont}"></span></div>
-  <div><a th:href="@{/docUpdate(doc_idx=${doc.doc_idx})}">수정하기</a></div>
-  <form action="/docDelete" method="post">
-    <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
-    <button style="height: 35px;width: 60px;border: 0px;border-radius: 10px;background-color: #4B515D;" id="delete_doc"
-      type="submit" value="삭제"
-      th:if="${loginInfo.user_name} == ${doc.doc_writ} or ${loginInfo.user_role} == 1">삭제</button>
-  </form>
+  <div class="container">
+    <div class="header_dis">
+      <header class="header">
+        <div class="header_logo">
+          <a href="/">
+            <h1>LFG Doc</h1>
+          </a>
+        </div>
+        <span class="header_interface">
+          <ul>
+            <span class="user-info" th:if="${loginInfo != null}">
+              <a href="/logout">로그아웃</a>
+              <a th:text="${loginInfo.user_name}"></a>
+              <a href="/myProfile">내 프로필</a>
+              <a href="/docWrite">글쓰기</a>
+            </span>
+            <span class="user-info_null" th:if="${loginInfo == null}">
+              <a href="/userLogin">로그인</a>
+              <a href="/userJoin">회원가입</a>
+            </span>
+          </ul>
+        </span>
+      </header>
+    </div>
 
+    <div id="board-list" style="background-color: #3e4551; border-radius: 10px; padding: 10px">
+      <div class="container" style="
+        margin: auto;
+        width: fit-content;
+        border-radius: 15px;
+        padding: 15px;
+        ">
+
+        <body>
+          <H1 th:text="${doc.doc_sub}"></H1>
+          <div>글쓴이 : <span th:text="${doc.doc_writ}"></span></div>
+          <div>제목 : <span th:text="${doc.doc_sub}"></span></div>
+          <div>작성일 : <span th:text="${doc.doc_reg}"></span></div>
+          <div id="appId" th:data-appid="${doc.doc_app_id}"></div>
+          <img alt="이미지 위치">
+          <div>게임이름 : <span th:text="${doc.doc_app_name}"></span></div>
+          <div>내용 : <span th:text="${doc.doc_cont}"></span></div>
+          <div><a th:href="@{/docUpdate(doc_idx=${doc.doc_idx})}">수정하기</a></div>
+          <form action="/docDelete" method="post">
+            <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
+            <button style="height: 35px;width: 60px;border: 0px;border-radius: 10px;background-color: #4B515D;"
+              id="delete_doc" type="submit" value="삭제"
+              th:if="${loginInfo.user_name} == ${doc.doc_writ} or ${loginInfo.user_role} == 1">삭제</button>
+          </form>
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
-
 <script>
   var appid = $('#appId').data('appid');
   var url = "https://cdn.akamai.steamstatic.com/steam/apps/" + appid + "/header.jpg";

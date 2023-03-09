@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>게시판 목록보기</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
   <link rel="stylesheet" href="board.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -19,7 +19,7 @@
       <header class="header">
         <div class="header_logo">
           <a href="/">
-            <H1> LFG Doc</H1>
+            <h1>LFG Doc</h1>
           </a>
         </div>
         <span class="header_interface">
@@ -29,7 +29,6 @@
               <a th:text="${loginInfo.user_name}"></a>
               <a href="/myProfile">내 프로필</a>
               <a href="/docWrite">글쓰기</a>
-
             </span>
             <span class="user-info_null" th:if="${loginInfo == null}">
               <a href="/userLogin">로그인</a>
@@ -40,37 +39,57 @@
       </header>
     </div>
     <!-- board list area -->
-    <div id="board-list" style="background-color: #3E4551; border-radius: 10px; padding: 10px;">
+    <div id="board-list" style="background-color: #3e4551; border-radius: 10px; padding: 10px">
       <table>
         <label for="search_name">게임 검색: </label>
 
-        <input
-          style="width: 400px; height: 30px; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
-          id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
+        <input style="
+              width: 400px;
+              height: 30px;
+              border-radius: 10px;
+              outline: none;
+              padding-left: 10px;
+              background-color: #dcddd8;
+            " id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
         <form action="/docSearch" method="get">
           <input id="name" type="hidden" name="name" />
-          <input type="submit" value="검색"
-            style="height: 35px;width: 60px;border: 0px;border-radius: 10px;background-color: #4B515D;" />
+          <input type="submit" value="검색" style="
+                height: 35px;
+                width: 60px;
+                border: 0px;
+                border-radius: 10px;
+                background-color: #4b515d;
+              " />
         </form>
 
-        <div id="name-list-container"
-          style="background-color: #DCDDD8; display: inline-block; width: 400px; border-radius: 10px;margin-left: 70px; margin-bottom: 20px;">
-        </div>
+        <div id="name-list-container" style="
+              background-color: #dcddd8;
+              display: inline-block;
+              width: 400px;
+              border-radius: 10px;
+              margin-left: 70px;
+              margin-bottom: 20px;
+            "></div>
 
         <!-- docList -->
         <tbody>
-          <div th:each="doc : ${docs}"
-            style="background-color: #4B515D;margin: 5px; border-radius: 10px; height: 215px;">
-            <div class="doc_box" style="display: flex; justify-content: space-between;">
-              <div style="height: 150px; padding: 10px;">
-                <div th:text="${doc.doc_idx}"></div>
-                <a th:href="@{/docDetail(doc_idx=${doc.doc_idx})}" th:text="${doc.doc_sub}"></a>
+          <div th:each="doc : ${docs}" style="
+                background-color: #4b515d;
+                margin: 5px;
+                border-radius: 10px;
+                height: 215px;
+              ">
+            <div class="doc_box" th:onclick="'doc_dox_click(' + ${doc.doc_idx} + ')'"
+              style="display: flex; justify-content: space-between">
+              <div style="height: 150px; padding: 10px">
+                <div th:text="${doc.doc_idx}" th:data-></div>
+                <div th:text="${doc.doc_sub}"></div>
                 <div th:text="${doc.doc_writ}"></div>
                 <div th:text="${doc.doc_reg}"></div>
               </div>
               <div>
                 <div class="appid" th:data-appid="${doc.doc_app_id}"></div>
-                <img class="game-image" alt="이미지 위치" style="border: 0px; border-radius: 10px; ">
+                <img class="game-image" alt="이미지 위치" style="border: 0px; border-radius: 10px" />
               </div>
             </div>
           </div>
@@ -80,26 +99,35 @@
   </div>
 </body>
 <script>
-  $('.appid').each(function () {
-    var appid = $(this).data('appid');
-    var url = "https://cdn.akamai.steamstatic.com/steam/apps/" + appid + "/header.jpg";
-    $(this).next('.game-image').attr("src", url);
+  $(".appid").each(function () {
+    var appid = $(this).data("appid");
+    var url =
+      "https://cdn.akamai.steamstatic.com/steam/apps/" +
+      appid +
+      "/header.jpg";
+    $(this).next(".game-image").attr("src", url);
   });
 
+  function doc_dox_click(doc_idx) {
+    var url = "/docDetail?doc_idx=" + doc_idx;
+    window.location.href = url;
+  }
 
   function search_name() {
-    var name = document.getElementById('search_name').value;
+    var name = document.getElementById("search_name").value;
     $.ajax({
-      url: './searchApp', type: 'post', data: { name: name },
+      url: "./searchApp",
+      type: "post",
+      data: { name: name },
 
       success: function (apps) {
-        var listContainer = document.getElementById('name-list-container');
+        var listContainer = document.getElementById("name-list-container");
         while (listContainer.firstChild) {
           listContainer.removeChild(listContainer.firstChild);
         }
         var maxItems = 16;
         for (var i = 0; i < Math.min(apps.length, maxItems); i++) {
-          var item = document.createElement('button');
+          var item = document.createElement("button");
           item.style.borderRadius = "10px";
           item.style.backgroundColor = "#DCDDD8";
           item.style.border = "0px";
@@ -110,8 +138,8 @@
           item.textContent = apps[i];
           listContainer.appendChild(item);
           item.onclick = function () {
-            document.getElementById('search_name').value = this.textContent;
-            document.getElementById('name').value = this.textContent;
+            document.getElementById("search_name").value = this.textContent;
+            document.getElementById("name").value = this.textContent;
             while (listContainer.firstChild) {
               listContainer.removeChild(listContainer.firstChild);
             }

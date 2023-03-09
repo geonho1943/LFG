@@ -34,8 +34,13 @@ public class DocController {
 
     @GetMapping("/docDetail")
     public String docDetail(@RequestParam("doc_idx")int idx,HttpSession httpSession, Model model){
-        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
-        model.addAttribute("loginInfo",loginInfo);
+        try {
+            LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+            loginInfo.getUser_idx();
+            model.addAttribute("loginInfo",loginInfo);
+        }catch (Exception e){
+            return "redirect:/userError";
+        }
         Doc doc = new Doc();
         doc.setDoc_idx(idx);
         docService.read(doc);
@@ -72,7 +77,7 @@ public class DocController {
                 throw new NullPointerException("로그인을 하고 접속 해주세요!");
             }
         }catch (NullPointerException e){
-            return "redirect:/userError?error=ture";//e 는 출력 x
+            return "redirect:/userError?error=ture";
         }
         Doc doc = new Doc();
         doc.setDoc_idx(doc_idx);
