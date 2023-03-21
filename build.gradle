@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.geonho1943.LFG'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
