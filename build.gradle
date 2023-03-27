@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.geonho1943.LFG'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.3-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
@@ -21,8 +21,4 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.0.6'
 
 
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }
