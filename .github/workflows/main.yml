@@ -4,7 +4,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build and deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -22,15 +22,15 @@ jobs:
           chmod +x gradlew
           ./gradlew build
 
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_DEST_DIR: ${{ secrets.SSH_DEST_DIR }}
+      - name: SSH Connection
+        uses: appleboy/ssh-action@v0.1.8
         with:
-          args: |
-            cd $SSH_DEST_DIR
-            put build/libs/*.jar .
-            nohup java -jar *.jar &
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            whoami
+            ls -al
+            echo ${{ secrets.PORT }}
+
