@@ -30,7 +30,7 @@ jobs:
         env:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ SSH_PW }}
+          password: ${{ secrets.SSH_PW }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
