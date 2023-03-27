@@ -33,6 +33,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoani
+            whoami
             put build/libs/*.jar .
             nohup java -jar *.jar &
