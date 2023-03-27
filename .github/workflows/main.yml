@@ -8,8 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
+      - name: Create Properties
         uses: actions/checkout@v3
+      - run: touch ./src/main/resources/application-awsMariaDB.properties
+      - run: echo "${{ secrets.APPLICATION_AWSMARIADB_PROPERTIES }}" > ./src/main/resources/application-awsMariaDB.properties
+      - run: cat ./src/main/resources/application-awsMariaDB.properties
 
       - name: Setup JDK 17
         uses: actions/setup-java@v3
@@ -30,7 +33,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
-            ls -al
-            echo ${{ secrets.PORT }}
-
+            whoani
+            put build/libs/*.jar .
+            nohup java -jar *.jar &
