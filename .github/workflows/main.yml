@@ -27,7 +27,7 @@ jobs:
 
       - name: SSH Connection
         uses: appleboy/ssh-action@v0.1.8
-        with:
+        env:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
