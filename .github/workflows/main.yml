@@ -32,10 +32,9 @@ jobs:
           port: ${{ secrets.PORT }}
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
-          first_ssh: |
-            whoami
-            echo whoami
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
           last_ssh: |
-            nohup java -jar *.jar &
+            cd /home/${{ secrets.USER }}/server/
+            ls
+            nohup java -jar ~/server/LFG*-SNAPSHOT.jar &
