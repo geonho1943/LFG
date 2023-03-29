@@ -25,6 +25,9 @@ jobs:
           chmod +x gradlew
           ./gradlew build
 
+      - name: var check
+      - run: whoami
+
       - name: ssh connection
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -33,5 +36,5 @@ jobs:
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           script: |
-            whoami
-            ls -al
+            put build/libs/LFG*.jar .
+            nohup java -jar LFG*.jar &
