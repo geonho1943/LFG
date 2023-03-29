@@ -26,7 +26,7 @@ jobs:
           ./gradlew build
 
       - name: ssh connection
-        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
@@ -36,7 +36,6 @@ jobs:
             whoami
             echo whoami
           scp: |
-            ./build/libs/LFG*.jar => /home/support800/server/
+            ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
           last_ssh: |
             nohup java -jar *.jar &
-            echo LFG is alive!
