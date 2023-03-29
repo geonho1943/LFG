@@ -26,12 +26,17 @@ jobs:
           ./gradlew build
 
       - name: ssh connection
-        uses: appleboy/ssh-action@v0.1.8
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
-          username: ${{ secrets.USER }}
+          user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
-          script: |
-            put build/libs/LFG*.jar .
-            nohup java -jar LFG*.jar &
+          first_ssh: |
+            whoami
+            echo whoami
+          scp: |
+            ./build/libs/LFG*.jar => /home/support800/server/
+          last_ssh: |
+            nohup java -jar *.jar &
+            echo LFG is alive!
