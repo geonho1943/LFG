@@ -35,6 +35,7 @@ jobs:
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
           last_ssh: |
+            sudo su
+            ${{ secrets.PW }}
             cd /home/${{ secrets.USER }}/server/
-            ls
-            nohup java -jar ~/server/LFG*-SNAPSHOT.jar &
+            nohup java -jar LFG*-SNAPSHOT.jar &
