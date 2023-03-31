@@ -31,11 +31,13 @@ jobs:
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           first_ssh: |
-            cd /home/${{ secrets.USER }}/server/;
+            cd /home/${{ secrets.USER }}/server/
             if [ -e LFG*-SNAPSHOT.jar ]; then 
-              rm LFG*-SNAPSHOT.jar
+              rm -f LFG*-SNAPSHOT.jar
+              echo 'delete success'
             fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
           last_ssh: | 
             sudo -S sh -c "nohup java -jar LFG*-SNAPSHOT.jar &" <<< "${{ secrets.PW }}"
+            echo 'I am alive!!!'
