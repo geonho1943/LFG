@@ -33,8 +33,9 @@ jobs:
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
             echo 'build file delete.'
-            if [ -e LFG*-SNAPSHOT.jar ]; then rm LFG*-SNAPSHOT.jar;
-            echo 'delete success!!!'
+            if [ -e LFG*-SNAPSHOT.jar ]; then 
+              rm LFG*-SNAPSHOT.jar
+              echo 'delete success!!!'
             fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
