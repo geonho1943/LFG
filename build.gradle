@@ -7,8 +7,6 @@ plugins {
 group = 'com.geonho1943.LFG'
 version = '0.0.3-SNAPSHOT'
 sourceCompatibility = '17'
-sourceCompatibility = 17
-targetCompatibility = 17
 
 repositories {
 	mavenCentral()
