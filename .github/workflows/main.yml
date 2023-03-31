@@ -31,6 +31,9 @@ jobs:
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           first_ssh: |
+            if [ -e LFG*-SNAPSHOT.jar ]; then
+              rm LFG*-SNAPSHOT.jar
+            fi
             cd /home/${{ secrets.USER }}/server/
             rm LFG*-SNAPSHOT.jar
           scp: |
