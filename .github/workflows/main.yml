@@ -31,11 +31,11 @@ jobs:
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           first_ssh: |
+            cd /home/${{ secrets.USER }}/server/
             if [ -e LFG*-SNAPSHOT.jar ]; then
               rm LFG*-SNAPSHOT.jar
             fi
-            cd /home/${{ secrets.USER }}/server/
-            rm LFG*-SNAPSHOT.jar
+
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
           last_ssh: |
