@@ -19,6 +19,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.6'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.0.6'
+}
 
-
+tasks.withType(JavaCompile) {
+	options.compilerArgs.addAll(['--release', '17'])
 }
