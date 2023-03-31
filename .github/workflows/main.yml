@@ -32,9 +32,9 @@ jobs:
           key: ${{ secrets.KEY }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-
+            [ -e LFG*-SNAPSHOT.jar ] && rm -f LFG*-SNAPSHOT.jar && echo 'delete success'
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/support800/server/
-          last_ssh: | 
-            sudo -S sh -c "nohup java -jar LFG*-SNAPSHOT.jar &" <<< "${{ secrets.PW }}"
-            echo 'I am alive!!!'
+          last_ssh: |
+            cd /home/${{ secrets.USER }}/server/
+            sudo -S sh -c "nohup java -jar LFG*-SNAPSHOT.jar &" <<< "${{ secrets.PW }}" && echo 'I am alive!!!'
