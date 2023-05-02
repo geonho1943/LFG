@@ -60,5 +60,4 @@ LFG 서비스는 이곳에서 실행됩니다
 
 
 ## License
-//수정
 https://choosealicense.com/licenses/mit/
