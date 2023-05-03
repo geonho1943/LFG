@@ -31,7 +31,7 @@ jobs:
           user: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           first_ssh: |
-            cd /home/${{ secrets.USER }}/server/ && if pgrep -f 'LFG*.jar'; then pkill -f 'LFG*.jar'; echo 'Process killed'; fi && if [ -e LFG*-SNAPSHOT.jar ]; then rm -f LFG*-SNAPSHOT.jar; echo 'Jar delete success'; fi
+            cd /home/${{ secrets.USER }}/server/ && if pgrep -f 'LFG*.jar'; then sudo -S pkill -f 'LFG*.jar' <<< "${{ secrets.PW }}"; echo 'Process killed'; fi && if [ -e LFG*-SNAPSHOT.jar ]; then rm -f LFG*-SNAPSHOT.jar; echo 'Jar delete success'; fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
           last_ssh: |
