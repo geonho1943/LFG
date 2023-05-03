@@ -1,13 +1,18 @@
 package com.geonho1943.LFG.controller;
 import org.springframework.stereotype.Controller;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
 
-//    @GetMapping("/")
-//    public String home(){
-//        return "/home";
-//    }
+    private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+
+    @GetMapping("/log-test")
+    public String logTest(){
+        LOGGER.info("첫 로그 test");
+        return "/home";
+    }
 }

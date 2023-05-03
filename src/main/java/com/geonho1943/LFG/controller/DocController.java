@@ -7,12 +7,16 @@ import com.geonho1943.LFG.service.DocService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 @Controller
 public class DocController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     private final DocService docService;
     private final AppService appService;
@@ -29,6 +33,7 @@ public class DocController {
         List<Doc> docs = docService.list();
         model.addAttribute("loginInfo",loginInfo);
         model.addAttribute("docs",docs);
+        LOGGER.info("메인 페이지가 활성화되었습니다.");
         return "doc/docList";
     }
 
