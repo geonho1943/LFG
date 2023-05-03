@@ -18,7 +18,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @PostMapping("/userJoin")
     public String userJoin(User user){
         userService.join(user);
