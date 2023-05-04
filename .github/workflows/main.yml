@@ -32,9 +32,7 @@ jobs:
           key: ${{ secrets.KEY }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            if [ $(pgrep -f 'LFG*') ]; then
-              sudo -S pkill -f 'LFG*' <<< "${{ secrets.PW }}"
-            fi 
+            if [ $(pgrep -f 'LFG*') ]; then sudo -S pkill -f 'LFG*' <<< "${{ secrets.PW }}"; fi
             sleep 5s
             if [ -e LFG*-SNAPSHOT.jar ]; then rm -f LFG*-SNAPSHOT.jar; fi
           scp: |
