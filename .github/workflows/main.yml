@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.KEY }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            if [ $(pgrep -f 'LFG*') ] then
+            if [ $(pgrep -f 'LFG*') ]; then
               sudo -S pkill -f 'LFG*' <<< "${{ secrets.PW }}"
             fi 
             sleep 5s
