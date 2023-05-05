@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 @Controller
 public class DocController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DocController.class);
 
     private final DocService docService;
     private final AppService appService;
@@ -59,8 +59,9 @@ public class DocController {
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
         doc.setDoc_writ(loginInfo.getUser_name());
-        appService.searchAppId(doc);
+        appService.searchAppId(doc);//회원 정보 검증
         docService.post(doc);
+        LOGGER.info("New post succeeded: "+ loginInfo.getUser_name() +"/"+doc.getDoc_idx());
         return "redirect:";
     }
 

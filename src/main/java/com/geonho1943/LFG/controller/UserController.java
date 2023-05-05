@@ -3,6 +3,8 @@ package com.geonho1943.LFG.controller;
 import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.dto.User;
 import com.geonho1943.LFG.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
+    private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -21,6 +24,7 @@ public class UserController {
     @PostMapping("/userJoin")
     public String userJoin(User user){
         userService.join(user);
+        LOGGER.info("User join succeeded: " +user.getUser_idx()+"/"+ user.getUser_id());
         return "redirect:/";
     }
 
@@ -34,6 +38,7 @@ public class UserController {
                     user.getUser_reg()
             );
             httpSession.setAttribute("loginInfo",loginInfo );
+            LOGGER.info("User login succeeded: " +user.getUser_idx()+"/"+ user.getUser_id());
         }catch (Exception e){
             return "redirect:/userError?error=ture";
         }
@@ -43,6 +48,7 @@ public class UserController {
     @PostMapping("/userModify")
     public String userModify(HttpSession httpSession,User user){
         userService.modify(user);
+        LOGGER.info("User modify succeeded: " + user.getUser_idx());
         httpSession.removeAttribute("loginInfo");
         return "redirect:";
     }

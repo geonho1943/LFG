@@ -26,7 +26,6 @@ public class UserService {
         userRepository.login(user);
         userRepository.auth(user);
         return user;
-
     }
 
     public User modify(User user) {

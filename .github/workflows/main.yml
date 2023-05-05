@@ -37,6 +37,6 @@ jobs:
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
           last_ssh: |
-            cd /home/${{ secrets.USER }}/server/
+            cd /home/${{ secrets.USER }}/serve r/
             if [ -f nohup.out ]; then mv nohup.out nohup_$(date +%Y%m%d).out; mv nohup_$(date +%Y%m%d).out /home/${{ secrets.USER }}/mylog/; fi
             echo "${{ secrets.PW }}" | sudo -S nohup java -jar LFG* > /home/${{ secrets.USER }}/server/nohup.out 2>&1 &
