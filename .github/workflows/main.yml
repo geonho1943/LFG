@@ -32,7 +32,6 @@ jobs:
           key: ${{ secrets.KEY }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            sudo su <<< "${{ secrets.PW }}"
             pkill -f 'LFG*'
             if [ -e LFG* ]; then rm -f LFG*; fi
           scp: |
