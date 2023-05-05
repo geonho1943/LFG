@@ -34,9 +34,9 @@ jobs:
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
             if [ -e LFG* ]; then rm -f LFG*; fi
+            if [ -f nohup.out ]; then mv nohup.out nohup_$(date +%Y%m%d).out; mv nohup_$(date +%Y%m%d).out /home/${{ secrets.USER }}/mylog/; fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
           last_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            if [ -f nohup.out ]; then mv nohup.out nohup_$(date +%Y%m%d).out; mv nohup_$(date +%Y%m%d).out /home/${{ secrets.USER }}/mylog/; fi
             echo "${{ secrets.PW }}" | sudo -S nohup java -jar LFG* > /home/${{ secrets.USER }}/server/nohup.out 2>&1 &
