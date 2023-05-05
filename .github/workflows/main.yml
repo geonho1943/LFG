@@ -33,7 +33,6 @@ jobs:
           pass: ${{ secrets.PW }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-          #echo "${{ secrets.PW }}" | sudo -S pkill -f 'LFG*'
             if [ -e LFG* ]; then rm -f LFG*; fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
