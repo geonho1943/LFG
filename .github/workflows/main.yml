@@ -38,4 +38,4 @@ jobs:
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
           last_ssh: |
-            echo "${{ secrets.PW }}" | sudo -S nohup java -jar LFG* > /home/${{ secrets.USER }}/server/nohup.out 2>&1 &
+            echo "${{ secrets.PW }}" | sudo -S nohup java -jar LFG* & > /home/${{ secrets.USER }}/server/nohup.out 2>&1
