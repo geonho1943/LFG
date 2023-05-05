@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.KEY }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            sudo -S pkill -f 'LFG*' <<< "${{ secrets.PW }}"
+            echo "${{ secrets.PW }}" | sudo -S pkill -f 'LFG*'
             if [ -e LFG* ]; then rm -f LFG*; fi
           scp: |
             ./build/libs/LFG*-SNAPSHOT.jar => /home/${{ secrets.USER }}/server/
