@@ -24,7 +24,7 @@
         </div>
         <span class="header_interface">
           <ul>
-            <span class="user-info" th:if="${loginInfo != null}">
+            <span style="additive-symbols: -moz-element();" class="user-info" th:if="${loginInfo != null}">
               <a href="/logout">로그아웃</a>
               <a th:text="${loginInfo.user_name}"></a>
               <a href="/myProfile">내 프로필</a>
