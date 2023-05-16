@@ -1,5 +1,5 @@
 .header_dis {
-    padding-bottom: 8%;
+    padding-bottom: 70px;
 }
 
 header {
@@ -15,6 +15,8 @@ header {
 a {
     text-decoration: none;
     background-color: #4b515d;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .header_logo a {
@@ -29,12 +31,12 @@ a {
 
 .header_interface ul span a {
     float: right;
-    padding: 5px;
-    padding-bottom: 10px;
+    padding: 10px;
     color: #dcddd8;
-
 }
 
-.header_interface ul span a:visited {
-    color: #dcddd8;
+/* .header_interface ul span a:visited {} */
+
+.user_info a:visited {
+    color: #3e4551;
 }

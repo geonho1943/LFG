@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>게시판 목록보기</title>
   <link rel="stylesheet" href="reset.css" />
@@ -24,13 +23,13 @@
         </div>
         <span class="header_interface">
           <ul>
-            <span style="additive-symbols: -moz-element();" class="user-info" th:if="${loginInfo != null}">
+            <span class="user_info" th:if="${loginInfo != null}">
               <a href="/logout">로그아웃</a>
               <a th:text="${loginInfo.user_name}"></a>
               <a href="/myProfile">내 프로필</a>
               <a href="/docWrite">글쓰기</a>
             </span>
-            <span class="user-info_null" th:if="${loginInfo == null}">
+            <span class="user_info" th:if="${loginInfo == null}">
               <a href="/userLogin">로그인</a>
               <a href="/userJoin">회원가입</a>
             </span>
