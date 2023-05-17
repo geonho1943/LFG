@@ -5,12 +5,16 @@ html {
 .container {
     background-color: #4B515D;
     margin: auto;
-    max-width: 800px;
-    min-width: 350px;
+    max-width: 1100px;
+    min-width: 600px;
 }
 
 #board-list {
-    max-width: 800px;
+    max-width: 1100px;
+    min-width: 600px;
+    background-color: #3e4551;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 /* 

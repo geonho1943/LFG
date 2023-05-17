@@ -3,13 +3,13 @@
 }
 
 header {
-
+    min-width: 600px;
     background-color: #3E4551;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    min-height: 90px;
+    /* min-height: 90px; */
     padding: 10px 20px;
-    /* bottom: unset; */
+    bottom: unset;
 }
 
 a {
@@ -26,13 +26,19 @@ a {
 .header_logo a h1 {
     font-size: 40px;
     color: black;
-    padding-bottom: 4%;
+}
+
+.header_interface ul {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .header_interface ul span a {
     float: right;
     padding: 10px;
     color: #dcddd8;
+    margin: 5px;
 }
 
 /* .header_interface ul span a:visited {} */

@@ -1,77 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login</title>
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="header.css" />
-    <link rel="stylesheet" href="board.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="header_dis">
-        <header class="header">
-          <div class="header_logo">
-            <a href="/">
-              <h1>LFG Login</h1>
-            </a>
-          </div>
-          <span class="header_interface">
-            <ul>
-              <span class="user-info" th:if="${loginInfo != null}">
-                <a href="/logout">로그아웃</a>
-                <a th:text="${loginInfo.user_name}"></a>
-                <a href="/myProfile">내 프로필</a>
-                <a href="/docWrite">글쓰기</a>
-              </span>
-              <span class="user-info_null" th:if="${loginInfo == null}">
-                <a href="/userLogin">로그인</a>
-                <a href="/userJoin">회원가입</a>
-              </span>
-            </ul>
-          </span>
-        </header>
-      </div>
-      <!-- board list area -->
-      <div
-        id="board-list"
-        style="background-color: #3e4551; border-radius: 10px; padding: 10px"
-      >
-        <div
-          class="container"
-          style="
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="board.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="header_dis">
+      <header class="header">
+        <div class="header_logo">
+          <a href="/">
+            <h1>LFG Login</h1>
+          </a>
+        </div>
+        <span class="header_interface">
+          <ul>
+            <span class="user-info" th:if="${loginInfo != null}">
+              <a href="/logout">로그아웃</a>
+              <a th:text="${loginInfo.user_name}"></a>
+              <a href="/myProfile">내 프로필</a>
+              <a href="/docWrite">글쓰기</a>
+            </span>
+            <span class="user-info_null" th:if="${loginInfo == null}">
+              <a href="/userLogin">로그인</a>
+              <a href="/userJoin">회원가입</a>
+            </span>
+          </ul>
+        </span>
+      </header>
+    </div>
+    <!-- board list area -->
+    <div id="board-list">
+      <div class="container" style="
             margin: auto;
             width: fit-content;
             border-radius: 15px;
             padding: 15px;
-          "
-        >
-          <h1>로그인</h1>
-          <div class="container">
-            <form action="/userLogin" method="post">
-              <div class="form-group">
-                <label for="id">ID</label>
-                <input
-                  type="text"
-                  id="id"
-                  name="user_id"
-                  placeholder="ID을 입력하세요"
-                /><br />
-                <label for="pw">PW</label>
-                <input
-                  type="password"
-                  id="pw"
-                  name="user_pw"
-                  placeholder="PW을 입력하세요"
-                /><br />
-              </div>
-              <button type="submit">로그인</button>
-            </form>
-          </div>
+          ">
+        <h1>로그인</h1>
+        <div class="container">
+          <form action="/userLogin" method="post">
+            <div class="form-group">
+              <label for="id">ID</label>
+              <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요" /><br />
+              <label for="pw">PW</label>
+              <input type="password" id="pw" name="user_pw" placeholder="PW을 입력하세요" /><br />
+            </div>
+            <button type="submit">로그인</button>
+          </form>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
