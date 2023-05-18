@@ -13,7 +13,7 @@ public interface UserRepository {
 
     User modify(User user);
 
-    User sleep(User user);
+    void sleep(User user);
 
     User role(User user);
 }

@@ -41,7 +41,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User role(User user){
-        String sql = "insert into lfg_user_role(user_idx,user_role) values (?,2)";
+        String sql = "insert into LFGservice.lfg_user_role(user_idx,user_role) values (?,2);";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -84,11 +84,11 @@ public class UserModel implements UserRepository {
         } finally {
             close(conn, pstmt, rs);
         }
-
     }
+
     @Override
     public User auth(User user){
-        String sql = "select user_role from lfg_user_role where user_idx = ?;";
+        String sql = "select user_role from LFGservice.lfg_user_role where user_idx = ?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -112,7 +112,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public boolean check(User user){
-        String sql = "select user_id from lfg_user where user_id=?;";
+        String sql = "select user_id from LFGservice.lfg_user where user_id=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -154,8 +154,8 @@ public class UserModel implements UserRepository {
     }
 
     @Override
-    public User sleep(User user) {
-        String sql = "DELETE FROM lfg_user WHERE user_idx=?;";
+    public void sleep(User user) {
+        String sql = "DELETE FROM LFGservice.lfg_user WHERE user_idx=?;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -163,13 +163,13 @@ public class UserModel implements UserRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, user.getUser_idx());
             pstmt.executeUpdate();
-            return user;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
             close(conn, pstmt, null);
         }
     }
+
 
 
     private Connection getConnection() {

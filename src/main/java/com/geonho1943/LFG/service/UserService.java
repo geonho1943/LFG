@@ -32,8 +32,8 @@ public class UserService {
         return userRepository.modify(user);
     }
 
-    public User sleep(User user) {
-        return userRepository.sleep(user);
+    public void sleep(User user) {
+//        return userRepository.sleep(user);
     }
     public boolean check(String id) {
         User user = new User();
