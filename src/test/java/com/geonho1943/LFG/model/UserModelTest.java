@@ -1,6 +1,5 @@
 package com.geonho1943.LFG.model;
 
-import com.geonho1943.LFG.controller.HomeController;
 import com.geonho1943.LFG.dto.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ class UserModelTest {
         String createSchemaQuery = "CREATE SCHEMA IF NOT EXISTS LFGSERVICE;";
         String createTableSql = "CREATE TABLE IF NOT EXISTS LFGservice.lfg_user"
         + "(user_idx INT AUTO_INCREMENT NOT NULL, user_id VARCHAR(45) NOT NULL,"
-        + "user_pw VARCHAR(45) NOT NULL, user_name VARCHAR(45) NOT NULL, user_reg TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+        + "user_pw VARCHAR(128) NOT NULL, user_name VARCHAR(45) NOT NULL, user_reg TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
         + "PRIMARY KEY (user_idx), UNIQUE (user_idx))";
         jdbcTemplate.execute(createSchemaQuery);
         jdbcTemplate.execute(createTableSql);
@@ -42,7 +41,10 @@ class UserModelTest {
     }
     @AfterEach
     public void afterEach(){
-//        UserRepository
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String dropSha2 = "DROP ALIAS IF EXISTS SHA2";
+        jdbcTemplate.execute(dropSha2);
+        LOGGER.info("커스텀 함수를 삭제하였습니다.");
     }
     public void roleSetUp(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -54,10 +56,18 @@ class UserModelTest {
         jdbcTemplate.execute(createTableSql);
         LOGGER.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
     }
+    void customMethod(){
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sha256Custom ="CREATE ALIAS SHA2 FOR 'com.geonho1943.LFG.utils.H2CustomFunctions.sha2'";
+        jdbcTemplate.execute(sha256Custom);
+//        String timeCustom ="CREATE ALIAS CURRENT_TIMESTAMP FOR 'com.geonho1943.LFG.utils.H2CustomFunctions.timestamp'";
+//        jdbcTemplate.execute(timeCustom);
+    }
 
     @Test
     void join() throws SQLException {
         //given
+        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -82,6 +92,7 @@ class UserModelTest {
     @Test
     void login() throws SQLException {
         // given
+        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -105,6 +116,7 @@ class UserModelTest {
     @Test
     void loginFail() {
         // Given
+        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("invalid_pw");
@@ -155,16 +167,16 @@ class UserModelTest {
         // then
     }
 
-
     @Test
     void sleep() throws SQLException {
         // Given
         User user = new User();
-        user.setUser_id("test_id");
-        user.setUser_pw("test_pw");
-        user.setUser_name("test_name");
+        user.setUser_id("test_id1");
+        user.setUser_pw("test_pw1");
+        user.setUser_name("test_name1");
 
         // 회원 등록
+        customMethod();
         User registeredUser = userRepository.join(user);
 
         // When
@@ -179,7 +191,5 @@ class UserModelTest {
         }
         LOGGER.info("로그인 예외 처리 검증이 완료되었습니다.");
     }
-
-
 
 }
