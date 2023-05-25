@@ -9,7 +9,7 @@ public interface DocRepository {
     Doc post (Doc doc);//작성
     Doc read(Doc doc);//조회
     Doc modify(Doc doc);//수정
-    Doc delete(Doc doc);//삭제
+    void delete(Doc doc);//삭제
 
     List<Doc> list();
 

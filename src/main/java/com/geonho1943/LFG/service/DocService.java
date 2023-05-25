@@ -34,8 +34,9 @@ public class DocService {
         return docRepository.modify(doc);
     }
 
-    public Doc delete(Doc doc) {
-        return docRepository.delete(doc);
+    public void delete(Doc doc) {
+        docRepository.delete(doc);
+//        return docRepository.delete(doc);
     }
 
     public List<Doc> appNameList(Doc doc) {

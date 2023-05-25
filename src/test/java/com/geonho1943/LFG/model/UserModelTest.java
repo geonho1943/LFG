@@ -39,6 +39,7 @@ class UserModelTest {
         jdbcTemplate.execute(createTableSql);
         LOGGER.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
     }
+    
     @AfterEach
     public void afterEach(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -65,7 +66,7 @@ class UserModelTest {
     }
 
     @Test
-    void join() throws SQLException {
+    void joinTest() throws SQLException {
         //given
         customMethod();
         User user = new User();
@@ -90,7 +91,7 @@ class UserModelTest {
     }
 
     @Test
-    void login() throws SQLException {
+    void loginTest() throws SQLException {
         // given
         customMethod();
         User user = new User();
@@ -114,7 +115,7 @@ class UserModelTest {
     }
 
     @Test
-    void loginFail() {
+    void loginFailTest() {
         // Given
         customMethod();
         User user = new User();
@@ -132,7 +133,7 @@ class UserModelTest {
     }
 
     @Test
-    void role() throws SQLException {
+    void roleTest() throws SQLException {
         // Given
         roleSetUp();
         customMethod();
@@ -152,7 +153,7 @@ class UserModelTest {
     }
 
     @Test
-    void auth() {
+    void authTest() {
         // given
         roleSetUp();
         customMethod();
@@ -171,7 +172,7 @@ class UserModelTest {
     }
 
     @Test
-    void check() {
+    void checkTest() {
         // given
         customMethod();
         User user = new User();
@@ -194,7 +195,7 @@ class UserModelTest {
     }
 
     @Test
-    void modify() {
+    void modifyTest() {
         // given
         customMethod();
         User user = new User();
@@ -215,7 +216,7 @@ class UserModelTest {
     }
 
     @Test
-    void sleep() throws SQLException {
+    void sleepTest() throws SQLException {
         // Given
         User user = new User();
         user.setUser_id("sleep_test_id");

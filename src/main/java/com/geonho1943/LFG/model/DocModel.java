@@ -16,7 +16,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc post(Doc doc) {
-        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_app_id`,`doc_app_name`,`doc_reg`) VALUES (?,?,?,?,?,sysdate());";
+        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_app_id`,`doc_app_name`,`doc_reg`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP());";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -44,7 +44,7 @@ public class DocModel implements DocRepository{
     }
 
     public Doc read(Doc doc) {
-        String sql = "select * from lfg_doc where doc_idx=?";
+        String sql = "select * from `LFGservice`.`lfg_doc` where doc_idx=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -71,7 +71,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public List<Doc> list() {
-        String sql = "select * from lfg_doc order by doc_idx desc;";
+        String sql = "select * from `LFGservice`.`lfg_doc` order by doc_idx desc;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -124,10 +124,8 @@ public class DocModel implements DocRepository{
     }
 
     @Override
-    public Doc delete(Doc doc) {
+    public void delete(Doc doc) {
         String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?);";
-        System.out.println("doc delete 실행됨");
-        System.out.println(doc.getDoc_idx());
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -135,7 +133,6 @@ public class DocModel implements DocRepository{
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, doc.getDoc_idx());
             pstmt.executeUpdate();
-            return  doc;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
@@ -145,7 +142,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public List<Doc> appNameList(Doc doc) {
-        String sql = "select * from lfg_doc where doc_app_name=? order by doc_idx desc;";
+        String sql = "select * from `LFGservice`.`lfg_doc` where doc_app_name=? order by doc_idx desc;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
