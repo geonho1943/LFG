@@ -15,7 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 import javax.sql.DataSource;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestPropertySource(locations = "/application-test.properties")
@@ -28,7 +27,7 @@ class DocModelTest {
     @Autowired
     private DocRepository docRepository;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserModelTest.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DocModelTest.class);
 
     @BeforeEach
     void setUp() {
@@ -84,6 +83,7 @@ class DocModelTest {
         Doc readDoc = docRepository.read(testForm);
 
         // Then
+        Assertions.assertNotNull(readDoc);
         Assertions.assertEquals(testForm.getDoc_sub(), readDoc.getDoc_sub());
         Assertions.assertEquals(testForm.getDoc_writ(), readDoc.getDoc_writ());
         Assertions.assertEquals(testForm.getDoc_cont(), readDoc.getDoc_cont());
