@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestPropertySource(locations = "/application-test.properties")
 @SpringBootTest
@@ -60,155 +61,116 @@ class DocModelTest {
     @Test
     void postTest() {
         // Given
-        Doc doc = new Doc();
-        doc.setDoc_sub("제목");
-        doc.setDoc_writ("작성자");
-        doc.setDoc_cont("내용");
-        doc.setDoc_app_id(1);
-        doc.setDoc_app_name("애플리케이션");
+        Doc testForm = docInputForTest(1,"제목","작성자","내용","애플리케이션",1);
 
         // When
-        Doc postDoc = docRepository.post(doc);
+        Doc postDoc = docRepository.post(testForm);
 
         // Then
         Assertions.assertNotNull(postDoc);
-        Assertions.assertEquals("제목", doc.getDoc_sub());
-        Assertions.assertEquals("작성자", doc.getDoc_writ());
-        Assertions.assertEquals("내용", doc.getDoc_cont());
-        Assertions.assertEquals(1, doc.getDoc_app_id());
-        Assertions.assertEquals("애플리케이션", doc.getDoc_app_name());
+        Assertions.assertEquals("제목", postDoc.getDoc_sub());
+        Assertions.assertEquals("작성자", postDoc.getDoc_writ());
+        Assertions.assertEquals("내용", postDoc.getDoc_cont());
+        Assertions.assertEquals(1, postDoc.getDoc_app_id());
+        Assertions.assertEquals("애플리케이션", postDoc.getDoc_app_name());
     }
 
     @Test
     void readTest() {
         // Given
-        Doc doc = new Doc();
-        doc.setDoc_sub("제목");
-        doc.setDoc_writ("작성자");
-        doc.setDoc_cont("내용");
-        doc.setDoc_app_id(1);
-        doc.setDoc_app_name("애플리케이션");
-        docRepository.post(doc);
+        Doc testForm = docInputForTest(1,"제목","작성자","내용","애플리케이션",1);
+        docRepository.post(testForm);
         // When
-        Doc readDoc = docRepository.read(doc);
+        Doc readDoc = docRepository.read(testForm);
 
         // Then
-        Assertions.assertEquals(doc.getDoc_sub(), readDoc.getDoc_sub());
-        Assertions.assertEquals(doc.getDoc_writ(), readDoc.getDoc_writ());
-        Assertions.assertEquals(doc.getDoc_cont(), readDoc.getDoc_cont());
-        Assertions.assertEquals(doc.getDoc_app_id(), readDoc.getDoc_app_id());
-        Assertions.assertEquals(doc.getDoc_app_name(), readDoc.getDoc_app_name());
+        Assertions.assertEquals(testForm.getDoc_sub(), readDoc.getDoc_sub());
+        Assertions.assertEquals(testForm.getDoc_writ(), readDoc.getDoc_writ());
+        Assertions.assertEquals(testForm.getDoc_cont(), readDoc.getDoc_cont());
+        Assertions.assertEquals(testForm.getDoc_app_id(), readDoc.getDoc_app_id());
+        Assertions.assertEquals(testForm.getDoc_app_name(), readDoc.getDoc_app_name());
     }
 
     @Test
     void listTest() {
         // When
-        Doc doc1 = new Doc();
-        doc1.setDoc_sub("제목1");
-        doc1.setDoc_writ("작성자1");
-        doc1.setDoc_cont("내용1");
-        doc1.setDoc_app_id(1);
-        doc1.setDoc_app_name("애플리케이션1");
-        docRepository.post(doc1);
-        Doc doc2 = new Doc();
-        doc2.setDoc_sub("제목2");
-        doc2.setDoc_writ("작성자2");
-        doc2.setDoc_cont("내용2");
-        doc2.setDoc_app_id(2);
-        doc2.setDoc_app_name("애플리케이션2");
-        docRepository.post(doc2);
+        Doc testForm1 = docInputForTest(1,"제목1","작성자1","내용1","애플리케이션1",1);
+        docRepository.post(testForm1);
+        Doc testForm2 = docInputForTest(2,"제목2","작성자2","내용2","애플리케이션2",2);
+        docRepository.post(testForm2);
         List<Doc> docs = docRepository.list();
 
         // Then
         Doc firstDoc = docs.get(0);
         Doc secondDoc = docs.get(1);
-        Assertions.assertEquals("제목2", firstDoc.getDoc_sub());
-        Assertions.assertEquals("제목1", secondDoc.getDoc_sub());
+        Assertions.assertEquals(testForm2.getDoc_sub(), firstDoc.getDoc_sub());
+        Assertions.assertEquals(testForm1.getDoc_sub(), secondDoc.getDoc_sub());
     }
 
     @Test
     void modifyTest() {
         // Given
-        Doc doc = new Doc();
-        doc.setDoc_sub("제목");
-        doc.setDoc_writ("작성자");
-        doc.setDoc_cont("내용");
-        doc.setDoc_app_id(1);
-        doc.setDoc_app_name("애플리케이션");
-        docRepository.post(doc);
+        Doc testForm = docInputForTest(1,"제목","작성자","내용","애플리케이션",1);
+        docRepository.post(testForm);
 
         // When
-        doc.setDoc_idx(1);
-        doc.setDoc_sub("수정된 제목");
-        doc.setDoc_cont("수정된 내용");
-        doc.setDoc_app_id(2);
-        doc.setDoc_app_name("수정된 애플리케이션");
-        docRepository.modify(doc);
+        Doc modifyTestForm = docInputForTest(1,"수정된 제목","작성자","수정된 내용","수정된 애플리케이션",2);
+        docRepository.modify(testForm);
 
         // Then
-        Assertions.assertEquals("수정된 제목", doc.getDoc_sub());
-        Assertions.assertEquals("수정된 내용", doc.getDoc_cont());
-        Assertions.assertEquals(2, doc.getDoc_app_id());
-        Assertions.assertEquals("수정된 애플리케이션", doc.getDoc_app_name());
+        Assertions.assertEquals("수정된 제목", modifyTestForm.getDoc_sub());
+        Assertions.assertEquals("수정된 내용", modifyTestForm.getDoc_cont());
+        Assertions.assertEquals(2, modifyTestForm.getDoc_app_id());
+        Assertions.assertEquals("수정된 애플리케이션", modifyTestForm.getDoc_app_name());
     }
 
     @Test
     void deleteTest() {
         // Given
-        Doc doc = new Doc();
-        doc.setDoc_sub("제목");
-        doc.setDoc_writ("작성자");
-        doc.setDoc_cont("내용");
-        doc.setDoc_app_id(1);
-        doc.setDoc_app_name("애플리케이션");
-        docRepository.post(doc);
+        Doc testForm = docInputForTest(1,"제목","작성자","내용","애플리케이션",1);
+        docRepository.post(testForm);
 
         // When
-        docRepository.delete(doc);
+        docRepository.delete(testForm);
+        Doc deleteDoc = new Doc();
+        deleteDoc.setDoc_idx(testForm.getDoc_idx());
+        deleteDoc = docRepository.read(deleteDoc);
 
         // Then
-        Doc readDoc = new Doc();
-        readDoc.setDoc_idx(doc.getDoc_idx());
-        Doc deleteDoc = docRepository.read(readDoc);
-
-        assertEquals( null, deleteDoc.getDoc_sub());
+        assertNull(deleteDoc.getDoc_sub());
     }
 
 
     @Test
     void appNameListTest() {
         // Given
-        Doc doc = new Doc();
-        doc.setDoc_sub("제목");
-        doc.setDoc_writ("작성자");
-        doc.setDoc_cont("내용");
-        doc.setDoc_app_id(0);
-        doc.setDoc_app_name("애플리케이션");
-        docRepository.post(doc);
-        Doc doc1 = new Doc();
-        doc1.setDoc_sub("제목");
-        doc1.setDoc_writ("작성자1");
-        doc1.setDoc_cont("내용1");
-        doc1.setDoc_app_id(1);
-        doc1.setDoc_app_name("애플리케이션");
-        docRepository.post(doc1);
-        Doc doc2 = new Doc();
-        doc2.setDoc_sub("제목");
-        doc2.setDoc_writ("작성자2");
-        doc2.setDoc_cont("내용2");
-        doc2.setDoc_app_id(2);
-        doc2.setDoc_app_name("애플리케이션");
-        docRepository.post(doc2);
+        Doc testForm1 = docInputForTest(1,"제목1","작성자1","내용1","애플리케이션1",1);
+        docRepository.post(testForm1);
+        Doc testForm2 = docInputForTest(2,"제목2","작성자2","내용2","애플리케이션1",1);
+        docRepository.post(testForm2);
+        Doc testForm3 = docInputForTest(3,"제목3","작성자3","내용3","애플리케이션1",1);
+        docRepository.post(testForm3);
 
         // When
-        List<Doc> docs = docRepository.appNameList(doc);
+        List<Doc> docs = docRepository.appNameList(testForm1);
 
         // Then
         Assertions.assertNotNull(docs);
         Assertions.assertFalse(docs.isEmpty());
         for (Doc d : docs) {
-            Assertions.assertEquals("제목", d.getDoc_sub());
-            Assertions.assertEquals("애플리케이션", d.getDoc_app_name());
+            Assertions.assertEquals(1, d.getDoc_app_id());
+            Assertions.assertEquals("애플리케이션1", d.getDoc_app_name());
         }
+    }
+
+    public Doc docInputForTest(int doc_idx, String doc_sub, String doc_writ, String doc_cont, String doc_app_name, int doc_app_id){
+        Doc doc = new Doc();
+        doc.setDoc_idx(doc_idx);
+        doc.setDoc_sub(doc_sub);
+        doc.setDoc_writ(doc_writ);
+        doc.setDoc_cont(doc_cont);
+        doc.setDoc_app_name(doc_app_name);
+        doc.setDoc_app_id(doc_app_id);
+        return doc;
     }
 }
