@@ -6,6 +6,7 @@ import com.geonho1943.LFG.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +31,11 @@ public class UserController {
 
     @PostMapping("/userLogin")
     public String userLogin(User user, HttpSession httpSession) {
+        LoginInfo checkLogin = (LoginInfo) httpSession.getAttribute("loginInfo");
+        if (checkLogin != null) {
+            LOGGER.info("로그인을 거부 했습니다 사유: 중복 로그인.");
+            return "redirect:/userError?error=duplicate";
+        }
         try {
             userService.login(user);
             LoginInfo loginInfo = new LoginInfo(
@@ -44,6 +50,14 @@ public class UserController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        httpSession.removeAttribute("loginInfo");
+        LOGGER.info("로그아웃 하였습니다");
+        return "redirect:/";
+    }
+
 
     @PostMapping("/userModify")
     public String userModify(HttpSession httpSession,User user){

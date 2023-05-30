@@ -189,9 +189,9 @@ class UserModelTest {
 
         // then
         assertEquals(true, idcheck);
-        LOGGER.info("사용 가능 ID 조회 검증을 성공 했습니다");
+        LOGGER.info("사용가능 ID 조회 검증을 성공 했습니다");
         assertEquals(false, idFalseCheck);
-        LOGGER.info("사용 불가능 ID 조회 검증을 성공 했습니다");
+        LOGGER.info("사용불가 ID 조회 검증을 성공 했습니다");
     }
 
     @Test

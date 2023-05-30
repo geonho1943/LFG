@@ -33,11 +33,7 @@ public class PageController {
         return "doc/docWrite";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession){
-        httpSession.removeAttribute("loginInfo");
-        return "redirect:/";
-    }
+
 
     @GetMapping("/myProfile")
     public String userProfile(HttpSession httpSession, Model model){
