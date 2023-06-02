@@ -5,23 +5,55 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>글 수정하기</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
+  <title>글 수정</title>
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="header.css" />
+  <link rel="stylesheet" href="board.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-  <H1>글 수정하기</H1>
-  <form action="/docUpdate" method="post">
-    <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
-    이름 : <a th:text="${loginInfo.user_name}"></a><br>
-    제목 : <input name="doc_sub" th:value="${doc.doc_sub}" /><br>
-    게임 타이틀: <input name="doc_app_name" th:value="${doc.doc_app_name}" /><br>
-    <input name="doc_app_id" th:value="${doc.doc_app_id}" style="display: none" /><br>
-    내용 : <br>
-    <textarea name="doc_cont" cols="50" rows="5" th:text="${doc.doc_cont}"></textarea><br>
-    <input type="submit" value="등록" />
-  </form>
+<div class="container">
+  <div class="header_dis">
+    <header class="header">
+      <div class="header_logo">
+        <a href="/">
+          <h1>LFG Doc</h1>
+        </a>
+      </div>
+      <span class="header_interface">
+          <ul>
+            <span class="user-info" th:if="${loginInfo != null}">
+              <a href="/logout">로그아웃</a>
+              <a th:text="${loginInfo.user_name}"></a>
+              <a href="/myProfile">내 프로필</a>
+              <a href="/docWrite">글쓰기</a>
+            </span>
+            <span class="user-info_null" th:if="${loginInfo == null}">
+              <a href="/userLogin">로그인</a>
+              <a href="/userJoin">회원가입</a>
+            </span>
+          </ul>
+        </span>
+    </header>
+  </div>
+  <div id="board-list">
+    <H1>글 수정하기</H1>
+
+    <form action="/docUpdate" method="post">
+      <input type="hidden" name="doc_idx" th:value="${doc.doc_idx}" />
+      이름 : <a th:text="${loginInfo.user_name}"></a><br>
+      제목 : <input name="doc_sub" th:value="${doc.doc_sub}" /><br>
+      게임 타이틀: <input name="doc_app_name" th:value="${doc.doc_app_name}" /><br>
+      <input name="doc_app_id" th:value="${doc.doc_app_id}" style="display: none" /><br>
+      내용 : <br>
+      <textarea name="doc_cont" cols="50" rows="5" th:text="${doc.doc_cont}"></textarea><br>
+      <input type="submit" value="등록" />
+    </form>
+  </div>
+</div>
+
 </body>
 
 </html>
