@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+    private final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @GetMapping("/log-test")
     public String logTest(){
-        LOGGER.info("첫 로그 test");
+        logger.info("첫 로그 test");
         return "/home";
     }
 }

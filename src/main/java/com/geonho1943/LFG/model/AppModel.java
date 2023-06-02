@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AppModel implements AppRepository {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AppModel.class);
+    private final Logger logger = LoggerFactory.getLogger(AppModel.class);
     private final DataSource dataSource;
 
     public AppModel(DataSource dataSource) {
@@ -42,11 +42,11 @@ public class AppModel implements AppRepository {
             }
             pstmt.executeBatch();
         } catch (Exception e) {
-            LOGGER.warn("lfg_app_list 테이블의 save 예외발생: " + e.getMessage() +
+            logger.warn("lfg_app_list 테이블의 save 예외발생: " + e.getMessage() +
                     ".\n데이터 갱신에 실패했습니다. 관리자의 확인이 필요합니다.");
             throw new IllegalStateException(e);
         } finally {
-            LOGGER.info("lfg_app_list테이블의 갱신 - save가 진행 되었습니다");
+            logger.info("lfg_app_list테이블의 갱신 - save가 진행 되었습니다");
             close(conn, pstmt, null);
         }
     }
@@ -102,11 +102,11 @@ public class AppModel implements AppRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.warn("lfg_app_list 테이블의 rowClear 예외 발생: " + e.getMessage() +
+            logger.warn("lfg_app_list 테이블의 rowClear 예외 발생: " + e.getMessage() +
                     ".\n데이터 정리에 실패했습니다. 관리자의 확인이 필요합니다.");
             throw new RuntimeException(e);
         }finally {
-            LOGGER.info("lfg_app_list테이블의 갱신 - roeClear가 진행 되었습니다");
+            logger.info("lfg_app_list테이블의 갱신 - roeClear가 진행 되었습니다");
             close(conn, pstmt, null);
         }
     }

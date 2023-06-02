@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 @Controller
 public class DocController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(DocController.class);
+    private final Logger logger = LoggerFactory.getLogger(DocController.class);
 
     private final DocService docService;
     private final AppService appService;
@@ -33,7 +33,7 @@ public class DocController {
         List<Doc> docs = docService.list();
         model.addAttribute("loginInfo",loginInfo);
         model.addAttribute("docs",docs);
-        if (loginInfo == null) LOGGER.info("메인 페이지가 활성화되었습니다.");
+        if (loginInfo == null) logger.info("메인 페이지가 활성화되었습니다.");
         return "doc/docList";
     }
 
@@ -41,7 +41,7 @@ public class DocController {
     public String docDetail(@RequestParam("doc_idx")int idx,HttpSession httpSession, Model model){
         try {
             LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
-            LOGGER.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 doc "+idx+" 를 조회 하였습니다");
+            logger.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 doc "+idx+" 를 조회 하였습니다");
             model.addAttribute("loginInfo",loginInfo);
         }catch (Exception e){
             return "redirect:/userError";
@@ -61,7 +61,7 @@ public class DocController {
         doc.setDoc_writ(loginInfo.getUser_name());
         appService.searchAppId(doc);//회원 정보 검증
         docService.post(doc);
-        LOGGER.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 의 새로운 글이 작성 되었습니다. ");
+        logger.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 의 새로운 글이 작성 되었습니다. ");
         return "redirect:";
     }
 
@@ -71,7 +71,7 @@ public class DocController {
         model.addAttribute("loginInfo",loginInfo);
         docService.modify(doc);
         model.addAttribute("doc",doc);
-        LOGGER.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 "+doc.getDoc_idx()+" 글을 수정 했습니다.");
+        logger.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 "+doc.getDoc_idx()+" 글을 수정 했습니다.");
         return "redirect:";
     }
 
@@ -108,7 +108,7 @@ public class DocController {
     public String docDelete(Doc doc,HttpSession httpSession, Model model){
         LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
-        LOGGER.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 "+doc.getDoc_idx()+" 글을 삭제 했습니다.");
+        logger.info(loginInfo.getUser_idx()+" / "+loginInfo.getUser_name()+" 가 "+doc.getDoc_idx()+" 글을 삭제 했습니다.");
         docService.delete(doc);
         return "redirect:/";
     }

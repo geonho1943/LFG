@@ -27,7 +27,7 @@ class DocModelTest {
     @Autowired
     private DocRepository docRepository;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(DocModelTest.class);
+    private final Logger logger = LoggerFactory.getLogger(DocModelTest.class);
 
     @BeforeEach
     void setUp() {
@@ -46,7 +46,7 @@ class DocModelTest {
                 ")";
         jdbcTemplate.execute(createSchemaQuery);
         jdbcTemplate.execute(createTableSql);
-        LOGGER.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
+        logger.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
     }
 
     @AfterEach
@@ -54,7 +54,7 @@ class DocModelTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String dropDocTable = "DROP TABLE IF EXISTS `lfg_doc`";
         jdbcTemplate.execute(dropDocTable);
-        LOGGER.info("doc Table 을 삭제 합니다.");
+        logger.info("doc Table 을 삭제 합니다.");
     }
 
     @Test
@@ -72,6 +72,7 @@ class DocModelTest {
         Assertions.assertEquals("내용", postDoc.getDoc_cont());
         Assertions.assertEquals(1, postDoc.getDoc_app_id());
         Assertions.assertEquals("애플리케이션", postDoc.getDoc_app_name());
+        logger.info("post 기능의 검증이 완료 되었습니다.");
     }
 
     @Test
@@ -89,6 +90,7 @@ class DocModelTest {
         Assertions.assertEquals(testForm.getDoc_cont(), readDoc.getDoc_cont());
         Assertions.assertEquals(testForm.getDoc_app_id(), readDoc.getDoc_app_id());
         Assertions.assertEquals(testForm.getDoc_app_name(), readDoc.getDoc_app_name());
+        logger.info("조회 기능 검증이 완료 되었습니다.");
     }
 
     @Test
@@ -105,6 +107,7 @@ class DocModelTest {
         Doc secondDoc = docs.get(1);
         Assertions.assertEquals(testForm2.getDoc_sub(), firstDoc.getDoc_sub());
         Assertions.assertEquals(testForm1.getDoc_sub(), secondDoc.getDoc_sub());
+        logger.info("글 조회기능 검증이 완료 되었습니다.");
     }
 
     @Test
@@ -122,6 +125,7 @@ class DocModelTest {
         Assertions.assertEquals("수정된 내용", modifyTestForm.getDoc_cont());
         Assertions.assertEquals(2, modifyTestForm.getDoc_app_id());
         Assertions.assertEquals("수정된 애플리케이션", modifyTestForm.getDoc_app_name());
+        logger.info("글 수정 기능의 검증이 완료 되었습니다.");
     }
 
     @Test
@@ -138,6 +142,7 @@ class DocModelTest {
 
         // Then
         assertNull(deleteDoc.getDoc_sub());
+        logger.info("글 삭제 기능의 검증이 완료 되었습니다.");
     }
 
 
@@ -161,6 +166,7 @@ class DocModelTest {
             Assertions.assertEquals(1, d.getDoc_app_id());
             Assertions.assertEquals("애플리케이션1", d.getDoc_app_name());
         }
+        logger.info("게임 조회 기능의 검증이 완료 되었습니다.");
     }
 
     public Doc docInputForTest(int doc_idx, String doc_sub, String doc_writ, String doc_cont, String doc_app_name, int doc_app_id){

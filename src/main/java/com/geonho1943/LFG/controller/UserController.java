@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
-    private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/userJoin")
     public String userJoin(User user){
         userService.join(user);
-        LOGGER.info("회원가입이 완료 되었습니다 : " +user.getUser_idx()+"/"+ user.getUser_name());
+        logger.info("회원가입이 완료 되었습니다 : " +user.getUser_idx()+"/"+ user.getUser_name());
         return "redirect:/";
     }
 
@@ -33,7 +33,7 @@ public class UserController {
     public String userLogin(User user, HttpSession httpSession) {
         LoginInfo checkLogin = (LoginInfo) httpSession.getAttribute("loginInfo");
         if (checkLogin != null) {
-            LOGGER.info("로그인을 거부 했습니다 사유: 중복 로그인.");
+            logger.info("로그인을 거부 했습니다 사유: 중복 로그인.");
             return "redirect:/userError?error=duplicate";
         }
         try {
@@ -44,7 +44,7 @@ public class UserController {
                     user.getUser_reg()
             );
             httpSession.setAttribute("loginInfo",loginInfo );
-            LOGGER.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 이 접속 하였습니다.");
+            logger.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 이 접속 하였습니다.");
         }catch (Exception e){
             return "redirect:/userError?error=ture";
         }
@@ -54,7 +54,8 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession){
         httpSession.removeAttribute("loginInfo");
-        LOGGER.info("로그아웃 하였습니다");
+        logger.info("로그아웃 하였습니다");
+
         return "redirect:/";
     }
 
@@ -62,7 +63,7 @@ public class UserController {
     @PostMapping("/userModify")
     public String userModify(HttpSession httpSession,User user){
         userService.modify(user);
-        LOGGER.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 의 정보가 수정 되었습니다.");
+        logger.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 의 정보가 수정 되었습니다.");
         httpSession.removeAttribute("loginInfo");
         return "redirect:";
     }

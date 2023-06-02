@@ -1,7 +1,6 @@
 package com.geonho1943.LFG.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.geonho1943.LFG.controller.AppController;
 import com.geonho1943.LFG.dto.App;
 import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.model.AppRepository;
@@ -20,7 +19,7 @@ import java.util.List;
 @Transactional
 @Service
 public class AppService {
-    private final Logger LOGGER = LoggerFactory.getLogger(AppService.class);
+    private final Logger logger = LoggerFactory.getLogger(AppService.class);
     private final AppRepository appRepository;
     @Autowired
     public AppService(AppRepository appRepository) {
@@ -54,7 +53,7 @@ public class AppService {
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
         appRepository.save(apps);
-        LOGGER.info("API 파싱 작업이 완료되었습니다. 소요시간: " + elapsedTime + "ms");
+        logger.info("API 파싱 작업이 완료되었습니다. 소요시간: " + elapsedTime + "ms");
     }
 
     public List<String> searchAppName(String name) {
