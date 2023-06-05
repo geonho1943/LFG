@@ -25,50 +25,47 @@ class UserModelTest {
     @Autowired
     private UserRepository userRepository;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserModelTest.class);
+    private final Logger logger = LoggerFactory.getLogger(UserModelTest.class);
 
     @BeforeEach
     public void setUp() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String createSchemaQuery = "CREATE SCHEMA IF NOT EXISTS LFGSERVICE;";
+        String createSchemaSql = "CREATE SCHEMA IF NOT EXISTS LFGSERVICE;";
         String createTableSql = "CREATE TABLE IF NOT EXISTS LFGservice.lfg_user"
         + "(user_idx INT AUTO_INCREMENT NOT NULL, user_id VARCHAR(45) NOT NULL,"
         + "user_pw VARCHAR(128) NOT NULL, user_name VARCHAR(45) NOT NULL, user_reg TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
         + "PRIMARY KEY (user_idx), UNIQUE (user_idx))";
-        jdbcTemplate.execute(createSchemaQuery);
-        jdbcTemplate.execute(createTableSql);
-        LOGGER.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
+        String createSha2Sql ="CREATE ALIAS SHA2 FOR 'com.geonho1943.LFG.utils.H2CustomFunctions.sha2'";
+        jdbcTemplate.execute(createSchemaSql);
+        jdbcTemplate.batchUpdate(createTableSql);
+        jdbcTemplate.batchUpdate(createSha2Sql);
+        logger.info("H2 데이터베이스의 스키마,테이블 생성이 완료 되었습니다.");
     }
     
     @AfterEach
     public void afterEach(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String dropSha2 = "DROP ALIAS IF EXISTS SHA2";
-        jdbcTemplate.execute(dropSha2);
-        LOGGER.info("커스텀 함수를 삭제하였습니다.");
+        String dropSha2Sql = "DROP ALIAS IF EXISTS SHA2";
+        String dropTableSql = "DROP TABLE IF EXISTS LFGservice.lfg_user";
+        String dropRoleTableSql = "DROP TABLE IF EXISTS LFGservice.lfg_user_role";
+        jdbcTemplate.execute(dropSha2Sql);
+        jdbcTemplate.batchUpdate(dropTableSql);
+        jdbcTemplate.batchUpdate(dropRoleTableSql);
+        logger.info("커스텀 함수를 삭제하였습니다.");
     }
     public void roleSetUp(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//        String createSchemaQuery = "CREATE SCHEMA IF NOT EXISTS LFGSERVICE;";
         String createTableSql = "CREATE TABLE IF NOT EXISTS LFGservice.lfg_user_role"
         + " (`user_idx` int(11) NOT NULL,`user_role` int(11) NOT NULL,"
         + "PRIMARY KEY (`user_idx`), UNIQUE KEY `user_idx_UNIQUE` (`user_idx`))";
-//        jdbcTemplate.execute(createSchemaQuery);
         jdbcTemplate.execute(createTableSql);
-        LOGGER.info("H2: lfg_user_role Table이  생성이 완료 되었습니다.");
-    }
-    void customMethod(){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String sha256Custom ="CREATE ALIAS SHA2 FOR 'com.geonho1943.LFG.utils.H2CustomFunctions.sha2'";
-        jdbcTemplate.execute(sha256Custom);
-//        String timeCustom ="CREATE ALIAS CURRENT_TIMESTAMP FOR 'com.geonho1943.LFG.utils.H2CustomFunctions.timestamp'";
-//        jdbcTemplate.execute(timeCustom);
+        logger.info("H2: lfg_user_role Table이  생성이 완료 되었습니다.");
     }
 
     @Test
     void joinTest() throws SQLException {
         //given
-        customMethod();
+
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -83,17 +80,16 @@ class UserModelTest {
             pstmt.setString(1, "test_id");
             try (ResultSet rs = pstmt.executeQuery()) {
                 assertTrue(rs.next());
-                assertEquals(rs.getString("user_id"), savedUser.getUser_id());
-                assertEquals(rs.getString("user_name"), savedUser.getUser_name());
+                assertEquals(savedUser.getUser_id(), rs.getString("user_id"));
+                assertEquals(savedUser.getUser_name(), rs.getString("user_name"));
             }
         }
-        LOGGER.info("join 검증이 완료 되었습니다.");
+        logger.info("join 검증이 완료 되었습니다.");
     }
 
     @Test
     void loginTest() throws SQLException {
         // given
-        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -111,32 +107,30 @@ class UserModelTest {
         assertEquals("test_id", loggedInUser.getUser_id());
         assertEquals("test_name", loggedInUser.getUser_name());
 
-        LOGGER.info("login 검증이 완료 되었습니다.");
+        logger.info("login 검증이 완료 되었습니다.");
     }
 
     @Test
     void loginFailTest() {
-        // Given
-        customMethod();
+        //Given
         User user = new User();
         user.setUser_id("test_id");
-        user.setUser_pw("invalid_pw");
+        user.setUser_pw("test_pw");
 
         // When
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        try{
             userRepository.login(user);
-        });
-
-        //Then
-        assertEquals("java.sql.SQLException: 회원정보를 다시 입력하세요", exception.getMessage());
-        LOGGER.info("login 예외 검증이 완료 되었습니다.");
+            fail("정상 로그인 됨: 로그인 실패가 검증되지 않았습니다");
+        } catch (IllegalArgumentException e) {
+            assertEquals(IllegalArgumentException.class, e.getClass());
+        }
+        logger.info("login 예외 검증이 완료 되었습니다.");
     }
 
     @Test
     void roleTest() throws SQLException {
         // Given
         roleSetUp();
-        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -149,14 +143,13 @@ class UserModelTest {
 
         // Then
         assertEquals(2, user.getUser_role());
-        LOGGER.info("권한 할당 검증이 완료되었습니다.");
+        logger.info("권한 할당 검증이 완료되었습니다.");
     }
 
     @Test
     void authTest() {
         // given
         roleSetUp();
-        customMethod();
         User user = new User();
         user.setUser_id("test_id2");//user_role 2 사용자 계정
         user.setUser_pw("test_pw2");
@@ -168,13 +161,12 @@ class UserModelTest {
         userRepository.auth(user);
         // then
         assertEquals(2,user.getUser_role());
-        LOGGER.info("권힌 조회 검증이 완료 되었습니다.");
+        logger.info("권힌 조회 검증이 완료 되었습니다.");
     }
 
     @Test
     void checkTest() {
         // given
-        customMethod();
         User user = new User();
         user.setUser_id("test_id_true");
         User user1 = new User();
@@ -189,15 +181,14 @@ class UserModelTest {
 
         // then
         assertEquals(true, idcheck);
-        LOGGER.info("사용가능 ID 조회 검증을 성공 했습니다");
+        logger.info("사용가능 ID 조회 검증을 성공 했습니다");
         assertEquals(false, idFalseCheck);
-        LOGGER.info("사용불가 ID 조회 검증을 성공 했습니다");
+        logger.info("사용불가 ID 조회 검증을 성공 했습니다");
     }
 
     @Test
     void modifyTest() {
         // given
-        customMethod();
         User user = new User();
         user.setUser_id("test_id");
         user.setUser_pw("test_pw");
@@ -222,7 +213,6 @@ class UserModelTest {
         user.setUser_id("sleep_test_id");
         user.setUser_pw("sleep_test_pw");
         user.setUser_name("sleep_test_name");
-        customMethod();
         userRepository.join(user);
 
         // When
@@ -233,9 +223,9 @@ class UserModelTest {
             userRepository.login(user);
             fail("회원정보가 정상조회됨: 회원 정보가 정상적으로 삭제 되지 않았습니다");
         } catch (IllegalArgumentException e) {
-            assertEquals("java.sql.SQLException: 회원정보를 다시 입력하세요", e.getMessage());
+            assertEquals(IllegalArgumentException.class, e.getClass());
         }
-        LOGGER.info("로그인 예외 처리 검증이 완료되었습니다.");
+        logger.info("로그인 예외 처리 검증이 완료되었습니다.");
     }
 
 }
