@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>userJoin</title>
-  <link rel="stylesheet" href="reset.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="header.css" />
-  <link rel="stylesheet" href="board.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
+    <meta charset="UTF-8" />
+    <title>userJoin</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="board.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
     .possible {
       display: none;
       color: green;
@@ -23,15 +23,15 @@
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
     <div class="header_dis">
-      <header class="header">
-        <div class="header_logo">
-          <a href="/">
-            <h1>LFG Login</h1>
-          </a>
-        </div>
-        <span class="header_interface">
+        <header class="header">
+            <div class="header_logo">
+                <a href="/">
+                    <h1>LFG Login</h1>
+                </a>
+            </div>
+            <span class="header_interface">
           <ul>
             <span class="user-info" th:if="${loginInfo != null}">
               <a href="/logout">로그아웃</a>
@@ -45,49 +45,68 @@
             </span>
           </ul>
         </span>
-      </header>
+        </header>
     </div>
     <!-- board list area -->
     <div id="board-list">
-      <div class="container" style="
+        <div class="container" style="
           margin: auto;
           width: fit-content;
           border-radius: 15px;
           padding: 15px;
         ">
-        <h1>회원가입</h1>
-        <div class="container">
-          <form action="/userJoin" method="post">
-            <div class="form-group">
-              <label for="id">ID</label>
-              <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요" />
-              <button type="button" onclick="idCheck()">ID 확인</button><br />
-              <span class="possible">사용가능한 ID 입니다!</span>
-              <span class="impossible">다른 ID 를 시도해주세요</span>
-              <br />
-              <label for="name">이름</label>
-              <input type="text" id="name" name="user_name" placeholder="이름을 입력하세요" /><br />
+            <h1>회원가입</h1>
+            <div class="container">
+                <form action="/userJoin" method="post">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="user_id" placeholder="ID을 입력하세요" />
+                        <button type="button" onclick="idCheck()">ID 확인</button><br />
+                        <span class="possible">사용가능한 ID 입니다!</span>
+                        <span class="impossible">다른 ID 를 시도해주세요</span>
+                        <br />
+                        <label for="name">이름</label>
+                        <input type="text" id="name" name="user_name" placeholder="이름을 입력하세요" /><br />
 
-              <label for="pw1">PW</label>
-              <input type="text" id="pw1" name="user_pw" placeholder="PW을 입력하세요" /><br />
-              <label for="pw2">PW</label>
-              <input type="text" id="pw2" placeholder="PW을 다시 입력하세요" /><br />
+                        <label for="pw1">PW</label>
+                        <input type="text" id="pw1" name="user_pw" placeholder="PW을 입력하세요" /><br />
+                        <label for="pw2">PW</label>
+                        <input type="text" id="pw2" placeholder="PW을 다시 입력하세요" /><br />
 
-              <button type="button" onclick="pwCheck()">pw 확인</button>
-              <button id="subbtn" disabled="disabled" type="submit">
-                등록
-              </button>
+                        <button type="button" onclick="pwCheck()">pw 확인</button>
+                        <button id="subbtn" disabled="disabled" type="submit">
+                            등록
+                        </button>
+                    </div>
+                </form>
             </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
-</body>
+</div>
 <script type="text/javascript">
+var idCheckEnabled = false;
+
   function idCheck() {
     var id = document.getElementById("id").value;
-    //var id = $('#id').val();
+    //var id = $('#id').val(); 제이쿼리
+
+    if (id.length < 6 || id.length > 12) {
+      alert("아이디는 6~12글자로 구성되어야 합니다.");
+      return;
+    }
+
+    var han = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+    if (han.test(id)) {
+      alert("아이디에는 한글을 사용할 수 없습니다.");
+      return;
+    }
+
+
+    var specialChars = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if (specialChars.test(id)) {
+      alert("아이디에는 특수문자를 사용할 수 없습니다.");
+      return;
+    }
 
     $.ajax({
       url: "./idCheck",
@@ -98,10 +117,12 @@
           $(".possible").css("display", "inline-block");
           $(".impossible").css("display", "none");
           alert("사용가능한 ID 입니다!");
+          idCheckEnabled = true;
         } else {
           $(".impossible").css("display", "inline-block");
           $(".possible").css("display", "none");
           alert("아이디를 다시 입력해주세요");
+          idCheckEnabled = false;
           // $('#id').val('');
         }
       },
@@ -111,15 +132,40 @@
     });
   }
 
+  document.getElementById("id").addEventListener("input", function () {
+  if (idCheckEnabled) {
+    $(".possible").css("display", "none");
+    idCheckEnabled = false;
+  }
+});
+
+
   function pwCheck() {
     const pw1 = document.getElementById("pw1").value;
     const pw2 = document.getElementById("pw2").value;
-    if (pw1 == pw2) {
-      alert("pw가 일치 합니다");
-      const target = document.getElementById("subbtn");
-      target.disabled = false;
+
+    if (!pwPattern(pw1)) {
+      alert("비밀번호는 영어 대문자, 소문자, 숫자, 특수문자를 각각 사용하여 8~20글자로 구성되어야 합니다.");
+      return;
     }
+
+    if (pw1 == pw2) {
+      alert("비밀번호가 일치 합니다");
+      const target = document.getElementById("subbtn");
+      if($(".possible").css("display") === "inline-block"){
+        target.disabled = false;
+      }
+    } else {
+      alert("비밀번호가 일치하지 않습니다");
+    }
+
+    function pwPattern(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+    return regex.test(password);
+    }
+
   }
 </script>
+</body>
 
 </html>
