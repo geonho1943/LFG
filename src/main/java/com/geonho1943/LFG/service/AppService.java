@@ -58,7 +58,6 @@ public class AppService {
 
     public List<String> searchAppName(String name) {
         return appRepository.searchAppName(name);
-
     }
 
     public Doc searchAppId(Doc doc) {

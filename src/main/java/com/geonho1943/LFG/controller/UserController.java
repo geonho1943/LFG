@@ -6,6 +6,7 @@ import com.geonho1943.LFG.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,11 @@ public class UserController {
         userService.join(user);
         logger.info("회원가입이 완료 되었습니다 : " +user.getUser_idx()+"/"+ user.getUser_name());
         return "redirect:/";
+    }
+
+    @GetMapping("/userJoin")
+    public String userJoinPage(){
+        return "user/userJoin";
     }
 
     @PostMapping("/userLogin")
@@ -51,14 +57,24 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/userLogin")
+    public String userLoginPage(){
+        return "user/userLogin";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession httpSession){
         httpSession.removeAttribute("loginInfo");
         logger.info("로그아웃 하였습니다");
-
         return "redirect:/";
     }
 
+    @GetMapping("/myProfile")
+    public String userProfile(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "user/userProfile";
+    }
 
     @PostMapping("/userModify")
     public String userModify(HttpSession httpSession,User user){
@@ -68,10 +84,22 @@ public class UserController {
         return "redirect:";
     }
 
+    @GetMapping("/userModify")
+    public String userModify(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "user/userModify";
+    }
+
     @PostMapping("/idCheck")
     @ResponseBody
     public boolean idCheck(@RequestParam("id") String id) {
         return userService.check(id);
+    }
+
+    @GetMapping("/userError")
+    public String errorPage(){
+        return "user/userError";
     }
 
 }

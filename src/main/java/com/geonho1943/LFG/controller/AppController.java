@@ -21,7 +21,7 @@ public class AppController {
     public String appList() {
         appService.rowClear();
         appService.apiParsing();
-        return "home";
+        return "redirect:";
     }
 
     @PostMapping("/searchApp")

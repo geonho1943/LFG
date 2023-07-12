@@ -37,6 +37,8 @@ public class DocController {
         return "doc/docList";
     }
 
+
+
     @GetMapping("/docDetail")
     public String docDetail(@RequestParam("doc_idx")int idx,HttpSession httpSession, Model model){
         try {
@@ -54,8 +56,7 @@ public class DocController {
     }
 
     @PostMapping("/docPost")
-    public String docPost(Doc doc,HttpSession httpSession,Model model
-    ){
+    public String docPost(Doc doc,HttpSession httpSession,Model model){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
         model.addAttribute("loginInfo",loginInfo);
         doc.setDoc_writ(loginInfo.getUser_name());
