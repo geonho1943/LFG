@@ -1,63 +1,127 @@
 ## LFG
 
 <H3>LFG(Looking For Group)</H3>
+스팀 멀티 플레이 개임의 방만들기, 같이하기 등의 <br>
+유저모집 기능이 없는 게임의 파티를 모집할수 있는 웹 사이트입니다<br>
 
-파티 모집을 지원하지않는 게임들을 위한 게임 파티 찾기 서비스 입니다.<br>
-[LFG SNAPSHOT 둘러보기](http://144.24.80.93/)
-
-## 파티 모집을 지원하지 않은 게임이란? 🤷<br>
-
-__멀티 게임__ 이지만 인게임에서 플레이어 찾기, 모집을 __지원하지 않는__ 게임 입니다.<br>
-
-[PICO PARK Classic_Edition](https://store.steampowered.com/app/461040/PICO_PARKClassic_Edition/)<br>
+### 파티 모집을 지원하지 않은 게임<br>
+[PICO PARK](https://store.steampowered.com/app/461040/PICO_PARKClassic_Edition/)<br>
 [RAFT](https://store.steampowered.com/app/648800/Raft/)<br>
 [WE WERE HERE](https://store.steampowered.com/app/582500/We_Were_Here/)<br>
 [ASTRONEER](https://store.steampowered.com/app/361420/ASTRONEER/)<br>
 [스팀에세 멀티게임 더 찾아보기](https://store.steampowered.com/category/multiplayer/)<br>
-
 ---
-## User Guide<br>
- UI 가 변경 될 수 있습니다.
-<br>
-
-<img width="839" alt="main_page" src="https://user-images.githubusercontent.com/106109077/227200348-5dd9d6b6-0644-422e-9d44-3b70af63eb50.png"><br>
-
-```
-메인 페이지에서 LFG 글을 최신순으로 볼 수 있습니다.
-```
-<br>
-
-<img width="827" alt="app_name_search" src="https://user-images.githubusercontent.com/106109077/227203505-82bebee8-ee02-46ba-b3e5-205628eac6d7.png"><br>
-
-```
-메인 페이지의 게임 검색기능으로 원하는 게임의 글만 조회 할 수 있습니다.
-```
-<br>
-
-<img width="826" alt="doc_writ" src="https://user-images.githubusercontent.com/106109077/227205861-ba9a0962-3002-47d4-be6f-480c9298d630.png"><br>
-```
-직접 게임파티 모집글을 게시 할 수 있습니다.
-등록이 완료되면 스팀의 게임베너와 동일한 이미지가 게시글에서 보여집니다! 
-```
-<br>
+## Period
+2022/10/31 ~
 
 ## Environment
-LFG 서비스는 이것으로 실행 됩니다.
-* Language: Java17
-* Framework: Spring Boot 2.7.3
-* DB: MariaDB 5.5.68
-* Template engine: Thymeleaf
-* JavaScript Library: jQuery 3.6.0
 
-LFG 서비스는 이것으로 만들어졌습니다.
-* IntelliJ IDEA Community Edition 
-* Visual Studio Code
-* Spring Initializr
+* BE: 
+  * Java17
+  * Spring Boot
+  * JUnit, Gradle
+  * GitHub Actions
+* FE: 
+  * HTML
+  * CSS
+  * JS
+  * jQuery
+  * Thymeleaf
+* DB:
+  * MariaDB
+  * H2DB
+* ETC:
+  * AWS
+  * Oracle Cloud
 
-LFG 서비스는 이곳에서 실행됩니다
-* AWS Ec2
-* Oracle Cloud
+
+## workFlow
+![LFG_workFlow_V9](https://github.com/geonho1943/LFG/assets/106109077/b84d7375-f8f2-4696-a403-09df791e632c)
+<h6> gliffy </h6>
+
+id: pushvalue42<br>
+pw: aL!ce!n1865<br>
+
+## ERD
+![LFG_ERD](https://github.com/geonho1943/LFG/assets/106109077/e48350ac-b499-4b2b-840e-5859c16d9cb1)
+<h6> MySQL Workbench </h6>
+
+##  API
+
+### Doc
+| 이름         | 메서드    | 엔드 포인트   | 설명           | in     | out            |
+|--------------|--------|---------------|----------------|--------|----------------|
+| 메인 페이지 | GET    | /             | 메인 페이지   |        | doc/docList    |
+| 게시물 검색 | GET    | /docDetail    | 게시물이 검색된 페이지 반환 | idx    | doc/docDetail  |
+| 글 쓰기 기능 | POST   | /docPost      | 게시물 작성   | Doc    | redirect:/     |
+| 글 수정 페이지 | GET    | /docUpdate    | 게시물 수정 페이지 | doc_idx | doc/docUpdate |
+| 글 수정     | PUT    | /docUpdate    | 게시물 수정   | Doc    | redirect:/     |
+| 글 검색     | GET    | /docSearch    | 이름으로 게시물 조회 | name   | doc/docList    |
+| 글 삭제     | DELETE | /docDelete    | 게시물 삭제   | Doc    | redirect:/     |
+
+### App
+| 이름            | 메서드 | 엔드 포인트 | 설명                | in   | out                |
+|-----------------|--------|-------------|-------------------|------|--------------------|
+| 앱 리스트 갱신 | PUT    | /appList    | 최신 스팀 게임 리스트로 동기화 |      | redirect:/         |
+| 앱 검색         | POST   | /searchApp  | 앱(게임) 조회          | name | appService.searchAppName(name) |
+
+### User
+
+| 이름              | 메서드 | 엔드 포인트  | 설명                          | in       | out                          |
+|------------------|--------|--------------|-------------------------------|----------|------------------------------|
+| 회원가입 페이지 | GET    | /userJoin    | 유저 회원가입 페이지         |          | user/userJoin                |
+| 회원가입         | POST   | /userJoin    | 유저 회원가입                 | User     | redirect:/                   |
+| 로그인 페이지    | GET    | /userLogin   | 유저 로그인 페이지           |          | user/userLogin               |
+| 로그인            | POST   | /userLogin   | 유저 로그인                   | User     | redirect:/                   |
+| 로그아웃         | GET    | /logout      | 유저 로그아웃                 |          | redirect:/                   |
+| 회원정보 수정 페이지 | GET    | /userModify  | 유저 회원정보 수정 페이지   |          | user/userModify              |
+| 회원정보 수정     | PUT    | /userModify  | 유저 회원정보 수정           | User     | redirect:/                   |
+| 회원 프로필       | GET    | /myProfile   | 유저 회원정보 조회           |          | user/userProfile             |
+| id 중복체크       | POST   | /idCheck     | 회원가입시 id 중복 검증 (비동기) | id       | userService.check(id)        |
+| 유저오류 페이지  | GET    | /userError   | 유저정보에 의한 에러 페이지 |          | user/userError               |
+
+## DTO
+
+### App
+
+| 데이터 타입 | 변수명      |
+|-------------|----------|
+| int         | app_id   |
+| String      | app_name |
 
 
-## License
-https://choosealicense.com/licenses/mit/
+### Doc
+
+| 데이터 타입 | 변수명          |
+|-------------|--------------|
+| int         | doc_idx      |
+| String      | doc_sub      |
+| String      | doc_writ     |
+| String      | doc_cont     |
+| String      | doc_reg      |
+| String      | doc_app_name |
+| int         | doc_app_id   |
+
+
+### LoginInfo
+
+| 데이터 타입 | 변수명       |
+|-------------|-----------|
+| int         | user_idx  |
+| String      | user_id   |
+| String      | user_name |
+| String      | user_reg  |
+| int         | user_role |
+
+
+### User
+
+| 데이터 타입 | 변수명       |
+|-------------|-----------|
+| int         | user_idx  |
+| String      | user_id   |
+| String      | user_name |
+| String      | user_pw   |
+| String      | user_reg  |
+| int         | user_role |
+
