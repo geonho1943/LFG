@@ -55,9 +55,9 @@ pw: aL!ce!n1865<br>
 | 게시물 검색 | GET    | /docDetail    | 게시물이 검색된 페이지 반환 | idx    | doc/docDetail  |
 | 글 쓰기 기능 | POST   | /docPost      | 게시물 작성   | Doc    | redirect:/     |
 | 글 수정 페이지 | GET    | /docUpdate    | 게시물 수정 페이지 | doc_idx | doc/docUpdate |
-| 글 수정     | PUT    | /docUpdate    | 게시물 수정   | Doc    | redirect:/     |
+| 글 수정     | POST    | /docUpdate    | 게시물 수정   | Doc    | redirect:/     |
 | 글 검색     | GET    | /docSearch    | 이름으로 게시물 조회 | name   | doc/docList    |
-| 글 삭제     | DELETE | /docDelete    | 게시물 삭제   | Doc    | redirect:/     |
+| 글 삭제     | POST | /docDelete    | 게시물 삭제   | Doc    | redirect:/     |
 
 ### App
 | 이름            | 메서드 | 엔드 포인트 | 설명                | in   | out                |
@@ -75,7 +75,7 @@ pw: aL!ce!n1865<br>
 | 로그인            | POST   | /userLogin   | 유저 로그인                   | User     | redirect:/                   |
 | 로그아웃         | GET    | /logout      | 유저 로그아웃                 |          | redirect:/                   |
 | 회원정보 수정 페이지 | GET    | /userModify  | 유저 회원정보 수정 페이지   |          | user/userModify              |
-| 회원정보 수정     | PUT    | /userModify  | 유저 회원정보 수정           | User     | redirect:/                   |
+| 회원정보 수정     | POST    | /userModify  | 유저 회원정보 수정           | User     | redirect:/                   |
 | 회원 프로필       | GET    | /myProfile   | 유저 회원정보 조회           |          | user/userProfile             |
 | id 중복체크       | POST   | /idCheck     | 회원가입시 id 중복 검증 (비동기) | id       | userService.check(id)        |
 | 유저오류 페이지  | GET    | /userError   | 유저정보에 의한 에러 페이지 |          | user/userError               |
