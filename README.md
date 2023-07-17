@@ -49,21 +49,22 @@ pw: aL!ce!n1865<br>
 ##  API
 
 ### Doc
-| 이름         | 메서드    | 엔드 포인트   | 설명           | in     | out            |
-|--------------|--------|---------------|----------------|--------|----------------|
-| 메인 페이지 | GET    | /             | 메인 페이지   |        | doc/docList    |
-| 게시물 검색 | GET    | /docDetail    | 게시물이 검색된 페이지 반환 | idx    | doc/docDetail  |
-| 글 쓰기 기능 | POST   | /docPost      | 게시물 작성   | Doc    | redirect:/     |
-| 글 수정 페이지 | GET    | /docUpdate    | 게시물 수정 페이지 | doc_idx | doc/docUpdate |
-| 글 수정     | POST    | /docUpdate    | 게시물 수정   | Doc    | redirect:/     |
-| 글 검색     | GET    | /docSearch    | 이름으로 게시물 조회 | name   | doc/docList    |
-| 글 삭제     | POST | /docDelete    | 게시물 삭제   | Doc    | redirect:/     |
+| 이름       | 메서드  | 엔드 포인트     | 설명                | in   | out           |
+|----------|------|------------|-------------------|------|---------------|
+| 메인 페이지   | GET  | /          | 메인 페이지            |      | doc/docList   |
+| 게시물 검색   | GET  | /docDetail | 게시물이 검색된 페이지      | idx  | doc/docDetail |
+| 글 작성 페이지 | GET  | /docPost   | 게시물 작성 페이지        |      | doc/docpost   |
+| 글 작성     | POST | /docPost   | 게시물 작성            | Doc  | redirect:/    |
+| 글 수정 페이지 | GET  | /docUpdate | 게시물 수정 페이지        | doc_idx | doc/docUpdate |
+| 글 수정     | POST | /docUpdate | 게시물 수정            | Doc  | redirect:/    |
+| 글 검색     | GET  | /docSearch | 게임 이름으로 게시물 조회 페이지 | name | doc/docList   |
+| 글 삭제     | POST | /docDelete | 게시물 삭제            | Doc  | redirect:/    |
 
 ### App
-| 이름            | 메서드 | 엔드 포인트 | 설명                | in   | out                |
-|-----------------|--------|-------------|-------------------|------|--------------------|
-| 앱 리스트 갱신 | PUT    | /appList    | 최신 스팀 게임 리스트로 동기화 |      | redirect:/         |
-| 앱 검색         | POST   | /searchApp  | 앱(게임) 조회          | name | appService.searchAppName(name) |
+| 이름            | 메서드 | 엔드 포인트 | 설명           | in   | out                |
+|-----------------|--------|-------------|--------------|------|--------------------|
+| 앱 리스트 갱신 | GET    | /appList    | 스팀 게임 리스트 갱신 |      | redirect:/         |
+| 앱 검색         | POST   | /searchApp  | 앱(게임) 조회     | name | appService.searchAppName(name) |
 
 ### User
 

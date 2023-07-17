@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>MyProfile</title>
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="header.css" />
-    <link rel="stylesheet" href="board.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/board.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
@@ -25,7 +25,7 @@
                 <a href="/logout">로그아웃</a>
                 <a th:text="${loginInfo.user_name}"></a>
                 <a href="/myProfile">내 프로필</a>
-                <a href="/docWrite">글쓰기</a>
+                <a href="/docPost">글쓰기</a>
               </span>
               <span class="user-info_null" th:if="${loginInfo == null}">
                 <a href="/userLogin">로그인</a>

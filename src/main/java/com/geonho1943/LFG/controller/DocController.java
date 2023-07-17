@@ -55,6 +55,13 @@ public class DocController {
         return "doc/docDetail";
     }
 
+    @GetMapping("/docPost")
+    public String docPostPage(HttpSession httpSession, Model model){
+        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo",loginInfo);
+        return "doc/docPost";
+    }
+
     @PostMapping("/docPost")
     public String docPost(Doc doc,HttpSession httpSession,Model model){
         LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
