@@ -40,18 +40,14 @@
     </div>
     <div id="board-list">
       <h1>글쓰기 폼</h1>
-      <input
-        style="width: 400px; height: 30px; border-radius: 10px; outline: none; padding-left: 10px;background-color: #DCDDD8;"
-        id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
-      <div id="name-list-container"
-        style="background-color: #DCDDD8; display: inline-block; width: 400px; border-radius: 10px;margin-left: 70px; margin-bottom: 20px;">
-      </div>
+      <input id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
+      <div id="name-list-container-main"></div>
       <form action="/docPost" method="post">
+        <input id="app_name" name="doc_app_name" style="display: none;" /><br>
         이름 : <a th:text="${loginInfo.user_name}"></a><br>
-        제목 : <input type="text" name="doc_sub" /><br>
-        <input id="app_name" name="doc_app_name" /><br>
+        제목 : <input type="text" name="doc_sub" class="input-area" /><br>
         내용 : <br />
-        <textarea name="doc_cont" cols="50" rows="5"></textarea><br>
+        <textarea name="doc_cont" cols="50" rows="5" class="input-area-content"></textarea><br>
         <input type="submit" value="등록" />
       </form>
     </div>
@@ -76,7 +72,7 @@
       url: './searchApp', type: 'post', data: { name: name },
 
       success: function (apps) {
-        var listContainer = document.getElementById('name-list-container');
+        var listContainer = document.getElementById('name-list-container-main');
         while (listContainer.firstChild) {
           listContainer.removeChild(listContainer.firstChild);
         }

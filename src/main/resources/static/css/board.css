@@ -17,42 +17,49 @@ html {
     padding: 10px;
 }
 
-/* 
-.board-table a {
-    color: #333;
+#search_name {
+    width: 400px;
+    height: 30px;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 15px;
+    background: #DCDDD8;
+}
+
+.search_name_btn {
+    height: 35px;
+    width: 60px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #4b515d;
+}
+
+#name-list-container {
+    background-color: #dcddd8;
     display: inline-block;
-    line-height: 1.4;
-    word-break: break-all;
-    vertical-align: middle;
+    width: 400px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.board-table th {
-    text-align: center;
+#name-list-container-main {
+    background-color: #dcddd8;
+    display: inline-block;
+    width: 400px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 5px;
 }
 
-.board-table .th-num {
-    width: 100px;
-    text-align: center;
+.input-area {
+    border-radius: 10px;
+    outline: none;
+    background: #DCDDD8;
 }
 
-.board-table .th-date {
-    width: 200px;
+.input-area-content {
+    border-radius: 10px;
+    outline: none;
+    background: #DCDDD8;
+    padding: 10pxs;
 }
-
-.board-table th,
-.board-table td {
-    리스트 꾸미는거임 이거 수정하기 
-    padding: 14px 0;
-}
-
-.board-table tbody td {
-    border-top: 1px solid #e7e7e7;
-    text-align: center;
-}
-
-.board-table tbody th {
-    padding-left: 28px;
-    padding-right: 14px;
-    border-top: 1px solid #e7e7e7;
-    text-align: left;
-} */

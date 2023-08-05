@@ -40,35 +40,13 @@
     <!-- board list area -->
     <div id="board-list">
       <table>
-        <label for="search_name">게임 검색: </label>
-
-        <input style="
-              width: 400px;
-              height: 30px;
-              border-radius: 10px;
-              outline: none;
-              padding-left: 10px;
-              background-color: #dcddd8;
-            " id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
+        <input id="search_name" oninput="search_name()" type="text" placeholder="게임명을 입력하세요" />
         <form action="/docSearch" method="get">
           <input id="name" type="hidden" name="name" />
-          <input type="submit" value="검색" style="
-                height: 35px;
-                width: 60px;
-                border: 0px;
-                border-radius: 10px;
-                background-color: #4b515d;
-              " />
+          <input type="submit" value="검색" class="search_name_btn" />
         </form>
 
-        <div id="name-list-container" style="
-              background-color: #dcddd8;
-              display: inline-block;
-              width: 400px;
-              border-radius: 10px;
-              margin-left: 70px;
-              margin-bottom: 20px;
-            "></div>
+        <div id="name-list-container-main"></div>
 
         <!-- docList -->
         <tbody>
@@ -120,7 +98,7 @@
       data: { name: name },
 
       success: function (apps) {
-        var listContainer = document.getElementById("name-list-container");
+        var listContainer = document.getElementById("name-list-container-main");
         while (listContainer.firstChild) {
           listContainer.removeChild(listContainer.firstChild);
         }
