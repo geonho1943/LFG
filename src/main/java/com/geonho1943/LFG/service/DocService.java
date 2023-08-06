@@ -26,8 +26,9 @@ public class DocService {
         return docRepository.post(doc);
     }
 
-    public List<Doc> list() {
-        return docRepository.list();
+    public List<Doc> list(int page) {
+        int docStart = (page - 1) * 5;
+        return docRepository.list(docStart);
     }
 
     public Doc modify(Doc doc) {
@@ -36,12 +37,19 @@ public class DocService {
 
     public void delete(Doc doc) {
         docRepository.delete(doc);
-//        return docRepository.delete(doc);
     }
 
-    public List<Doc> appNameList(Doc doc) {
-        return docRepository.appNameList(doc);
+    public List<Doc> appNameList(Doc doc, int page) {
+        int docStart = (page - 1) * 5;
+        return docRepository.appNameList(doc, docStart);
     }
 
 
+    public int docCount() {
+        return docRepository.docCount();
+    }
+
+    public int docSearchCount(String name) {
+        return docRepository.docSearchCount(name);
+    }
 }

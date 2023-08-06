@@ -11,7 +11,9 @@ public interface DocRepository {
     Doc modify(Doc doc);//수정
     void delete(Doc doc);//삭제
 
-    List<Doc> list();
+    List<Doc> list(int docStart);
+    List<Doc> appNameList(Doc doc, int docStart);
 
-    List<Doc> appNameList(Doc doc);
+    int docCount();
+    int docSearchCount(String name);
 }

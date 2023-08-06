@@ -2,6 +2,7 @@ package com.geonho1943.LFG.model;
 
 import com.geonho1943.LFG.dto.Doc;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,8 +16,56 @@ public class DocModel implements DocRepository{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public int docCount() {// 페이징을 위해 모든 문서의 수를 반환
+        int docCount = 0;
+        String sql = "select count(*) as total_count from lfg_doc";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                docCount = rs.getInt(1);
+            }
+            return docCount;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int docSearchCount(String name) {// 페이징을 위해 모든 문서의 수를 반환
+        int docCount = 0;
+        String sql = "select count(*) as total_count from lfg_doc where doc_app_name=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,name);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                docCount = rs.getInt(1);
+            }
+            return docCount;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+
+    @Override
     public Doc post(Doc doc) {
-        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_app_id`,`doc_app_name`,`doc_reg`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP());";
+        String sql = "INSERT INTO `LFGservice`.`lfg_doc` (`doc_sub`, `doc_writ`, `doc_cont`,`doc_app_id`,`doc_app_name`,`doc_reg`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP())";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -43,6 +92,7 @@ public class DocModel implements DocRepository{
         }
     }
 
+    @Override
     public Doc read(Doc doc) {
         String sql = "select * from `LFGservice`.`lfg_doc` where doc_idx=?";
         Connection conn = null;
@@ -70,14 +120,15 @@ public class DocModel implements DocRepository{
     }
 
     @Override
-    public List<Doc> list() {
-        String sql = "select * from `LFGservice`.`lfg_doc` order by doc_idx desc;";
+    public List<Doc> list(int docStart) {
+        String sql = "select * from `LFGservice`.`lfg_doc` order by doc_idx desc limit ?,5";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,docStart);
             rs = pstmt.executeQuery();
             List<Doc> docs = new ArrayList<>();
             while (rs.next()) {
@@ -88,6 +139,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_reg(rs.getString("doc_reg"));
                 doc.setDoc_app_id(rs.getInt("doc_app_id"));
+                doc.setDoc_app_name(rs.getString("doc_app_name"));
                 docs.add(doc);
             }
             return docs;
@@ -101,7 +153,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public Doc modify(Doc doc) {
-        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ? where doc_idx = ?;";
+        String sql = "update `LFGservice`.`lfg_doc` set doc_sub = ?,doc_cont = ?,doc_app_id = ?,doc_app_name = ? where doc_idx = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -125,7 +177,7 @@ public class DocModel implements DocRepository{
 
     @Override
     public void delete(Doc doc) {
-        String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?);";
+        String sql = "DELETE FROM `LFGservice`.`lfg_doc` WHERE (`doc_idx` = ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -141,8 +193,8 @@ public class DocModel implements DocRepository{
     }
 
     @Override
-    public List<Doc> appNameList(Doc doc) {
-        String sql = "select * from `LFGservice`.`lfg_doc` where doc_app_name=? order by doc_idx desc;";
+    public List<Doc> appNameList(Doc doc, int docStart) {
+        String sql = "select * from `LFGservice`.`lfg_doc` where doc_app_name=? order by doc_idx desc limit ?,5";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -150,9 +202,11 @@ public class DocModel implements DocRepository{
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,doc.getDoc_app_name());
+            pstmt.setInt(2,docStart);
             rs = pstmt.executeQuery();
             List<Doc> docs = new ArrayList<>();
             while (rs.next()) {
+                doc = new Doc();
                 doc.setDoc_idx(rs.getInt("doc_idx"));
                 doc.setDoc_sub(rs.getString("doc_sub"));
                 doc.setDoc_writ(rs.getString("doc_writ"));
@@ -160,6 +214,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_reg(rs.getString("doc_reg"));
                 doc.setDoc_app_id(rs.getInt("doc_app_id"));
                 docs.add(doc);
+                System.out.println(doc.getDoc_sub());
             }
             return docs;
         } catch (Exception e) {
@@ -168,6 +223,8 @@ public class DocModel implements DocRepository{
             close(conn, pstmt, rs);
         }
     }
+
+
 
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);

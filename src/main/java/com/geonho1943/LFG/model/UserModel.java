@@ -15,7 +15,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User join(User user) {
-        String sql = "INSERT INTO LFGservice.lfg_user (user_id, user_pw, user_name, user_reg) VALUES (?, SHA2(?, 256), ?, CURRENT_TIMESTAMP());";
+        String sql = "INSERT INTO LFGservice.lfg_user (user_id, user_pw, user_name, user_reg) VALUES (?, SHA2(?, 256), ?, CURRENT_TIMESTAMP())";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -41,7 +41,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User role(User user){
-        String sql = "insert into LFGservice.lfg_user_role(user_idx,user_role) values (?,2);";
+        String sql = "insert into LFGservice.lfg_user_role(user_idx,user_role) values (?,2)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -88,7 +88,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public User auth(User user){
-        String sql = "select user_role from LFGservice.lfg_user_role where user_idx = ?;";
+        String sql = "select user_role from LFGservice.lfg_user_role where user_idx = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -112,7 +112,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public boolean check(User user){
-        String sql = "select user_id from LFGservice.lfg_user where user_id=?;";
+        String sql = "select user_id from LFGservice.lfg_user where user_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -134,7 +134,7 @@ public class UserModel implements UserRepository {
     }
     @Override
     public User modify(User user) {
-        String sql = "update LFGservice.lfg_user set user_id=?,user_pw=SHA2(?, 256),user_name=? where user_idx=?;";
+        String sql = "update LFGservice.lfg_user set user_id=?,user_pw=SHA2(?, 256),user_name=? where user_idx=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -155,7 +155,7 @@ public class UserModel implements UserRepository {
 
     @Override
     public void sleep(User user) {
-        String sql = "DELETE FROM LFGservice.lfg_user WHERE user_idx=?;";
+        String sql = "DELETE FROM LFGservice.lfg_user WHERE user_idx=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {

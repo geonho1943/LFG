@@ -26,7 +26,7 @@ public class AppModel implements AppRepository {
         PreparedStatement pstmt = null;
         try {
             conn = getConnection();
-            String sql = "INSERT INTO `LFGservice`.`lfg_app_list` (app_id, app_name) VALUES (?, ?);";
+            String sql = "INSERT INTO `LFGservice`.`lfg_app_list` (app_id, app_name) VALUES (?, ?)";
             pstmt = conn.prepareStatement(sql);
             int maxNum = 10000;
             int count=0;
@@ -53,7 +53,7 @@ public class AppModel implements AppRepository {
 
     @Override
     public List<String> searchAppName(String name) {
-        String sql = "select * from `LFGservice`.`lfg_app_list` WHERE app_name Like ?;";
+        String sql = "select * from `LFGservice`.`lfg_app_list` WHERE app_name Like ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -74,7 +74,7 @@ public class AppModel implements AppRepository {
 
     @Override
     public Doc searchAppId(Doc doc) {
-        String sql = "select app_id from `LFGservice`.`lfg_app_list` WHERE app_name=?;";
+        String sql = "select app_id from `LFGservice`.`lfg_app_list` WHERE app_name=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
