@@ -213,6 +213,7 @@ public class DocModel implements DocRepository{
                 doc.setDoc_cont(rs.getString("doc_cont"));
                 doc.setDoc_reg(rs.getString("doc_reg"));
                 doc.setDoc_app_id(rs.getInt("doc_app_id"));
+                doc.setDoc_app_name(rs.getString("doc_app_name"));
                 docs.add(doc);
                 System.out.println(doc.getDoc_sub());
             }

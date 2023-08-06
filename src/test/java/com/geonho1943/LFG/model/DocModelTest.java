@@ -100,7 +100,8 @@ class DocModelTest {
         docRepository.post(testForm1);
         Doc testForm2 = docInputForTest(2,"제목2","작성자2","내용2","애플리케이션2",2);
         docRepository.post(testForm2);
-        List<Doc> docs = docRepository.list();
+
+        List<Doc> docs = docRepository.list(0);
 
         // Then
         Doc firstDoc = docs.get(0);
@@ -157,7 +158,7 @@ class DocModelTest {
         docRepository.post(testForm3);
 
         // When
-        List<Doc> docs = docRepository.appNameList(testForm1);
+        List<Doc> docs = docRepository.appNameList(testForm1, 1);
 
         // Then
         Assertions.assertNotNull(docs);
