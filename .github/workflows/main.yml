@@ -2,22 +2,18 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Create Properties
-        run: |
-          touch ./src/main/resources/application-awsMariaDB.properties
-          echo "${{ secrets.APPLICATION_AWSMARIADB_PROPERTIES }}" > ./src/main/resources/application-awsMariaDB.properties
+        uses: actions/checkout@v3
+      - run: touch ./src/main/resources/application-awsMariaDB.properties
+      - run: echo "${{ secrets.APPLICATION_AWSMARIADB_PROPERTIES }}" > ./src/main/resources/application-awsMariaDB.properties
 
       - name: Setup JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -39,7 +35,7 @@ jobs:
           pass: ${{ secrets.PW }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            pkill -f LFG
+            pgrep -f "LFG" | xargs -r kill -9
             if [ -e LFG* ]; then rm -f LFG*; fi
             if [ -f nohup.out ]; then mv nohup.out nohup_$(date +%Y%m%d).out; mv nohup_$(date +%Y%m%d).out /home/${{ secrets.USER }}/mylog/; fi
           scp: |
