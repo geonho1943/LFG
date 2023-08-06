@@ -18,14 +18,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
       - name: Build with Gradle
         run: |
           ./gradlew build
 
-      - name: Deploy to server
+      - name: ssh connection
         uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
         with:
           host: ${{ secrets.HOST }}
