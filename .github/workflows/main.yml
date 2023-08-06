@@ -32,7 +32,6 @@ jobs:
           pass: ${{ secrets.PW }}
           first_ssh: |
             cd /home/${{ secrets.USER }}/server/
-            pgrep -f "LFG" | xargs -r kill -9
             if [ -e LFG* ]; then rm -f LFG*; fi
             if [ -f nohup.out ]; then mv nohup.out nohup_$(date +%Y%m%d).out; mv nohup_$(date +%Y%m%d).out /home/${{ secrets.USER }}/mylog/; fi
           scp: |
