@@ -16,4 +16,5 @@ public interface DocRepository {
 
     int docCount();
     int docSearchCount(String name);
+    List<Doc> myDocList(String user_name);
 }

@@ -62,6 +62,37 @@ public class DocModel implements DocRepository{
         }
     }
 
+    @Override
+    public List<Doc> myDocList(String user_name) {// 유저프로필에서 직접 작성한 글 리스트 myDocs 반환
+        String sql = "select * from `LFGservice`.`lfg_doc`where doc_writ=? order by doc_idx desc";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Doc> myDocs = new ArrayList<>();
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,user_name);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Doc doc = new Doc();
+                doc.setDoc_idx(rs.getInt("doc_idx"));
+                doc.setDoc_sub(rs.getString("doc_sub"));
+                doc.setDoc_writ(rs.getString("doc_writ"));
+                doc.setDoc_cont(rs.getString("doc_cont"));
+                doc.setDoc_reg(rs.getString("doc_reg"));
+                doc.setDoc_app_id(rs.getInt("doc_app_id"));
+                doc.setDoc_app_name(rs.getString("doc_app_name"));
+                myDocs.add(doc);
+            }
+            return myDocs;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
 
     @Override
     public Doc post(Doc doc) {
@@ -215,7 +246,6 @@ public class DocModel implements DocRepository{
                 doc.setDoc_app_id(rs.getInt("doc_app_id"));
                 doc.setDoc_app_name(rs.getString("doc_app_name"));
                 docs.add(doc);
-                System.out.println(doc.getDoc_sub());
             }
             return docs;
         } catch (Exception e) {

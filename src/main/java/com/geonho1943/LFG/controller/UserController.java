@@ -1,7 +1,9 @@
 package com.geonho1943.LFG.controller;
 
+import com.geonho1943.LFG.dto.Doc;
 import com.geonho1943.LFG.dto.LoginInfo;
 import com.geonho1943.LFG.dto.User;
+import com.geonho1943.LFG.service.DocService;
 import com.geonho1943.LFG.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,25 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final DocService docService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, DocService docService) {
         this.userService = userService;
+        this.docService = docService;
     }
 
     @PostMapping("/userJoin")
-    public String userJoin(User user){
+    public String userJoin(User user) {
         userService.join(user);
-        logger.info("회원가입이 완료 되었습니다 : " +user.getUser_idx()+"/"+ user.getUser_name());
+        logger.info("회원가입이 완료 되었습니다 : " + user.getUser_idx() + "/" + user.getUser_name());
         return "redirect:/";
     }
 
     @GetMapping("/userJoin")
-    public String userJoinPage(){
+    public String userJoinPage() {
         return "user/userJoin";
     }
 
@@ -45,41 +50,42 @@ public class UserController {
         try {
             userService.login(user);
             LoginInfo loginInfo = new LoginInfo(
-                    user.getUser_idx(),user.getUser_id(),
-                    user.getUser_name(),user.getUser_role(),
-                    user.getUser_reg()
-            );
-            httpSession.setAttribute("loginInfo",loginInfo );
-            logger.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 이 접속 하였습니다.");
-        }catch (Exception e){
+                    user.getUser_idx(), user.getUser_id(),
+                    user.getUser_name(), user.getUser_role(),
+                    user.getUser_reg());
+            httpSession.setAttribute("loginInfo", loginInfo);
+            logger.info("유저 " + user.getUser_idx() + " / " + user.getUser_name() + " 이 접속 하였습니다.");
+        } catch (Exception e) {
             return "redirect:/userError?error=ture";
         }
         return "redirect:/";
     }
 
     @GetMapping("/userLogin")
-    public String userLoginPage(){
+    public String userLoginPage() {
         return "user/userLogin";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession httpSession){
+    public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("loginInfo");
         logger.info("로그아웃 하였습니다");
         return "redirect:/";
     }
 
     @GetMapping("/myProfile")
-    public String userProfile(HttpSession httpSession, Model model){
-        LoginInfo loginInfo = (LoginInfo)httpSession.getAttribute("loginInfo");
-        model.addAttribute("loginInfo",loginInfo);
+    public String userProfile(HttpSession httpSession, Model model) {
+        LoginInfo loginInfo = (LoginInfo) httpSession.getAttribute("loginInfo");
+        model.addAttribute("loginInfo", loginInfo);
+        List<Doc> myDocs = docService.myDocList(loginInfo.getUser_name());
+        model.addAttribute("myDocs", myDocs);
         return "user/userProfile";
     }
 
     @PostMapping("/userModify")
-    public String userModify(HttpSession httpSession,User user){
+    public String userModify(HttpSession httpSession, User user) {
         userService.modify(user);
-        logger.info("유저 "+user.getUser_idx()+" / "+user.getUser_name()+" 의 정보가 수정 되었습니다.");
+        logger.info("유저 " + user.getUser_idx() + " / " + user.getUser_name() + " 의 정보가 수정 되었습니다.");
         httpSession.removeAttribute("loginInfo");
         return "redirect:";
     }

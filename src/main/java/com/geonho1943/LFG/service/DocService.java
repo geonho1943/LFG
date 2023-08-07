@@ -52,4 +52,8 @@ public class DocService {
     public int docSearchCount(String name) {
         return docRepository.docSearchCount(name);
     }
+
+    public List<Doc> myDocList(String user_name) {
+        return docRepository.myDocList(user_name);
+    }
 }

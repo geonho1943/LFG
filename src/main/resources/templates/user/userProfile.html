@@ -1,91 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>MyProfile</title>
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/board.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="header_dis">
-        <header class="header">
-          <div class="header_logo">
-            <a href="/">
-              <h1>LFG MyProfile</h1>
-            </a>
-          </div>
-          <span class="header_interface">
-            <ul>
-              <span class="user-info" th:if="${loginInfo != null}">
-                <a href="/logout">로그아웃</a>
-                <a th:text="${loginInfo.user_name}"></a>
-                <a href="/myProfile">내 프로필</a>
-                <a href="/docPost">글쓰기</a>
-              </span>
-              <span class="user-info_null" th:if="${loginInfo == null}">
-                <a href="/userLogin">로그인</a>
-                <a href="/userJoin">회원가입</a>
-              </span>
-            </ul>
-          </span>
-        </header>
-      </div>
-      <div class="profile_container" style="background-color: #3e4551">
-        <div class="userprofile">
-          <ul>
-            <h1>내정보:</h1>
-            <div th:text="${loginInfo.user_name}"></div>
-            <h1>회원가입 날짜:</h1>
-            <div th:text="${loginInfo.user_reg}"></div>
-            <a href="/userModify">내정보 수정하기</a>
-          </ul>
-          <h1>모집글 관리</h1>
-          <ul>
-            <h1>해당유저글 List</h1>
-          </ul>
+<head>
+  <meta charset="UTF-8" />
+  <title>MyProfile</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/board.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header_dis">
+      <header class="header">
+        <div class="header_logo">
+          <a href="/">
+            <h1>LFG MyProfile</h1>
+          </a>
         </div>
+        <span class="header_interface">
+          <ul>
+            <span class="user-info" th:if="${loginInfo != null}">
+              <a href="/logout">로그아웃</a>
+              <a th:text="${loginInfo.user_name}"></a>
+              <a href="/myProfile">내 프로필</a>
+              <a href="/docPost">글쓰기</a>
+            </span>
+            <span class="user-info_null" th:if="${loginInfo == null}">
+              <a href="/userLogin">로그인</a>
+              <a href="/userJoin">회원가입</a>
+            </span>
+          </ul>
+        </span>
+      </header>
+    </div>
+    <div class="profile_container" style="background-color: #3e4551">
+      <div class="userprofile">
+        <ul>
+          <h1>내정보:</h1>
+          <div th:text="${loginInfo.user_name}"></div>
+          <h1>회원가입 날짜:</h1>
+          <div th:text="${loginInfo.user_reg}"></div>
+          <a href="/userModify">내정보 수정하기</a>
+        </ul>
+        <h1>모집글 관리</h1>
+        <table>
+          <tbody>
+            <div th:each="doc : ${myDocs}" style="
+                  background-color: #4b515d;
+                  margin: 5px;
+                  border-radius: 10px;
+                  height: 215px;
+                ">
+              <div class="doc_box" th:onclick="'doc_dox_click(' + ${doc.doc_idx} + ')'"
+                style="display: flex; justify-content: space-between">
+                <div style="height: 150px; padding: 10px">
+                  <div th:text="${doc.doc_idx}" th:data-></div>
+                  <div th:text="${doc.doc_sub}"></div>
+                  <div th:text="${doc.doc_writ}"></div>
+                  <div th:text="${doc.doc_reg}"></div>
+                </div>
+                <div>
+                  <div class="appid" th:data-appid="${doc.doc_app_id}"></div>
+                  <img class="game-image" alt="이미지 위치" style="border: 0px; border-radius: 10px" />
+                </div>
+              </div>
+            </div>
+          </tbody>
+        </table>
+
+
       </div>
     </div>
-  </body>
-  <script type="text/javascript">
-    function idCheck() {
-      var id = document.getElementById("id").value;
-      //var id = $('#id').val();
+  </div>
+</body>
+<script type="text/javascript">
+  function idCheck() {
+    var id = document.getElementById("id").value;
+    //var id = $('#id').val();
 
-      $.ajax({
-        url: "./idCheck",
-        type: "post",
-        data: { id: id },
-        success: function (ans) {
-          if (ans == true) {
-            $(".possible").css("display", "inline-block");
-            $(".impossible").css("display", "none");
-            alert("사용가능한 ID 입니다!");
-          } else {
-            $(".impossible").css("display", "inline-block");
-            $(".possible").css("display", "none");
-            alert("아이디를 다시 입력해주세요");
-            // $('#id').val('');
-          }
-        },
-        error: function () {
-          alert("나중에 다시 시도해주세요");
-        },
-      });
-    }
+    $.ajax({
+      url: "./idCheck",
+      type: "post",
+      data: { id: id },
+      success: function (ans) {
+        if (ans == true) {
+          $(".possible").css("display", "inline-block");
+          $(".impossible").css("display", "none");
+          alert("사용가능한 ID 입니다!");
+        } else {
+          $(".impossible").css("display", "inline-block");
+          $(".possible").css("display", "none");
+          alert("아이디를 다시 입력해주세요");
+          // $('#id').val('');
+        }
+      },
+      error: function () {
+        alert("나중에 다시 시도해주세요");
+      },
+    });
+  }
 
-    function pwCheck() {
-      const pw1 = document.getElementById("pw1").value;
-      const pw2 = document.getElementById("pw2").value;
-      if (pw1 == pw2) {
-        alert("pw가 일치 합니다");
-        const target = document.getElementById("subbtn");
-        target.disabled = false;
-      }
+  function pwCheck() {
+    const pw1 = document.getElementById("pw1").value;
+    const pw2 = document.getElementById("pw2").value;
+    if (pw1 == pw2) {
+      alert("pw가 일치 합니다");
+      const target = document.getElementById("subbtn");
+      target.disabled = false;
     }
-  </script>
+  }
+
+  function doc_dox_click(doc_idx) {
+    var url = "/docDetail?doc_idx=" + doc_idx;
+    window.location.href = url;
+  }
+
+  $(".appid").each(function () {
+    var appid = $(this).data("appid");
+    var url =
+      "https://cdn.akamai.steamstatic.com/steam/apps/" +
+      appid +
+      "/header.jpg";
+    $(this).next(".game-image").attr("src", url);
+  });
+</script>
+
 </html>
