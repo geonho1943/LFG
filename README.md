@@ -12,14 +12,15 @@
 [스팀에세 멀티게임 더 찾아보기](https://store.steampowered.com/category/multiplayer/)<br>
 ---
 ## Period
-2022/10/31 ~
+2022/10/31 ~ 2023/8/7
 
 ## Environment
 
 * BE: 
-  * Java17
+  * Java
   * Spring Boot
-  * JUnit, Gradle
+  * JUnit
+  * Gradle
   * GitHub Actions
 * FE: 
   * HTML

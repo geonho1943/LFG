@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public void sleep(User user) {
-//        return userRepository.sleep(user);
+        userRepository.sleep(user);
     }
     public boolean check(String id) {
         User user = new User();
