@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Create Properties
         uses: actions/checkout@v3
-      - run: touch ./src/main/resources/application-awsMariaDB.properties
-      - run: echo "${{ secrets.APPLICATION_AWSMARIADB_PROPERTIES }}" > ./src/main/resources/application-awsMariaDB.properties
+      - run: touch ./src/main/resources/application-mariaDB.properties
+      - run: echo "${{ secrets.APPLICATION_MARIADB_PROPERTIES }}" > ./src/main/resources/application-mariaDB.properties
 
       - name: Setup JDK 17
         uses: actions/setup-java@v3

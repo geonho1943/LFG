@@ -19,7 +19,7 @@ bin/
 
 ### IntelliJ IDEA ###
 
-application-awsMariaDB.properties
+application-mariaDB.properties
 
 .idea
 *.iws
