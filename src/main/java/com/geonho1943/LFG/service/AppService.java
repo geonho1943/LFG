@@ -26,8 +26,8 @@ public class AppService {
         this.appRepository = appRepository;
     }
 
-    public void rowClear() {
-        appRepository.rowClear();
+    public void fieldClear() {
+        appRepository.deleteField();
     }
 
     public void apiParsing() {

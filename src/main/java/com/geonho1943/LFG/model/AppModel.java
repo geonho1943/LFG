@@ -28,7 +28,7 @@ public class AppModel implements AppRepository {
             conn = getConnection();
             String sql = "INSERT INTO `LFGservice`.`lfg_app_list` (app_id, app_name) VALUES (?, ?)";
             pstmt = conn.prepareStatement(sql);
-            int maxNum = 10000;
+            int maxNum = 1000;
             int count=0;
             for (App app : apps) {
                 count+=1;
@@ -93,20 +93,19 @@ public class AppModel implements AppRepository {
     }
 
     @Override
-    public void rowClear() {
-        String sql ="DELETE FROM `LFGservice`.`lfg_app_list`";
+    public void deleteField() {
+        String sql = "TRUNCATE TABLE `LFGservice`.`lfg_app_list`";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
+            logger.info("app_list갱신중 deleteField() 종료.");
         } catch (SQLException e) {
-            logger.warn("lfg_app_list 테이블의 rowClear 예외 발생: " + e.getMessage() +
-                    ".\n데이터 정리에 실패했습니다. 관리자의 확인이 필요합니다.");
+            logger.warn("app_list갱신중 deleteField() 실패. :"+e.getMessage());
             throw new RuntimeException(e);
         }finally {
-            logger.info("lfg_app_list테이블의 갱신 - roeClear가 진행 되었습니다");
             close(conn, pstmt, null);
         }
     }

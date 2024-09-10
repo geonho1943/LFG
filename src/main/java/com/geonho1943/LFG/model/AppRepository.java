@@ -6,7 +6,7 @@ import com.geonho1943.LFG.dto.Doc;
 import java.util.List;
 
 public interface AppRepository {
-    void rowClear();
+    void deleteField();
     void save(List<App> apps);
     List<String> searchAppName(String name);
 

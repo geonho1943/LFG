@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
-
 @Controller
 public class AppController {
 
@@ -19,7 +18,7 @@ public class AppController {
 
     @GetMapping("/appList")
     public String appList() {
-        appService.rowClear();
+        appService.fieldClear();
         appService.apiParsing();
         return "redirect:";
     }
