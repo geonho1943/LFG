@@ -19,7 +19,7 @@ public class AppController {
     @GetMapping("/appList")
     public String appList() {
         appService.fieldClear();
-        appService.apiParsing();
+        appService.saveAppList(appService.apiParsing());
         return "redirect:";
     }
 

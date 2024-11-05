@@ -30,8 +30,7 @@ public class AppService {
         appRepository.deleteField();
     }
 
-    public void apiParsing() {
-        long startTime = System.currentTimeMillis();
+    public List<App> apiParsing() {
         String steamUrl = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(steamUrl, String.class);
@@ -50,10 +49,7 @@ public class AppService {
             app1.setApp_name(app.path("name").asText());
             apps.add(app1);
         }
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-        appRepository.save(apps);
-        logger.info("API 파싱 작업이 완료되었습니다. 소요시간: " + elapsedTime + "ms");
+        return apps;
     }
 
     public List<String> searchAppName(String name) {
@@ -63,4 +59,9 @@ public class AppService {
     public Doc searchAppId(Doc doc) {
         return appRepository.searchAppId(doc);
     }
+
+    public void saveAppList(List<App> apps) {
+        appRepository.save(apps);
+    }
+
 }

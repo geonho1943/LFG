@@ -17,8 +17,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
-	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2'
+//	implementation 'org.mariadb.jdbc:mariadb-java-client'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
+
 }

@@ -26,7 +26,7 @@ public class AppModel implements AppRepository {
         PreparedStatement pstmt = null;
         try {
             conn = getConnection();
-            String sql = "INSERT INTO `LFGservice`.`lfg_app_list` (app_id, app_name) VALUES (?, ?)";
+            String sql = "INSERT INTO `LFG_COLONY`.`lfg_app_list` (app_id, app_name) VALUES (?, ?)";
             pstmt = conn.prepareStatement(sql);
             int maxNum = 1000;
             int count=0;
@@ -94,7 +94,7 @@ public class AppModel implements AppRepository {
 
     @Override
     public void deleteField() {
-        String sql = "TRUNCATE TABLE `LFGservice`.`lfg_app_list`";
+        String sql = "TRUNCATE TABLE `LFG_COLONY`.`lfg_app_list`";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
