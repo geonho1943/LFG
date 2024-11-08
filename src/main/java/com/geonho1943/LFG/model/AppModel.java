@@ -5,11 +5,12 @@ import com.geonho1943.LFG.dto.Doc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceUtils;
-
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AppModel implements AppRepository {
 
@@ -21,26 +22,30 @@ public class AppModel implements AppRepository {
     }
 
     @Override
-    public void save(List<App> apps) {
+    public void save(Set<App> apps) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
-            conn = getConnection();
-            String sql = "INSERT INTO `LFG_COLONY`.`lfg_app_list` (app_id, app_name) VALUES (?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            int maxNum = 1000;
+            String sql = "INSERT INTO LFG_COLONY.LFG_APP_LIST (app_id, app_name) VALUES (?, ?)";
             int count=0;
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            HashSet<Integer> dupli = new HashSet<>();
             for (App app : apps) {
-                count+=1;
+                count++;
+                if (dupli.contains(app.getApp_id())) {
+                    continue; // 이미 추가된 id는 스킵
+                }
+                dupli.add(app.getApp_id());
                 pstmt.setInt(1, app.getApp_id());
                 pstmt.setString(2, app.getApp_name());
                 pstmt.addBatch();
-                if (maxNum-count == 0) {
+                if (count >= 1000) {
                     pstmt.executeBatch();
-                    count=0;
+                    count = 0;
                 }
             }
-            pstmt.executeBatch();
+            if (count > 0) pstmt.executeBatch(); // 나머지 정리
         } catch (Exception e) {
             logger.warn("lfg_app_list 테이블의 save 예외발생: " + e.getMessage() +
                     ".\n데이터 갱신에 실패했습니다. 관리자의 확인이 필요합니다.");
@@ -94,7 +99,7 @@ public class AppModel implements AppRepository {
 
     @Override
     public void deleteField() {
-        String sql = "TRUNCATE TABLE `LFG_COLONY`.`lfg_app_list`";
+        String sql = "TRUNCATE TABLE LFG_COLONY.lfg_app_list";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -113,6 +118,7 @@ public class AppModel implements AppRepository {
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
+
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs){
         try {
             if (rs != null) {

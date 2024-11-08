@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocModel implements DocRepository{
+
     private final DataSource dataSource;
+
     public DocModel(DataSource dataSource) {
         this.dataSource = dataSource;
     }

@@ -13,14 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
 public class AppService {
+
     private final Logger logger = LoggerFactory.getLogger(AppService.class);
     private final AppRepository appRepository;
+
     @Autowired
     public AppService(AppRepository appRepository) {
         this.appRepository = appRepository;
@@ -30,10 +33,13 @@ public class AppService {
         appRepository.deleteField();
     }
 
-    public List<App> apiParsing() {
+    public ResponseEntity<String> requestAppList() {
         String steamUrl = "https://api.steampowered.com/ISteamApps/GetAppList/v2/";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(steamUrl, String.class);
+        return restTemplate.getForEntity(steamUrl, String.class);
+    }
+
+    public Set<App> apiParsing(ResponseEntity<String> response) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode root = null;
         try {
@@ -42,7 +48,7 @@ public class AppService {
             e.printStackTrace();
         }
         JsonNode appList = root.path("applist").path("apps");
-        List<App> apps = new ArrayList<>();
+        Set<App> apps = new HashSet<>();
         for (JsonNode app : appList) {
             App app1 = new App();
             app1.setApp_id(app.path("appid").asInt());
@@ -60,8 +66,11 @@ public class AppService {
         return appRepository.searchAppId(doc);
     }
 
-    public void saveAppList(List<App> apps) {
+    public void saveAppList(Set<App> apps) {
         appRepository.save(apps);
     }
 
+    public void saveAppListWithMultiValue(Set<App> apps) {
+        appRepository.saveAppsWithMultiValue(apps);
+    }
 }

@@ -1,7 +1,5 @@
 package com.geonho1943.LFG.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.geonho1943.LFG.dto.App;
 import com.geonho1943.LFG.model.AppRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -10,19 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.client.RestTemplate;
-
 import javax.sql.DataSource;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @TestPropertySource(locations = "/application.yml") // 새로운 connection 설정을 사용함
 @SpringBootTest
@@ -31,43 +23,60 @@ class AppServiceTest {
     @Autowired
     private DataSource dataSource;
     @Autowired
-    AppRepository appRepository;
+    private AppRepository appRepository;
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private AppService appService;
 
-
     @BeforeEach
     void setUp() {
-        String createSchema = "CREATE SCHEMA IF NOT EXISTS LFG_COLONY;";
-        String createTable = "CREATE TABLE IF NOT EXISTS LFG_COLONY.lfg_app_list (" +
-                "app_id INT NOT NULL," +
-                "app_name VARCHAR(255) DEFAULT NULL," + // 45 > 200으로 증가함
-                "PRIMARY KEY (`app_id`)" +
-                ");"; // 백업해뒀던 lfg_app_list sql을 참고함
-        jdbcTemplate.execute("DROP TABLE IF EXISTS `lfg_app_list`");
-        jdbcTemplate.execute(createSchema);
-        jdbcTemplate.execute(createTable);
+        try {
+            jdbcTemplate.execute("CREATE TABLE LFG_COLONY.LFG_APP_LIST (" +
+                    "app_id INT NOT NULL," +
+                    "app_name VARCHAR(255) DEFAULT NULL" +  // 45 > 200으로 증가함
+                    ",PRIMARY KEY (app_id)" +
+                    ");"); // 백업해뒀던 lfg_app_list sql을 참고함
+        } catch (Exception e) {
+            System.err.println("테이블 생성 중 오류 발생: " + e.getMessage());
+            throw new RuntimeException("테이블 생성 실패", e);
+        }
     }
 
     @AfterEach
     void tearDown() {
-        jdbcTemplate.execute("DROP TABLE IF EXISTS `lfg_app_list`");
+        try {
+            jdbcTemplate.execute("DROP TABLE LFG_COLONY.LFG_APP_LIST;");
+        } catch (Exception e) {
+            System.err.println("테이블 정리 중 오류 발생: " + e.getMessage());
+        }
     }
 
     @Test
-    void apiParsingTest() {
-        long startTime = System.currentTimeMillis();
-        appService.apiParsing();
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime - startTime);
+    void parsingAndSaveTest() {
+        ResponseEntity<String> respondedApps = appService.requestAppList();
+
+        if (respondedApps.getStatusCode() == HttpStatus.OK) {
+            Set<App> appList = appService.apiParsing(respondedApps);
+            long startTime = System.currentTimeMillis();
+            appService.saveAppList(appList);
+            long endTime = System.currentTimeMillis();
+            long saveAppListTime = endTime - startTime;
+            System.out.println("saveAppList: " + saveAppListTime);
+
+            startTime = System.currentTimeMillis();
+            appService.saveAppListWithMultiValue(appList);
+            endTime = System.currentTimeMillis();
+            long multivalueTime = endTime - startTime;
+            System.out.println("multivalueTime: " + multivalueTime);
+        }
+        //10 회 평균 7283 ms / 최악 7804 ms
     }
 
     @Test
     void fieldClear() {
         // 데이터 생성
-        ArrayList<App> apps = new ArrayList<>();
+        Set<App> apps = new HashSet<>();
         for (int i = 0; i < 10; i++) {
             App app = new App();
             app.setApp_id(i+1);
@@ -83,7 +92,6 @@ class AppServiceTest {
 
         // 필드에 데이터가 남아있으면 실패
         Assertions.assertEquals(0, count);
-        Assertions.assertNull(count); // 인티져라 null이 올수도 있음
     }
 
 }
