@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AppModel implements AppRepository {
 
@@ -53,6 +50,43 @@ public class AppModel implements AppRepository {
         } finally {
             logger.info("lfg_app_list테이블의 갱신 - save가 진행 되었습니다");
             close(conn, pstmt, null);
+        }
+    }
+
+    @Override
+    public void saveAppsWithMultiValue(Set<App> apps) {
+        StringBuilder sb;
+        int count1000 = 0;
+        int countSum = 0;
+        int maxValue = 2000;
+        Iterator<App> iterator = apps.iterator(); // set에서 Iterator로 변환
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = null;
+            while (apps.size() > countSum) {
+                // 다중값 갯수 기준 1000개 or 나머지갯수 에 대응하도록 동적으로 쿼리를 생성 한다
+                int multiValSize = Math.min(apps.size() - count1000 * maxValue, maxValue);
+                countSum+=multiValSize;
+                sb = new StringBuilder();
+                sb.append("INSERT INTO LFG_COLONY.LFG_APP_LIST (app_id, app_name) VALUES (?, ?)");
+                for (int i = 0; i < multiValSize - 1; i++) { //sql 에 하나를 포함 되어있어서 multiValSize - 1
+                    sb.append(", (?,?)");
+                }
+                // 완성된 sql에 매핑 시작
+                ps = conn.prepareStatement(sb.toString());
+                int paramIndex = 1; // 파라미터 인덱스는 1부터 시작해야 함
+                for (int i = 0; i < multiValSize; i++) {
+                    if (!iterator.hasNext()) break;
+                    App currentApp = iterator.next();
+                    ps.setInt(paramIndex++, currentApp.getApp_id());
+                    ps.setString(paramIndex++, currentApp.getApp_name());
+                }
+                ps.addBatch();
+                count1000++; // 완성된 쿼리 배치에 추가
+            }
+            Objects.requireNonNull(ps).executeBatch(); // 일괄 요청
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

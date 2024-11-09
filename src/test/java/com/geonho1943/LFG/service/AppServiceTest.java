@@ -55,22 +55,26 @@ class AppServiceTest {
     @Test
     void parsingAndSaveTest() {
         ResponseEntity<String> respondedApps = appService.requestAppList();
-
         if (respondedApps.getStatusCode() == HttpStatus.OK) {
+            long startTime, endTime;
             Set<App> appList = appService.apiParsing(respondedApps);
-            long startTime = System.currentTimeMillis();
-            appService.saveAppList(appList);
-            long endTime = System.currentTimeMillis();
-            long saveAppListTime = endTime - startTime;
-            System.out.println("saveAppList: " + saveAppListTime);
 
             startTime = System.currentTimeMillis();
-            appService.saveAppListWithMultiValue(appList);
+            appService.saveAppList(appList); // 기존 메서드
             endTime = System.currentTimeMillis();
-            long multivalueTime = endTime - startTime;
-            System.out.println("multivalueTime: " + multivalueTime);
+            long saveAppListTime = endTime - startTime;
+            System.out.println("saveAppList: " + saveAppListTime + " ms");
+
+            tearDown();
+            setUp(); //  테스트 메서드 실행시 동작되는 테이블 초기화
+
+            startTime = System.currentTimeMillis();
+            appService.saveAppListWithMultiValue(appList); // 개선된 메서드
+            endTime = System.currentTimeMillis();
+            System.out.println("상향된 multi value + batch 메서드");
+            long multiValTime = endTime - startTime;
+            System.out.println("multiValTime: " + multiValTime + " ms");
         }
-        //10 회 평균 7283 ms / 최악 7804 ms
     }
 
     @Test
